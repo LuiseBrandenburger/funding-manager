@@ -13,8 +13,9 @@ import Login from "./components/auth-components/login";
 export default function Welcome() {
     return (
         <div className="welcome-container">
-            <h1>Go Fund Yourself - hello from Welcome</h1>
-            {/* <img className="bg-img-modal" src="/blur-background.svg" alt="" /> */}
+            <h1>Go Fund Yourself</h1>
+            <br></br>
+            <img className="bg-img-modal" src="/blur-background.svg" alt="" />
  
             <BrowserRouter>
                 <div className="welcome-box">

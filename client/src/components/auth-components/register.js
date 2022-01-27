@@ -65,11 +65,17 @@ export default function Register() {
                     placeholder="password"
                     type="password"
                 />
-                <button onClick={handleSubmit}>REGISTER</button>
             </form>
-            <Link to="/login">
-                <button id="login-btn">LOGIN</button>
-            </Link>
+            <div>
+                <button className="submit-btn" onClick={handleSubmit}>
+                    REGISTER
+                </button>
+                <Link to="/login">
+                    <button className="submit-btn-two" id="login-btn">
+                        LOGIN
+                    </button>
+                </Link>
+            </div>
         </div>
     );
 }

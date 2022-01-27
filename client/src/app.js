@@ -22,8 +22,6 @@ export default function App() {
                     </div>
                 </div>
 
-                {/* MAIN CONTENT RIGHT SIDE */}
-
                 <div className="main-row-right">
                     <div className="navigation-top">
                         <nav className="navbar-top">

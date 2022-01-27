@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Component } from "react";
 import { useEffect, useState } from "react";
 import useForm from "../../hooks/use-form";
 
@@ -38,20 +37,22 @@ export default function Login() {
                 console.log("error in fetch login.json", err);
                 setError(true);
             });
-    }
+    };
 
     return (
         <div className="login-container">
-            <h1>I am in Login Container</h1>
-
-            <Link to="/">
-                <button id="go-back-btn">GO BACK</button>
+            <Link className="go-back" to="/">
+                <button className="submit-btn-two" id="go-back-btn">
+                    GO BACK
+                </button>
             </Link>
-            <h1>You can login here: </h1>
+            <br></br>
+            <h3>Please login here: </h3>
+            <br></br>
             {error && (
                 <h3 style={{ color: "red" }}> Error, something went wrong </h3>
             )}
-            <form>
+            <form className="login-box">
                 <input
                     onChange={handleChange}
                     name="email"
@@ -64,11 +65,17 @@ export default function Login() {
                     placeholder="password"
                     type="password"
                 />
-                <button onClick={handleLogin}>LOGIN</button>
             </form>
-            <Link to="/reset">
-                <button id="reset-btn">RESET PASSWORD</button>
-            </Link>
+            <div>
+                <Link to="/reset">
+                    <button className="submit-btn-two" id="reset-btn">
+                        RESET PASSWORD
+                    </button>
+                </Link>
+                <button className="submit-btn" onClick={handleLogin}>
+                    LOGIN
+                </button>
+            </div>
         </div>
     );
 }

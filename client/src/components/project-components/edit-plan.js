@@ -1,13 +1,10 @@
 
 
-
-
 export default function EditPlan() {
     return (
         <div className="main-content-right-container">
             <div className="edit-project-container">
-                <h2>You can add Positions to your Project Plan here:</h2>
-                <br />
+                <h3>You can add Positions to your Project Plan here:</h3>
                 <div className="project-plan-outgoings">
                     <h2>OUTGOINGS</h2>
                     <form action="">
@@ -104,7 +101,7 @@ export default function EditPlan() {
                                 <input
                                     type="text"
                                     id="final-position-description"
-                                    placeholder="Please enter Notes in case the position has changed"
+                                    placeholder="Please enter Notes"
                                 />
                             </div>
 
@@ -209,7 +206,7 @@ export default function EditPlan() {
                                 <input
                                     type="text"
                                     id="final-position-description"
-                                    placeholder="Please enter Notes in case the position has changed"
+                                    placeholder="Please enter Notes"
                                 />
                             </div>
 

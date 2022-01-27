@@ -147,11 +147,13 @@ h4 {
     top: 0;
     bottom: 0;
     width: 100vw;
-    z-index: 1;
+    z-index: 2;
     display: flex;
     justify-content: center;
+    background: var(--main-bg-color);
     flex-direction: column;
     align-items: center;
+    border-radius: 3%;
 }
 
 .welcome-box {
@@ -159,17 +161,28 @@ h4 {
     position: relative;
     display: flex;
     flex-direction: column;
-    background: var(--focus-bg-color);
+    background: var(--main-bg-color);
     background-blend-mode: screen;
     width: 50vw;
     height: 60vh;
     padding: 40px;
+    z-index: 2;
 }
 
-.register-container {
+.register-container, .register-container form, .login-box, .login-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
+
+.register-container button, .login-container button  {
+    margin: 10px;
+}
+
+.go-back {
+    align-self: flex-start;
+}
+
 
 /******************* BUTTONS *******************/
 
@@ -638,6 +651,11 @@ h4 {
 .bg-img-modal {
     width: 900px;
     height: 900px;
+    position: fixed;
+    
+    /* width: 100vw; */
+    /* background-color: var(--main-bg-color); */
+    z-index: 1;
 }
 
 .modal-container {
