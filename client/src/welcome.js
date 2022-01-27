@@ -13,7 +13,7 @@
 export default function Welcome() {
     return (
         <div>
-            <h1>Go Fund Yourself</h1>
+            <h1>Go Fund Yourself - hello from Welcome</h1>
 
             {/* <img id="app-logo-landing-page" src="/logo.svg" /> */}
             {/* <BrowserRouter>
