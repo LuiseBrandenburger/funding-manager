@@ -27,6 +27,34 @@
 --   );
 
 
+DROP TABLE IF EXISTS projects;
+
+CREATE TABLE projects( 
+id SERIAL PRIMARY KEY, 
+owner_id INT REFERENCES users(id) NOT NULL,
+name VARCHAR(255) NOT NULL,
+project_number VARCHAR(255) NOT NULL UNIQUE,
+artist_name VARCHAR(255) NOT NULL,
+project_start DATE,
+project_end DATE,
+project_description VARCHAR(255),
+program_name VARCHAR(255),
+manager VARCHAR(255),
+approved_funding DECIMAL(8,2),
+sum_spend DECIMAL(8,2),
+sum_left DECIMAL(8,2),
+sum_accounted DECIMAL(8,2),
+funding_received DECIMAL(8,2),
+sum_fc_total DECIMAL(8,2),
+sum_fc_production DECIMAL(8,2),
+sum_fc_marketing DECIMAL(8,2),
+sum_fc_tour DECIMAL(8,2),
+sum_total DECIMAL(8,2),
+sum_production DECIMAL(8,2),
+sum_marketing DECIMAL(8,2),
+sum_tour DECIMAL(8,2),
+approved BOOLEAN DEFAULT false);
+
 
 -- DROP TABLE IF EXISTS friendships;
 
@@ -86,7 +114,8 @@
 --   (106, 'I love this social network');
 
 
-  SELECT * FROM users;
+  -- SELECT * FROM users;
+  SELECT * FROM projects;
   -- SELECT * FROM reset_code;
   -- SELECT * FROM friendships;
   -- SELECT * FROM chat_messages;
