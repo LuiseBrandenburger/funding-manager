@@ -1,3 +1,660 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* MAIN */
+    --main-bg-color: #f9f9f9;
+    /* --bg-color-left-nav: #7ca9827b; */
+    /* E0D3DE */
+    --bg-color-left-nav: #e0d3de;
+
+    --focus-bg-color: #7ca982;
+    --main-text-color: #131313;
+    --main-headline-color: #124559;
+    --main-gradient: linear-gradient(#124559, transparent),
+        linear-gradient(to top left, #e0d3de, transparent),
+        linear-gradient(to top right, #9f4a54, transparent);
+    background-blend-mode: screen;
+    --main-font: "Roboto Mono", monospace;
+
+    /* MODAL */
+    --modal-bg-color: #131313d0;
+
+    /* NAVBAR */
+    --nav-bg-color: transparent;
+    --nav-height: 10vh;
+
+    /* BUTTONS */
+    --btn-width: 130px;
+    --btn-height: 40px;
+
+    --main-btn-color: #124559;
+    --highlight-bg-color: #9f4a5469;
+    --focus-btn-bg-color: #f5b700;
+    --btn-margin: 20px 10px 20px 10px;
+    --btn-font-size: 0.8rem;
+    --btn-submit-bg-color: #9f4a54;
+    --main-btn-text-color: #e0d3de;
+
+    /* INPUT */
+    --input-with: 300px;
+    --input-margin: 5px 10px 20px 10px;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
 body {
-    background-color: ghostwhite;
+    width: 100%;
+    height: 100%;
+    background-color: var(--main-bg-color);
+    overflow: scroll;
+    color: var(--main-text-color);
+    font-family: var(--main-font);
+    overflow: hidden;
+}
+
+button {
+    width: var(--btn-width);
+    height: var(--btn-height);
+    cursor: pointer;
+    border: none;
+    border-radius: 2px;
+    color: var(--main-btn-text-color);
+    background-color: var(--main-btn-color);
+    font-family: var(--main-font);
+    font-size: var(--btn-font-size);
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: var(--highlight-bg-color);
+}
+
+hr {
+    width: 95%;
+    align-self: center;
+    background-color: var(--highlight-bg-color);
+    height: 3px;
+    border: none;
+    border-radius: 3px;
+}
+
+textarea {
+    font: var(--main-font);
+}
+
+img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    border-radius: 3px;
+}
+
+input {
+    width: var(--input-with);
+    height: 30px;
+    padding: 4px;
+    margin: var(--input-margin);
+}
+
+label {
+    width: var(--input-with);
+    margin-left: 9px;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: var(--main-headline-color);
+    cursor: pointer;
+}
+
+select,
+option,
+label {
+    font-family: var(--main-font);
+}
+
+ul {
+    padding: 0;
+}
+
+h5 {
+    color: var(--btn-submit-bg-color);
+}
+
+h4 {
+    margin-top: 10px;
+}
+
+/******************* BUTTONS *******************/
+
+.focus-btn {
+    width: var(--btn-width);
+    height: var(--btn-height);
+    background-color: var(--focus-btn-bg-color);
+    color: var(--main-headline-color);
+}
+
+.main-btn {
+    width: var(--btn-width);
+    height: var(--btn-height);
+    background-color: var(--main-btn-color);
+}
+
+.submit-btn {
+    width: var(--btn-width);
+    height: var(--btn-height);
+    background-color: var(--btn-submit-bg-color);
+}
+
+.submit-btn-two {
+    width: var(--btn-width);
+    height: var(--btn-height);
+    background-color: transparent;
+    color: var(--btn-submit-bg-color);
+    border: 3px solid var(--btn-submit-bg-color);
+}
+
+/******************* MAIN SETUP *******************/
+
+.main-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    background-color: var(--main-bg-color);
+}
+
+.main-row-left {
+    height: 100%;
+    width: 7%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--main-bg-color);
+    border-right: 2px solid var(--bg-color-left-nav);
+}
+
+.main-row-right {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--main-bg-color);
+}
+
+.navigation-top {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 2px solid var(--bg-color-left-nav);
+}
+
+.main-content-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.main-content-left {
+    height: 100%;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-color-left-nav);
+}
+
+.main-content-right {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--main-bg-color);
+}
+
+/******************* CLASSES *******************/
+
+.spectrum-background {
+    background: var(--main-gradient);
+    width: 100%;
+    height: 100vh;
+}
+
+
+/******************************************* NAVBARS ******************************************/
+
+.navbar-top {
+    width: 100%;
+    height: 100%;
+    padding: 25px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.navbar-top ul {
+    display: flex;
+    padding: 0;
+}
+
+.navbar-top li {
+    width: 100px;
+    background-color: transparent;
+    margin-right: 30px;
+    font-size: 1rem;
+    text-decoration: none;
+    list-style: none;
+    font-weight: bold;
+}
+
+.navbar-top li:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.navbar-top-title {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 30vh;
+    z-index: -1;
+    margin: 0;
+}
+
+.avatar {
+    height: 45px;
+    width: 45px;
+    /* background-color: var(--main-headline-color); */
+    border-radius: 3px;
+    align-self: center;
+}
+
+/* .logo {
+    height: 50px;
+    width: 50px;
+    align-self: center;
+} */
+
+/******************************************* NAVBAR LEFT ******************************************/
+
+.navbar-left {
+    width: 100%;
+    height: 100%;
+    padding: 25px;
+    padding-top: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.navbar-left-container {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+.navbar-left-container .avatar {
+    margin-bottom: 15px;
+    object-fit: cover;
+}
+
+.navbar-left-container .avatar img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    border-radius: 3px;
+}
+
+/******************************************* CONTAINER ******************************************/
+
+.main-content-left-container,
+.main-content-right-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+/******************************************* MAIN CONTENT LEFT ******************************************/
+
+.main-content-left-container ul li {
+    margin: 0px 0px 15px 0px;
+    text-decoration: none;
+    list-style: none;
+}
+
+.main-content-left-container ul {
+    width: 100%;
+    padding: 10px;
+    padding-left: 25px;
+    /* background-color: var(--btn-submit-bg-color); */
+}
+
+.content-left-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content-left-container button {
+    margin-bottom: 10px;
+}
+
+.btns-left {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.btns-left button {
+    margin-top: 10px;
+}
+
+.choose-project select {
+    width: 100%;
+    border-radius: 3%;
+    height: 30px;
+}
+
+/******************************************* MAIN CONTENT RIGHT ******************************************/
+
+.overview {
+    width: 100%;
+    height: 15%;
+    background-color: var(--focus-btn-bg-color);
+    border-radius: 3px;
+}
+
+.chart-container {
+    width: 100%;
+    height: 40%;
+    background-color: var(--bg-color-left-nav);
+    border-radius: 3px;
+}
+
+/******************************************* ADD NEW PROJECT ******************************************/
+
+.add-new-project-container {
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color-left-nav);
+    border-radius: 3px;
+    padding: 20px;
+}
+
+.add-new-project-container form {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.form-left,
+.form-right {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 10px;
+}
+
+.add-new-project-container textarea {
+    margin: 5px 10px 20px;
+    width: 300px;
+    height: 90px;
+}
+
+.add-new-project-container button {
+    margin-left: 10px;
+}
+
+/******************************************* EDIT PROJECT PLAN ******************************************/
+
+.edit-project-container {
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color-left-nav);
+    border-radius: 3px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* justify-content: space-around; */
+}
+
+.edit-project-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    height: 70%;
+    padding: 10px;
+    background-color: var(--main-bg-color);
+    border-radius: 3px;
+}
+.edit-plan-form-top,
+.edit-plan-form-bottom {
+    display: flex;
+    flex-direction: row;
+    height: 50%;
+    margin-bottom: 12px;
+}
+
+.edit-plan-form-bottom div {
+    align-self: flex-end;
+}
+
+.edit-project-container input,
+.edit-project-container select {
+    margin: 0px;
+    width: 100%;
+    height: 30px;
+    font-size: 0.8rem;
+}
+
+.edit-project-container label {
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+.edit-project-container option {
+    font-size: 0.8rem;
+}
+
+.edit-project-container textarea {
+    margin: 5px 10px 20px;
+    width: 300px;
+    height: 90px;
+    font-size: 0.8rem;
+}
+
+.add-btn {
+    height: 30px;
+    width: 30px;
+    background-color: var(--btn-submit-bg-color);
+    align-self: baseline;
+    align-self: flex-end;
+    padding: 3px;
+}
+
+.income {
+    background-color: var(--main-btn-color);
+}
+
+.file-label {
+    width: 30px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.file-label img {
+    width: 30px;
+    height: 30px;
+    background-color: var(--btn-submit-bg-color);
+    margin: 0px 5px;
+    align-self: flex-end;
+}
+
+.file-label img:hover {
+    background-color: var(--highlight-bg-color);
+}
+
+#item-file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.single-position-costs {
+    margin-top: 10px;
+    align-self: flex-end;
+}
+
+.project-plan-income,
+.project-plan-outgoings {
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+    background-color: var(--main-bg-color);
+    border-radius: 3px;
+    padding: 10px;
+    font-size: 0.8rem;
+}
+
+.project-plan-outgoings {
+    border: 4px solid var(--btn-submit-bg-color);
+}
+
+.project-plan-income {
+    border: 4px solid var(--main-headline-color);
+}
+
+/******************************************* SHOW TABLE ******************************************/
+
+.project-plan-table-container {
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-color-left-nav);
+    border-radius: 3px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.project-plan-table {
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+    background-color: var(--main-bg-color);
+    border-radius: 3px;
+    padding: 10px;
+    font-size: 0.8rem;
+    border: 4px solid var(--main-headline-color);
+}
+
+.project-plan-overview {
+    display: flex;
+    width: 100%;
+    height: 50%;
+    margin-top: 20px;
+    background-color: var(--main-bg-color);
+    border-radius: 3px;
+    padding: 10px;
+    font-size: 0.8rem;
+    border: 4px solid var(--focus-btn-bg-color);
+}
+
+.project-plan-overview-left,
+.project-plan-overview-right {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+
+/******************************************* MODAL ******************************************/
+
+.bg-img-modal {
+    width: 900px;
+    height: 900px;
+}
+
+
+.modal-container {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100vw;
+    background-color: var(--main-bg-color);
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-box {
+    border-radius: 3px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    background-blend-mode: screen;
+    width: 50vw;
+    height: 30vh;
+    padding: 40px;
+}
+
+.modal-btn {
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-size: 2rem;
+    position: absolute;
+    right: 15px;
+    top: 5px;
+    background: transparent;
+}
+
+
+/******************* OTHERS *******************/
+
+/* Hide up down Buttons Input */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
 }

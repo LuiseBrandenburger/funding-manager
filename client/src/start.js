@@ -15,9 +15,7 @@ const store = createStore(
 );
 
 
-// TODO: change the fetch route
-
-fetch("/user/id.json")
+fetch("/api/user-id")
     .then((response) => response.json())
     .then((data) => {
         if (!data.userId) {

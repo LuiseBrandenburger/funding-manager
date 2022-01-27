@@ -1,0 +1,55 @@
+const express = require("express");
+const auth = express.Router();
+
+const { compare } = require("../utils/bc");
+const { getUserForLogin } = require("../sql/db");
+
+/*************************** ROUTES ***************************/
+
+console.log("Hello from auth");
+
+auth.get("/api/user-id", function (req, res) {
+    res.json({
+        userId: req.session.userId,
+    });
+});
+
+// login.json vorher
+auth.post("/api/login", (req, res) => {
+    console.log("req.body in login.json request: ", req.body);
+
+    const data = req.body;
+    const pw = data.password;
+
+    getUserForLogin(data.email)
+        .then(({ rows }) => {
+            compare(pw, rows[0].password)
+                .then((match) => {
+                    if (match) {
+                        req.session.userId = rows[0].id;
+                        console.log("console.log req.session: ", req.session);
+                        res.json({ success: true });
+                    } else {
+                        console.log("Error in Match");
+                        res.json({ success: false });
+                    }
+                })
+                .catch((err) => {
+                    console.log("password error", err);
+                    res.json({ success: false });
+                });
+        })
+        .catch((err) => {
+            console.log("error finding user: ", err);
+            res.json({ success: false });
+        });
+});
+
+auth.get("/logout", (req, res) => {
+    req.session = null;
+    res.redirect("/");
+});
+
+/*************************** EXPORT ***************************/
+
+module.exports = auth;

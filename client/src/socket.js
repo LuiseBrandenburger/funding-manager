@@ -1,8 +1,8 @@
 import { io } from "socket.io-client";
 
-import // wallMessagesReceived,
-// wallMessageReceived,
-"./redux/wall/slice.js";
+// import // wallMessagesReceived,
+// // wallMessageReceived,
+// "./redux/wall/slice.js";
 
 export let socket;
 
