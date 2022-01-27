@@ -34,8 +34,6 @@ export default function AddNewProject() {
             });
     };
 
-
-
     return (
         <div className="main-content-right-container">
             <div className="add-new-project-container">
@@ -112,7 +110,7 @@ export default function AddNewProject() {
                             type="number"
                             id="funding-sum"
                             name="approvedFunding"
-                            placeholder="10.000,00"
+                            placeholder="1000,00 or 1000.00"
                             min="0.01"
                             step="0.01"
                             onChange={handleChange}
