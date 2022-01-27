@@ -1,18 +1,13 @@
 import { Link } from "react-router-dom";
-// import { Component } from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useForm from "../../hooks/use-form";
 
 export default function Register() {
     const [userInput, handleChange] = useForm();
     const [error, setError] = useState(false);
 
-    console.log("user Input from handleChange", userInput);
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("please handle submit");
-
         fetch("/api/register", {
             method: "POST",
             headers: {

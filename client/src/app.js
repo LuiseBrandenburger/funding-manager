@@ -1,25 +1,54 @@
-
-
+import { BrowserRouter, Route, Link } from "react-router-dom";
+import Projects from "./components/project-components/projects";
+import Dashboard from "./components/dashboard-components/dashboard";
 
 export default function App() {
     return (
-        <div>
-            <h1>Hello I am in App</h1>
+        <div className="main-container">
+            <BrowserRouter>
+                <div className="main-row-left navigation-left">
+                    <div className="navbar-left">
+                        <div className="avatar logo">
+                            <img src="/blur-background.svg" alt="" />
+                        </div>
 
-            {/* <img id="app-logo-landing-page" src="/logo.svg" /> */}
-            {/* <BrowserRouter>
-                <div className="welcome-box">
-                    <Route exact path="/">
-                        <Registration />
-                    </Route>
-                    <Route path="/reset">
-                        <Reset />
-                    </Route>
-                    <Route path="/login">
-                        <Login />
-                    </Route>
+                        <div className="navbar-left-container">
+                            <div className="avatar">
+                                <img src="/logout.svg" alt="" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </BrowserRouter> */}
+
+                {/* MAIN CONTENT RIGHT SIDE */}
+
+                <div className="main-row-right">
+                    <div className="navigation-top">
+                        <nav className="navbar-top">
+                            <ul>
+                                <Link to="/dashboard">
+                                    <li>Dashboard</li>
+                                </Link>
+                                <Link to="/projects">
+                                    <li>Projects</li>
+                                </Link>
+                            </ul>
+                            <div className="avatar">
+                                <img src="/default-profile.gif" alt="" />
+                            </div>
+                        </nav>
+                    </div>
+
+                    <div className="main-content-container">
+                        <Route path="/dashboard">
+                            <Dashboard />
+                        </Route>
+                        <Route path="/projects">
+                            <Projects />
+                        </Route>
+                    </div>
+                </div>
+            </BrowserRouter>
         </div>
     );
 }
