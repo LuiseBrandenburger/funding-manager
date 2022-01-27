@@ -1,7 +1,7 @@
-// import Registration from "./components/registration-components/registration";
-// import Reset from "./components/auth-components/reset";
-// import { BrowserRouter, Route } from "react-router-dom";
-// import Login from "./components/auth-components/login";
+import Register from "./components/auth-components/register";
+import Reset from "./components/auth-components/reset-pw";
+import { BrowserRouter, Route } from "react-router-dom";
+import Login from "./components/auth-components/login";
 // import MyChart from "./myChart";
 
 // import { io } from "socket.io-client";
@@ -12,23 +12,20 @@
 
 export default function Welcome() {
     return (
-        <div>
+        <div className="welcome-container">
             <h1>Go Fund Yourself - hello from Welcome</h1>
-
-            {/* <img id="app-logo-landing-page" src="/logo.svg" /> */}
-            {/* <BrowserRouter>
+            {/* <img className="bg-img-modal" src="/blur-background.svg" alt="" /> */}
+ 
+            <BrowserRouter>
                 <div className="welcome-box">
                     <Route exact path="/">
-                        <Registration />
-                    </Route>
-                    <Route path="/reset">
-                        <Reset />
+                        <Register />
                     </Route>
                     <Route path="/login">
                         <Login />
                     </Route>
                 </div>
-            </BrowserRouter> */}
+            </BrowserRouter>
         </div>
     );
 }

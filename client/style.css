@@ -133,6 +133,38 @@ h4 {
     margin-top: 10px;
 }
 
+/******************************************* WELCOME ******************************************/
+
+.welcome-container {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100vw;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.welcome-box {
+    border-radius: 3px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--focus-bg-color);
+    background-blend-mode: screen;
+    width: 50vw;
+    height: 60vh;
+    padding: 40px;
+}
+
+.register-container {
+    display: flex;
+    flex-direction: column;
+}
+
 /******************* BUTTONS *******************/
 
 .focus-btn {
@@ -226,7 +258,6 @@ h4 {
     width: 100%;
     height: 100vh;
 }
-
 
 /******************************************* NAVBARS ******************************************/
 
@@ -596,14 +627,12 @@ h4 {
     width: 100%;
 }
 
-
 /******************************************* MODAL ******************************************/
 
 .bg-img-modal {
     width: 900px;
     height: 900px;
 }
-
 
 .modal-container {
     position: fixed;
@@ -642,7 +671,6 @@ h4 {
     top: 5px;
     background: transparent;
 }
-
 
 /******************* OTHERS *******************/
 
