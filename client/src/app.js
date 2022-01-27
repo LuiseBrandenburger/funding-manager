@@ -13,9 +13,11 @@ export default function App() {
                         </div>
 
                         <div className="navbar-left-container">
-                            <div className="avatar">
-                                <img src="/logout.svg" alt="" />
-                            </div>
+                            <a href="/logout">
+                                <div className="avatar">
+                                    <img src="/logout.svg" alt="" />
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
