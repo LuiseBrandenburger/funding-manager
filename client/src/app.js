@@ -40,6 +40,9 @@ export default function App() {
                     </div>
 
                     <div className="main-content-container">
+                        <Route exact path="/">
+                            <Dashboard />
+                        </Route>
                         <Route path="/dashboard">
                             <Dashboard />
                         </Route>

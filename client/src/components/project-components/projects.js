@@ -85,6 +85,10 @@ export default function Projects() {
                 {/*PROJECTS MAIN CONTENT RIGHT */}
 
                 <div className="main-content-right">
+                    <Route exact path="/projects">
+                        <ShowProjectOverview
+                        />
+                    </Route>
                     <Route path="/edit-project">
                         <EditProject />
                     </Route>
