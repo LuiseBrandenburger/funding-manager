@@ -24,13 +24,13 @@ module.exports.getUserForLogin = (email) => {
     return db.query(q, params);
 };
 
-module.exports.registerProject = (name, project_number, artist_name, project_start, project_end , project_description, program_name, manager, approved_funding, approved) => {
+module.exports.registerProject = (name, project_number, artist_name, project_start, project_end , project_description, program_name, manager, approved_funding, approved, owner_id) => {
     const q = `INSERT INTO projects (name, project_number, 
         artist_name, project_start, project_end, 
         project_description, program_name, manager, 
-        approved_funding, approved)
+        approved_funding, approved, owner_id)
 
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
     RETURNING id`;
 
     const params = [
@@ -44,6 +44,7 @@ module.exports.registerProject = (name, project_number, artist_name, project_sta
         manager,
         approved_funding,
         approved,
+        owner_id
     ];
     return db.query(q, params);
 };
