@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Link } from "react-router-dom";
 import Projects from "./components/project-components/projects";
 import Dashboard from "./components/dashboard-components/dashboard";
 
-export default function App() {
+export default function App({userId}) {
     return (
         <div className="main-container">
             <BrowserRouter>
@@ -41,13 +41,13 @@ export default function App() {
 
                     <div className="main-content-container">
                         <Route exact path="/">
-                            <Dashboard />
+                            <Dashboard userId={userId} />
                         </Route>
                         <Route path="/dashboard">
-                            <Dashboard />
+                            <Dashboard userId={userId} />
                         </Route>
                         <Route path="/projects">
-                            <Projects />
+                            <Projects userId={userId} />
                         </Route>
                     </div>
                 </div>

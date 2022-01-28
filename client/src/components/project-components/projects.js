@@ -1,11 +1,28 @@
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import ShowProjectOverview from "./show-project-overview";
+import { useState, useEffect } from "react";
+
 import EditPlan from "./edit-plan";
 import EditProject from "./edit-project";
 import AddNewProject from "./add-new-project";
 
+export default function Projects({ userId }) {
+    useEffect(() => {
+        console.log("UserId in Projects:", userId);
+        // get all corresponding Projects to the userId
 
-export default function Projects() {
+        fetch(`/all-projects`)
+            .then((data) => data.json())
+            .then(({ data }) => {
+                // console.log("data in GET Route friends-and-wannabees: ", data);
+                //    dispatch(receiveFriendsAndWannabees(data));
+            })
+            .catch((err) => {
+                //    location.replace("/");
+                console.log("error to get all Projects: ", err);
+            });
+    }, []);
+
     return (
         <div className="main-content-container">
             {/* PROJECTS MAIN CONTENT LEFT */}
@@ -86,17 +103,16 @@ export default function Projects() {
 
                 <div className="main-content-right">
                     <Route exact path="/projects">
-                        <ShowProjectOverview
-                        />
+                        <ShowProjectOverview userId={userId} />
                     </Route>
                     <Route path="/edit-project">
-                        <EditProject />
+                        <EditProject userId={userId} />
                     </Route>
                     <Route path="/edit-plan">
-                        <EditPlan />
+                        <EditPlan userId={userId} />
                     </Route>
                     <Route path="/add-project">
-                        <AddNewProject />
+                        <AddNewProject userId={userId} />
                     </Route>
                     {/* <Route path="/">
                         <ShowProjectOverview />

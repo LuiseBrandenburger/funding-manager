@@ -16,20 +16,20 @@ export default function AddNewProject() {
             body: JSON.stringify(userInput),
         })
             .then((data) => {
-                console.log("Data from handle Submit: ", data);
                 return data.json();
             })
             .then((data) => {
-                console.log("response data from /register.json", data);
+                console.log("response data from /api/projects", data);
 
                 if (data.success) {
-                    location.replace("/projects");
+                    // location.replace("/projects");
+                    
                 } else {
                     setError(true);
                 }
             })
             .catch((err) => {
-                console.log("error in fetch register.json", err);
+                console.log("error in fetch /api/projects", err);
                 setError(true);
             });
     };

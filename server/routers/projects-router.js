@@ -16,14 +16,25 @@ console.log("Hello from Projects");
 //     });
 // });
 
+projects.get("/all-projects", function (req, res) {
+
+
+
+    
+});
+
+
 projects.post("/api/projects", (req, res) => {
     console.log("req.body in registration.json request: ", req.body);
 
     const data = req.body;
 
-    // const mailError = validateEmail(data.email);
-    // console.log("Mail Error is: ", mailError);
-    // (name, project_number, artist_name, project_start, project_end , project_description, program_name, manager, approved_funding, approved)
+    if (!data.approvedFunding) {
+        data.approvedFunding = 0;
+    }
+    if (!data.approved) {
+        data.approved = false;
+    }
 
     registerProject(
         data.projectName,
@@ -39,8 +50,6 @@ projects.post("/api/projects", (req, res) => {
         req.session.userId
     )
         .then(({ rows }) => {
-            // req.session.userId = rows[0].id;
-            // console.log("console.log req.session: ", req.session);
             console.log(rows);
             res.json({ success: true });
         })
