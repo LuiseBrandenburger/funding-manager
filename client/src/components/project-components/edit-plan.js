@@ -53,8 +53,6 @@ export default function EditPlan() {
 
     const handleSubmitOutgoings = (e) => {
         e.preventDefault();
-
-        console.log("userInput Outgoings is:", userInputOutgoings);
         fetch("/api/edit-outgoings", {
             method: "POST",
             headers: {
@@ -63,13 +61,11 @@ export default function EditPlan() {
             body: JSON.stringify(userInputOutgoings),
         })
             .then((data) => {
-                // console.log("Data from handle Submit: ", data);
                 return data.json();
             })
             .then((data) => {
-                console.log("response data from /edit-outgoings", data);
-
                 if (data.success) {
+                    // TODO: SOMETHING WHEN SUCCESS
                     // location.replace("/");
                 } else {
                     setError(true);
@@ -82,10 +78,31 @@ export default function EditPlan() {
     };
 
     const handleSubmitIncome = (e) => {
-        e.preventDefault();
 
-        console.log("handle Submit in Outgoings");
-        console.log("userInput Incoming is:", userInputIncome);
+        e.preventDefault();
+        fetch("/api/edit-incomings", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userInputIncome),
+        })
+            .then((data) => {
+                return data.json();
+            })
+            .then((data) => {
+                if (data.success) {
+                    // TODO: SOMETHING WHEN SUCCESS
+                    // location.replace("/");
+                    console.log("this worked");
+                } else {
+                    setError(true);
+                }
+            })
+            .catch((err) => {
+                console.log("error in fetch /incomings", err);
+                setError(true);
+            });
 
 
     };
@@ -258,11 +275,11 @@ export default function EditPlan() {
                     <form action="">
                         <div className="edit-plan-form-top">
                             <div className="group-container">
-                                <label htmlFor="income-category">
+                                <label htmlFor="incomeCategory">
                                     Select Category
                                 </label>
                                 <select
-                                    name="income-category"
+                                    name="incomeCategory"
                                     id="selection-group"
                                     onChange={handleIncomeChange}
                                 >
@@ -274,24 +291,22 @@ export default function EditPlan() {
                             </div>
 
                             <div>
-                                <label htmlFor="income-position">
-                                    Position
-                                </label>
+                                <label htmlFor="incomePosition">Position</label>
                                 <input
                                     type="text"
-                                    id="income-position"
-                                    name="income-position"
+                                    id="incomePosition"
+                                    name="incomePosition"
                                     onChange={handleIncomeChange}
                                     placeholder="Describe Position"
                                 />
                             </div>
 
                             <div>
-                                <label htmlFor="income-amount">Amount</label>
+                                <label htmlFor="incomeAmount">Amount</label>
                                 <input
                                     type="number"
-                                    id="income-amount"
-                                    name="income-amount"
+                                    id="incomeAmount"
+                                    name="incomeAmount"
                                     onChange={handleIncomeChange}
                                     placeholder="1000,00"
                                     min="0.01"
@@ -300,11 +315,11 @@ export default function EditPlan() {
                             </div>
 
                             <div>
-                                <label htmlFor="income-paid">Received?</label>
+                                <label htmlFor="isIncomePaid">Received?</label>
                                 <input
                                     type="checkbox"
-                                    id="income-paid"
-                                    name="income-paid"
+                                    id="isIncomePaid"
+                                    name="isIncomePaid"
                                     onChange={handleIncomeChange}
                                 />
                             </div>
@@ -312,25 +327,25 @@ export default function EditPlan() {
 
                         <div className="edit-plan-form-bottom">
                             <div>
-                                <label htmlFor="income-paid-date">
+                                <label htmlFor="incomePaidDate">
                                     Date of Payment
                                 </label>
                                 <input
                                     type="date"
-                                    id="income-paid-date"
-                                    name="income-paid-date"
+                                    id="incomePaidDate"
+                                    name="incomePaidDate"
                                     onChange={handleIncomeChange}
                                 />
                             </div>
 
                             <div>
-                                <label htmlFor="income-received">
+                                <label htmlFor="incomeReceived">
                                     Received Amount
                                 </label>
                                 <input
                                     type="number"
-                                    id="income-received"
-                                    name="income-received"
+                                    id="incomeReceived"
+                                    name="incomeReceived"
                                     onChange={handleIncomeChange}
                                     placeholder="10.000,00"
                                     min="0.01"
@@ -339,13 +354,11 @@ export default function EditPlan() {
                             </div>
 
                             <div>
-                                <label htmlFor="income-description">
-                                    Notes
-                                </label>
+                                <label htmlFor="incomeNotes">Notes</label>
                                 <input
                                     type="text"
-                                    id="income-description"
-                                    name="income-description"
+                                    id="incomeNotes"
+                                    name="incomeNotes"
                                     onChange={handleIncomeChange}
                                     placeholder="Please enter Notes"
                                 />
@@ -354,14 +367,14 @@ export default function EditPlan() {
                             <div>
                                 <label
                                     className="file-label"
-                                    htmlFor="income-file"
+                                    htmlFor="incomeFile"
                                 >
                                     <img src="/upload-btn.svg" alt="" />
                                 </label>
                                 <input
                                     type="file"
-                                    id="income-file"
-                                    name="income-file"
+                                    id="incomeFile"
+                                    name="incomeFile"
                                     onChange={handleIncomeChange}
                                     title="upload file here"
                                 />
@@ -369,10 +382,6 @@ export default function EditPlan() {
                         </div>
 
                         <div className="single-position-costs">
-                            <span>
-                                TOTAL:
-                                <span>0,00 €</span>
-                            </span>
                             <button
                                 className="add-btn income"
                                 onClick={handleSubmitIncome}

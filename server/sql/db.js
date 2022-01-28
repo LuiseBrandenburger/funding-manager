@@ -24,7 +24,19 @@ module.exports.getUserForLogin = (email) => {
     return db.query(q, params);
 };
 
-module.exports.registerProject = (name, project_number, artist_name, project_start, project_end , project_description, program_name, manager, approved_funding, approved, owner_id) => {
+module.exports.registerProject = (
+    name,
+    project_number,
+    artist_name,
+    project_start,
+    project_end,
+    project_description,
+    program_name,
+    manager,
+    approved_funding,
+    approved,
+    owner_id
+) => {
     const q = `INSERT INTO projects (name, project_number, 
         artist_name, project_start, project_end, 
         project_description, program_name, manager, 
@@ -44,13 +56,13 @@ module.exports.registerProject = (name, project_number, artist_name, project_sta
         manager,
         approved_funding,
         approved,
-        owner_id
+        owner_id,
     ];
     return db.query(q, params);
 };
 
-
 module.exports.addOutgoing = (
+    projectId,
     category,
     option,
     position,
@@ -59,15 +71,18 @@ module.exports.addOutgoing = (
     file,
     notes,
     finalSum,
+    total,
     isPaid,
     paidDate,
+    userId
 ) => {
-    const q = `INSERT INTO outgoings (category, option, position, price, quantity, file, notes, fc_total, total, paiddate, paid)
+    const q = `INSERT INTO outgoings (project_id, category, option, position, price, quantity, file, notes, fc_total, total, paid, paiddate, sender_id)
 
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
     RETURNING id`;
 
     const params = [
+        projectId,
         category,
         option,
         position,
@@ -76,11 +91,46 @@ module.exports.addOutgoing = (
         file,
         notes,
         finalSum,
+        total,
         isPaid,
         paidDate,
+        userId,
     ];
     return db.query(q, params);
 };
+
+module.exports.addIcomings = (
+    projectId,
+    category,
+    position,
+    incomeAmount,
+    file,
+    notes,
+    finalSum,
+    isPaid,
+    paidDate,
+    userId
+) => {
+    const q = `INSERT INTO incomings (project_id, category, position, price, file, notes, total, paid, paiddate, sender_id)
+
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    RETURNING id`;
+
+    const params = [
+        projectId,
+        category,
+        position,
+        incomeAmount,
+        file,
+        notes,
+        finalSum,
+        isPaid,
+        paidDate,
+        userId,
+    ];
+    return db.query(q, params);
+};
+
 
 
 module.exports.getProjectsById = (owner_id) => {
@@ -88,7 +138,6 @@ module.exports.getProjectsById = (owner_id) => {
     const params = [owner_id];
     return db.query(q, params);
 };
-
 
 /**
  
