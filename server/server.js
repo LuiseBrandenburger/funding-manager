@@ -20,6 +20,8 @@ const io = SocketIOServer(server, {
 
 const auth = require("./routers/auth-router");
 const projects = require("./routers/projects-router");
+const plan = require("./routers/edit-plan-router");
+
 
 
 /*************************** SECRET ***************************/
@@ -66,6 +68,8 @@ app.use(express.json());
 
 app.use(auth);
 app.use(projects);
+app.use(plan);
+
 
 
 // ************************* SOCKET ******************************

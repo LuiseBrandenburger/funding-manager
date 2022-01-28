@@ -56,9 +56,12 @@
 -- approved BOOLEAN DEFAULT false);
 
 
+DROP TABLE IF EXISTS outgoings;
+DROP TABLE IF EXISTS incomings;
 DROP TABLE IF EXISTS positions;
 
-CREATE TABLE positions( 
+
+CREATE TABLE outgoings( 
 id SERIAL PRIMARY KEY, 
 project_id INT REFERENCES projects(id) NOT NULL,
 category VARCHAR(255) NOT NULL,
@@ -74,7 +77,19 @@ paiddate DATE,
 paid BOOLEAN DEFAULT false);
 
 
-
+CREATE TABLE incomings( 
+id SERIAL PRIMARY KEY, 
+project_id INT REFERENCES projects(id) NOT NULL,
+category VARCHAR(255) NOT NULL,
+position VARCHAR(255) NOT NULL,
+price DECIMAL(8,2) NOT NULL,
+quantity DECIMAL(8) DEFAULT 1,
+file VARCHAR(255),
+notes VARCHAR(255),
+fc_total DECIMAL(8,2) DEFAULT 0,
+total DECIMAL(8,2) DEFAULT 0,
+paiddate DATE,
+paid BOOLEAN DEFAULT false);
 
 
 -- DROP TABLE IF EXISTS friendships;
@@ -137,7 +152,10 @@ paid BOOLEAN DEFAULT false);
 
   -- SELECT * FROM users;
   -- SELECT * FROM projects;
-  SELECT * FROM positions;
+  -- SELECT * FROM positions;
+    SELECT * FROM outgoings;
+    SELECT * FROM incomings;
+
 
   -- SELECT * FROM reset_code;
   -- SELECT * FROM friendships;

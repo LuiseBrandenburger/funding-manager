@@ -50,6 +50,39 @@ module.exports.registerProject = (name, project_number, artist_name, project_sta
 };
 
 
+module.exports.addOutgoing = (
+    category,
+    option,
+    position,
+    price,
+    quantity,
+    file,
+    notes,
+    finalSum,
+    isPaid,
+    paidDate,
+) => {
+    const q = `INSERT INTO outgoings (category, option, position, price, quantity, file, notes, fc_total, total, paiddate, paid)
+
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+    RETURNING id`;
+
+    const params = [
+        category,
+        option,
+        position,
+        price,
+        quantity,
+        file,
+        notes,
+        finalSum,
+        isPaid,
+        paidDate,
+    ];
+    return db.query(q, params);
+};
+
+
 module.exports.getProjectsById = (owner_id) => {
     const q = `SELECT name, project_number, artist_name, id, approved_funding, sum_spend AS sumSpend, sum_left, sum_accounted, funding_received, sum_total FROM projects WHERE owner_id = ($1)`;
     const params = [owner_id];
