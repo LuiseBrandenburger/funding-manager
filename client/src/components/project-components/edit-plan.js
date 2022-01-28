@@ -13,13 +13,10 @@ export default function EditPlan() {
                     <form action="">
                         <div className="edit-plan-form-top">
                             <div className="group-container">
-                                <label htmlFor="selection-group">
+                                <label htmlFor="category">
                                     Select Item Category
                                 </label>
-                                <select
-                                    name="selection-group"
-                                    id="selection-group"
-                                >
+                                <select name="category" id="category">
                                     <option value="hide">-- Category --</option>
                                     <option value="Production">
                                         Production
@@ -29,14 +26,9 @@ export default function EditPlan() {
                                 </select>
                             </div>
 
-                            <div className="option-container">
-                                <label htmlFor="selection-option">
-                                    Select Option
-                                </label>
-                                <select
-                                    name="selection-option"
-                                    id="selection-option"
-                                >
+                            <div className="option">
+                                <label htmlFor="option">Select Option</label>
+                                <select name="option" id="option">
                                     <option value="hide">
                                         -- Expense Category --
                                     </option>
@@ -44,53 +36,53 @@ export default function EditPlan() {
                             </div>
 
                             <div>
-                                <label htmlFor="item-name">Item Name</label>
+                                <label htmlFor="position">Item Name</label>
                                 <input
                                     type="text"
-                                    id="item-name"
+                                    id="position"
                                     placeholder="Describe Position"
                                 />
                             </div>
 
                             <div>
-                                <label htmlFor="item-price">Item Price</label>
+                                <label htmlFor="price">Item Price</label>
                                 <input
                                     type="number"
-                                    id="item-price"
-                                    placeholder="10.000,00"
+                                    id="price"
+                                    placeholder="1000,00"
                                     min="0.01"
                                     step="0.01"
                                 />
                             </div>
 
                             <div>
-                                <label htmlFor="item-amount">Quantity</label>
+                                <label htmlFor="quantity">Quantity</label>
                                 <input
                                     type="number"
-                                    id="item-amount"
+                                    id="quantity"
                                     placeholder="1"
                                     step="1"
                                 />
                             </div>
                             <div>
-                                <label htmlFor="item-paid">Paid?</label>
-                                <input type="checkbox" id="item-paid" />
+                                <label htmlFor="paid">Paid?</label>
+                                <input type="checkbox" id="paid" />
                             </div>
                         </div>
 
                         <div className="edit-plan-form-bottom">
                             <div>
-                                <label htmlFor="item-paid-date">
+                                <label htmlFor="paiddate">
                                     Date of Payment
                                 </label>
-                                <input type="date" id="item-paid-date" />
+                                <input type="date" id="paiddate" />
                             </div>
 
                             <div>
-                                <label htmlFor="final-price">Paid Amount</label>
+                                <label htmlFor="finalsum">Paid Amount</label>
                                 <input
                                     type="number"
-                                    id="final-price"
+                                    id="finalsum"
                                     placeholder="10.000,00"
                                     min="0.01"
                                     step="0.01"
@@ -98,12 +90,12 @@ export default function EditPlan() {
                             </div>
 
                             <div>
-                                <label htmlFor="final-position-description">
+                                <label htmlFor="notes">
                                     Notes on Payment
                                 </label>
                                 <input
                                     type="text"
-                                    id="final-position-description"
+                                    id="notes"
                                     placeholder="Please enter Notes"
                                 />
                             </div>
@@ -111,13 +103,13 @@ export default function EditPlan() {
                             <div>
                                 <label
                                     className="file-label"
-                                    htmlFor="item-file"
+                                    htmlFor="file"
                                 >
                                     <img src="/upload-btn.svg" alt="" />
                                 </label>
                                 <input
                                     type="file"
-                                    id="item-file"
+                                    id="file"
                                     title="upload file here"
                                 />
                             </div>

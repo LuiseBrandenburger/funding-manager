@@ -13,7 +13,7 @@ export default function Projects({ userId }) {
     const dispatch = useDispatch();
     const [userInput, handleChange] = useForm();
     const [currentProjectId, setCurrentProjectId] = useState(0);
-    // const [currentProject, setCurrentProject] = useState(0);
+    const [currentProject, setCurrentProject] = useState(0);
 
     const projects = useSelector((state) => state.projects);
 
@@ -27,7 +27,9 @@ export default function Projects({ userId }) {
                     data[0].id
                 );
                 setCurrentProjectId(data[0].id);
+                // setCurrentProject(data[0]);
                 // set the current Project to true;
+                
 
                 dispatch(projectsReceived(data));
             })
@@ -36,6 +38,8 @@ export default function Projects({ userId }) {
                 console.log("error to get all Projects: ", err);
             });
     }, []);
+
+// console.log("currentProject after get", currentProject);
 
     let projectsList =
         projects.length > 0 &&
@@ -47,25 +51,24 @@ export default function Projects({ userId }) {
             );
         }, this);
 
-    const currentProject = useSelector(
-        (state) =>
-            state.projects &&
-            state.projects.filter((project) => {
-                // console.log("project ID in State: ", project.id);
-                return project.id === currentProjectId;
-            })
-    );
-
     // console.log("current Project is: ", currentProject[0]);
 
     useEffect(() => {
         if (userInput) {
             let inputId = parseInt(userInput.selection);
             setCurrentProjectId(inputId);
-            console.log("current Project after change is: ", currentProject[0]);
+            console.log("current Project after change is: ", currentProject);
         }
     }, [userInput]);
 
+    // const currentProject = useSelector(
+    //     (state) =>
+    //         state.projects &&
+    //         state.projects.filter((project) => {
+    //             // console.log("project ID in State: ", project.id);
+    //             return project.id === currentProjectId;
+    //         })
+    // );
 
     return (
         <div className="main-content-container">
