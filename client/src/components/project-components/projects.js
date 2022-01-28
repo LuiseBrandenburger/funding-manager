@@ -92,30 +92,46 @@ export default function Projects({ userId }) {
                             </div>
                             <br />
                             <h4>Recent Projekt</h4>
-                            {currentProjectData && currentProjectData.length?(
+                            {currentProjectData && currentProjectData.length ? (
                                 <ul>
                                     <li>
-                                        <h4>{currentProjectData[0].id}</h4>
+                                        <h4>{currentProjectData[0].sumspend}</h4>
                                         <h5>Money Spend</h5>
                                     </li>
                                     <li>
-                                        {/* <h4>{currentProject[0].approved_funding}</h4> */}
+                                        <h4>
+                                            {
+                                                currentProjectData[0]
+                                                    .approved_funding
+                                            }
+                                        </h4>
                                         <h5>Funding Sum</h5>
                                     </li>
                                     <li>
-                                        <h4>10.000,00</h4>
+                                        <h4>
+                                            {currentProjectData[0].sum_left}
+                                        </h4>
                                         <h5>Left</h5>
                                     </li>
                                     <li>
-                                        <h4>0,00</h4>
+                                        <h4>
+                                            {currentProjectData[0].sumspend}
+                                        </h4>
                                         <h5>Accounted</h5>
                                     </li>
                                     <li>
-                                        <h4>0,00</h4>
+                                        <h4>
+                                            {
+                                                currentProjectData[0]
+                                                    .approved_funding
+                                            }
+                                        </h4>
                                         <h5>Funding received</h5>
                                     </li>
                                 </ul>
-                            ):""}
+                            ) : (
+                                ""
+                            )}
                             <Link to="/edit-project">
                                 <button className="submit-btn">
                                     Edit Project
