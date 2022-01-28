@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-// import { messagesReducer } from "./chat/slice.js";
+import { projectsReducer } from "./projects/slice";
 
 const rootReducer = combineReducers({
-    // friendsAndWannabees: friendsAndWannabeesReducer,
+    projects: projectsReducer,
     // messages: messagesReducer,
     // wallMessages: wallReducer,
 });

@@ -51,7 +51,7 @@ module.exports.registerProject = (name, project_number, artist_name, project_sta
 
 
 module.exports.getProjectsById = (owner_id) => {
-    const q = `SELECT name, project_number, artist_name, id, approved_funding, sum_spend, sum_left, sum_accounted, funding_received, sum_total FROM projects WHERE owner_id = ($1)`;
+    const q = `SELECT name, project_number, artist_name, id, approved_funding, sum_spend AS sumSpend, sum_left, sum_accounted, funding_received, sum_total FROM projects WHERE owner_id = ($1)`;
     const params = [owner_id];
     return db.query(q, params);
 };
