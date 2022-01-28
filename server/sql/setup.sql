@@ -79,10 +79,8 @@
   -- SELECT * FROM users;
   -- SELECT * FROM projects;
   -- SELECT * FROM positions;
-    -- SELECT * FROM outgoings;
+    SELECT * FROM outgoings;
     SELECT * FROM incomings;
-
-
 
 
 

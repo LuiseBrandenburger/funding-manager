@@ -139,22 +139,5 @@ module.exports.getProjectsById = (owner_id) => {
     return db.query(q, params);
 };
 
-/**
- 
-SET sum_spend = 0,
-        SET sum_left = 0,
-        SET sum_accounted = 0,
-        SET funding_received = 0,
-        SET sum_fc_total = 0,
-        SET sum_fc_production = 0,
-        SET sum_fc_marketing = 0,
-        SET sum_fc_tour = 0,
-        SET sum_total = 0,
-        SET sum_production = 0,
-        SET sum_marketing = 0,
-        SET sum_tour = 0,
-        (name, project_number, 
-        artist_name, project_start, project_end, 
-        project_description, program_name, manager, 
-        approved_funding, approved, owner_id)
- */
+
+

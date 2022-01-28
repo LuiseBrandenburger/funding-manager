@@ -4,11 +4,11 @@ import { useState, useEffect, useRef } from "react";
 export default function EditPlan() {
     const [userInputOutgoings, setUserInputOutgoings] = useState({});
     const [userInputIncome, setUserInputIncome] = useState({});
-    const [sumTotalOutgoings, setSumTotalOutgoings] = useState(0);
-    // const [sumTotalIncome, setSumTotalOutgoings] = useState(0);
-    // const [categoryInput, setCategoryInput] = useState();
     const [error, setError] = useState(false);
     const categorySelectionRef = useRef();
+    // const [sumTotalOutgoings, setSumTotalOutgoings] = useState(0);
+    // const [sumTotalIncome, setSumTotalOutgoings] = useState(0);
+    // const [categoryInput, setCategoryInput] = useState();
 
 
     const handleChange = ({ target }) =>
@@ -23,14 +23,9 @@ export default function EditPlan() {
             [target.name]: target.value,
         });
 
-    // const handleCategoryChange = ({target}) => {
-    //     console.log(target)
-    //     setCategoryInput({
-    //         [target.name]: target.value,
-    //     });
-    // };
 
     // TODO: ADD diffrent categories to diffrent selections
+    
     useEffect(() => {
         // console.log("userInput Outgoings is:", userInputOutgoings.price);
         // console.log("userInput Outgoings is:", userInputOutgoings.quantity);
