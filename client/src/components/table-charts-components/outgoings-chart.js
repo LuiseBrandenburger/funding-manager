@@ -9,7 +9,7 @@ import { Bar } from "react-chartjs-2";
 
 export default function OutgoingsChart() {
     const { id } = useParams();
-    console.log("id in params: ", id);
+    // console.log("id in params: ", id);
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -17,11 +17,9 @@ export default function OutgoingsChart() {
         (state) => state.currentProjectId || {}
     );
     const outgoings = useSelector((state) => state.outgoings || {});
-
     const labelArr = useSelector((state) => state.outgoings.map((item)=> {
         return item.option;
     }) || {});
-
     const dataArr = useSelector(
         (state) =>
             state.outgoings.map((item) => {
@@ -29,8 +27,8 @@ export default function OutgoingsChart() {
             }) || {}
     );
 
-    console.log(labelArr);
-    console.log(dataArr);
+    // console.log(labelArr);
+    // console.log(dataArr);
 
 
     // *********************************** STATE FOR CHART *******************************
@@ -85,7 +83,7 @@ export default function OutgoingsChart() {
         setChartData({
             datasets: [
                 {
-                    data: [20, 10, 30],
+                    data: dataArr,
                     backgroundColor: ["red"],
                     barPercentage: 0.5,
                     barThickness: 10,
@@ -93,9 +91,11 @@ export default function OutgoingsChart() {
                     minBarLength: 2,
                 },
             ],
-            labels: ["a", "b", "c"],
+            labels: labelArr,
         });
-    }, []);
+    }, [outgoings]);
+
+
 
     return (
         <div>
