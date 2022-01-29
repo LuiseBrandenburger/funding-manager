@@ -26,10 +26,8 @@ export default function OutgoingsChart() {
                 return item.price;
             }) || {}
     );
-
     // console.log(labelArr);
     // console.log(dataArr);
-
 
     // *********************************** STATE FOR CHART *******************************
 
@@ -86,7 +84,7 @@ export default function OutgoingsChart() {
                     data: dataArr,
                     backgroundColor: ["red"],
                     barPercentage: 0.5,
-                    barThickness: 10,
+                    barThickness: 20,
                     maxBarThickness: 8,
                     minBarLength: 2,
                 },
@@ -96,12 +94,12 @@ export default function OutgoingsChart() {
     }, [outgoings]);
 
 
-
     return (
         <div>
             <h1>HelloI am in Chart</h1>
             <Bar
                 data={
+                    chartData,
                     chartData
                 }
                 width={100}

@@ -28,26 +28,6 @@ export default function ShowProjectOverview() {
                             <h2>Total:</h2>
                         </div>
                         <div className="project-plan-overview-right">
-                            <h2>Project Plan Spend</h2>
-                            <br />
-                            <h3>Money spend per Position</h3>
-                            <h3>Money spend per Marketing</h3>
-                            <h3>Money spend per Tour</h3>
-                            <h3>Money spend per Production</h3>
-                            <br />
-                            <h2>Total:</h2>
-                        </div>
-                        <div className="project-plan-overview-right">
-                            <h2>Project Plan Spend</h2>
-                            <br />
-                            <h3>Money spend per Position</h3>
-                            <h3>Money spend per Marketing</h3>
-                            <h3>Money spend per Tour</h3>
-                            <h3>Money spend per Production</h3>
-                            <br />
-                            <h2>Total:</h2>
-                        </div>
-                        <div className="project-plan-overview-right">
                             {/* TODO: FIXME: */}
                             {currentProjectId ? (
                                 <Link to={`/outgoings-table/${id}`}>
