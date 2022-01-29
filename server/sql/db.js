@@ -134,10 +134,27 @@ module.exports.addIcomings = (
 
 
 module.exports.getProjectsById = (owner_id) => {
-    const q = `SELECT name, project_number, artist_name, id, approved_funding, sum_spend AS sumSpend, sum_left, sum_accounted, funding_received, sum_total FROM projects WHERE owner_id = ($1)`;
+    const q = `SELECT name, project_number, artist_name, id, approved_funding, sum_spend AS sumSpend, sum_left, sum_accounted, funding_received, sum_total FROM projects WHERE owner_id = ($1)
+    ORDER by created_at DESC`;
     const params = [owner_id];
     return db.query(q, params);
 };
 
+module.exports.getOutgoingsByProjectId = (projectId) => {
+    const q = `SELECT * FROM outgoings WHERE project_id = ($1) 
+    ORDER by created_at DESC`;
 
+    const params = [projectId];
+    return db.query(q, params);
+};
 
+// SELECT email, password, id FROM users WHERE email = ($1)
+
+module.exports.getIncomingsByProjectId = (projectId) => {
+    const q = `SELECT * WHERE project_id = ($1)
+    FROM incomings
+    ORDER by created_at DESC`;
+
+    const params = [projectId];
+    return db.query(q, params);
+};

@@ -22,7 +22,7 @@ export default function AddNewProject() {
                 console.log("response data from /api/projects", data);
 
                 if (data.success) {
-                    // location.replace("/projects");
+                    location.replace("/projects");
                     
                 } else {
                     setError(true);

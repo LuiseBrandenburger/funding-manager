@@ -62,6 +62,7 @@ export default function EditPlan() {
                 if (data.success) {
                     // TODO: SOMETHING WHEN SUCCESS
                     // location.replace("/");
+                    console.log("this worked");
                 } else {
                     setError(true);
                 }
@@ -88,6 +89,7 @@ export default function EditPlan() {
             .then((data) => {
                 if (data.success) {
                     // TODO: SOMETHING WHEN SUCCESS
+                    // Show a succsess notification and remove the inputs
                     // location.replace("/");
                     console.log("this worked");
                 } else {

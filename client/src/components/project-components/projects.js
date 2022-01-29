@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import ShowProjectOverview from "./show-project-overview";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { projectsReceived } from "../../redux/projects/slice";
 import {
@@ -17,7 +17,6 @@ export default function Projects({ userId }) {
     const dispatch = useDispatch();
     const [userInput, handleChange] = useForm();
     // const [currentProject, setCurrentProject] = useState(0);
-
     const projects = useSelector((state) => state.projects || {});
 
     useEffect(() => {
@@ -42,7 +41,7 @@ export default function Projects({ userId }) {
     const currentProjectId = useSelector(
         (state) => state.currentProjectId || {}
     );
-    console.log("current Project ID aus state: ", currentProjectId);
+    // console.log("current Project ID aus state: ", currentProjectId);
 
     const currentProjectData = useSelector((state) => {
         if (state.projects) {
@@ -53,7 +52,7 @@ export default function Projects({ userId }) {
             return {};
         }
     });
-    console.log("currentProjectData", currentProjectData);
+    // console.log("currentProjectData", currentProjectData);
 
     let projectsList =
         projects.length > 0 &&
@@ -67,7 +66,7 @@ export default function Projects({ userId }) {
 
     useEffect(() => {
         if (userInput) {
-            console.log("user Input after change: ", userInput.selection);
+            // console.log("user Input after change: ", userInput.selection);
             let inputId = parseInt(userInput.selection);
             dispatch(updateCurrentProjectId(inputId));
         }
@@ -95,7 +94,9 @@ export default function Projects({ userId }) {
                             {currentProjectData && currentProjectData.length ? (
                                 <ul>
                                     <li>
-                                        <h4>{currentProjectData[0].sumspend}</h4>
+                                        <h4>
+                                            {currentProjectData[0].sumspend}
+                                        </h4>
                                         <h5>Money Spend</h5>
                                     </li>
                                     <li>
@@ -144,11 +145,11 @@ export default function Projects({ userId }) {
                                 </button>
                             </Link>
 
-                            {/* <Link to="/show-project"> */}
-                            <button className="submit-btn">
-                                Show Overview
-                            </button>
-                            {/* </Link> */}
+                            <Link to="/show-project">
+                                <button className="submit-btn">
+                                    Show Overview
+                                </button>
+                            </Link>
                         </div>
                         <div className="btns-left">
                             <Link to="/add-project">
@@ -163,7 +164,7 @@ export default function Projects({ userId }) {
                 {/*PROJECTS MAIN CONTENT RIGHT */}
 
                 <div className="main-content-right">
-                    <Route exact path="/projects">
+                    <Route exact path="/show-project">
                         <ShowProjectOverview userId={userId} />
                     </Route>
                     <Route path="/edit-project">
@@ -175,7 +176,7 @@ export default function Projects({ userId }) {
                     <Route path="/add-project">
                         <AddNewProject userId={userId} />
                     </Route>
-                    {/* <Route path="/">
+                    {/* <Route path="/projects">
                         <ShowProjectOverview />
                     </Route> */}
                 </div>
