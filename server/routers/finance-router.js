@@ -25,9 +25,10 @@ console.log("Hello from Projects");
 //     });
 // });
 
-finance.get("/all-outgoings", function (req, res) {
-    // console.log("params in request body outgoings: ", req.params);
-    let projectId = 1;
+finance.get("/all-outgoings/:id", function (req, res) {
+    console.log("params in request body outgoings: ", req.params.id);
+
+    let projectId = req.params.id;
     getOutgoingsByProjectId(projectId).then(({ rows }) => {
         console.log("rows after projects have been fetched: ", rows);
         res.json({
@@ -37,16 +38,16 @@ finance.get("/all-outgoings", function (req, res) {
 });
 
 
-finance.get("/all-incomings/:id", function (req, res) {
-    console.log("params in request body outgoings: ", req.params);
+// finance.get("/all-incomings/:id", function (req, res) {
+//     console.log("params in request body outgoings: ", req.params);
 
-    getIncomingsByProjectId(req.session.userId).then(({ rows }) => {
-        // console.log("rows after projects have been fetched: ", rows);
-        res.json({
-            data: rows,
-        });
-    });
-});
+//     getIncomingsByProjectId(req.session.userId).then(({ rows }) => {
+//         // console.log("rows after projects have been fetched: ", rows);
+//         res.json({
+//             data: rows,
+//         });
+//     });
+// });
 
 /*************************** EXPORT ***************************/
 

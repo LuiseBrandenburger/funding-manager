@@ -23,6 +23,7 @@ export default function Projects({ userId }) {
     const currentProjectId = useSelector(
         (state) => state.currentProjectId || {}
     );
+    let id = currentProjectId;
     const currentProjectData = useSelector((state) => {
         if (state.projects) {
             return state.projects.filter((project) => {
@@ -61,25 +62,6 @@ export default function Projects({ userId }) {
         }
     }, [userInput]);
 
-
-    // useEffect(() => {
-    //     console.log("project ID has changed");
-
-    //     fetch(`/project-sum-fc/${currentProjectId}`)
-    //         .then((data) => data.json())
-    //         .then(({ data }) => {
-    //             console.log(
-    //                 "data in GET Route /project-sum-fc/:id",
-    //                 data,
-    //             );
-    //         })
-    //         .catch((err) => {
-    //             //    location.replace("/");
-    //             console.log("error to get all Projects: ", err);
-    //         });
-    // }, [currentProjectId]);
-    
-    // console.log("currentProjectData", currentProjectData);
 
     let projectsList =
         projects.length > 0 &&
@@ -150,13 +132,13 @@ export default function Projects({ userId }) {
                                 </button>
                             </Link> */}
 
-                            <Link to="/projects/edit-plan">
+                            <Link to={`/projects/edit-plan/${id}`}>
                                 <button className="submit-btn">
                                     Edit Plan
                                 </button>
                             </Link>
 
-                            <Link to="/projects/show-project">
+                            <Link to={`/projects/show-project/${id}`}>
                                 <button className="submit-btn">
                                     Show Overview
                                 </button>
@@ -175,13 +157,13 @@ export default function Projects({ userId }) {
                 {/*PROJECTS MAIN CONTENT RIGHT */}
 
                 <div className="main-content-right">
-                    <Route exact path="/projects/show-project">
+                    <Route exact path="/projects/show-project/:id">
                         <ShowProjectOverview userId={userId} />
                     </Route>
                     <Route path="/projects/edit-project">
                         <EditProject userId={userId} />
                     </Route>
-                    <Route path="/projects/edit-plan">
+                    <Route path="/projects/edit-plan/:id">
                         <EditPlan userId={userId} />
                     </Route>
                     <Route path="/projects/add-project">

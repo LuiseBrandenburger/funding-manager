@@ -1,22 +1,24 @@
 import useForm from "../../hooks/use-form";
 import { useState, useEffect, useRef } from "react";
+import { useParams, useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProjectFCSumOutgoings } from "../../redux/projects/slice";
+import {OutgoingsTable} from "../table-charts-components/outgoings-table";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 
 
 export default function EditPlan() {
     const dispatch = useDispatch();
-    const [userInputOutgoings, setUserInputOutgoings] = useState({});
-    const [userInputIncome, setUserInputIncome] = useState({});
-    const [fileInputOutgoings, setFileInputOutgoings] = useState({});
-    const [file, setFile] = useState({});
+    const { id } = useParams();
+    console.log("id in params: ", id);
 
+    const [userInputOutgoings, setUserInputOutgoings] = useState({});
+    // const [fileInputOutgoings, setFileInputOutgoings] = useState({});
     const [error, setError] = useState(false);
     const categorySelectionRef = useRef();
 
 
     // *********************************** STATE *******************************
-
 
     const currentProjectId = useSelector(
         (state) => state.currentProjectId || {}
@@ -35,6 +37,7 @@ export default function EditPlan() {
         //         );
         //         dispatch(currentProjectIdReceived(data[0].id));
         //         dispatch(projectsReceived(data));
+        // dispatch(outgoingsReceived())
         //     })
         //     .catch((err) => {
         //         //    location.replace("/");
@@ -42,30 +45,22 @@ export default function EditPlan() {
         //     });
     }, []);
 
-
     // ******************************* HANDLE CHANGES *************************
   
-
     const handleChange = ({ target }) =>
         setUserInputOutgoings({
             ...userInputOutgoings,
             [target.name]: target.value,
         });
 
-    const handleIncomeChange = ({ target }) =>
-        setUserInputIncome({
-            ...userInputIncome,
-            [target.name]: target.value,
-        });
-
-    const handleFileChangeOutgoings = ({ target }) =>
-        setFileInputOutgoings({
-            ...userInputOutgoings,
-            [target.name]: target.files[0],
-        });
+    // const handleFileChangeOutgoings = ({ target }) =>
+    //     setFileInputOutgoings({
+    //         ...userInputOutgoings,
+    //         [target.name]: target.files[0],
+    //     });
 
 
-// **********************TODO: SET OPTION VALUES **********************
+    // **********************TODO: SET OPTION VALUES **********************
 
     // let marketingArr = ["2.01.	Promotion Print",
     //     "2.02.	Promotion Radio",
@@ -114,10 +109,6 @@ export default function EditPlan() {
     const handleSubmitOutgoings = (e) => {
         e.preventDefault();
         console.log("project id in handle submit: ", currentProjectId);
-        // const fd = new FormData();
-
-        // TODO: fix file input
-        // fd.append("file", this.state.file);
 
         fetch("/api/edit-outgoings", {
             method: "POST",
@@ -135,6 +126,7 @@ export default function EditPlan() {
                     console.log("data when posted:", data);
                     console.log("this worked");
                     dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
+                    // dispatch(outgoingsReceived())
                     // location.reload();
                 } else {
                     setError(true);
@@ -146,35 +138,39 @@ export default function EditPlan() {
             });
     };
 
-    // const handleSubmitIncome = (e) => {
-    //     e.preventDefault();
-    //     fetch("/api/edit-incomings", {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify({userInputIncome, currentProjectId}),
-    //     })
-    //         .then((data) => {
-    //             return data.json();
-    //         })
-    //         .then((data) => {
-    //             if (data.success) {
-    //                 // TODO: SOMETHING WHEN SUCCESS
-    //                 // Show a succsess notification and remove the inputs
-    //                 // location.replace("/");
-    //                 console.log("this worked");
-    //             } else {
-    //                 setError(true);
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             console.log("error in fetch /incomings", err);
-    //             setError(true);
-    //         });
-    // };
 
 
+
+    const handleUpdateOutgoings = (e) => {
+        e.preventDefault();
+
+        fetch("/api/update-outgoings", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({userInputOutgoings, outgoingId}),
+        })
+            .then((data) => {
+                return data.json();
+            })
+            .then((data) => {
+                if (data.success) {
+                    // TODO: SOMETHING WHEN SUCCESS
+                    console.log("data when posted:", data);
+                    console.log("this worked");
+                    dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
+                    // dispatch(outgoingsReceived())
+                    // location.reload();
+                } else {
+                    setError(true);
+                }
+            })
+            .catch((err) => {
+                console.log("error in fetch /edit-outgoings", err);
+                setError(true);
+            });
+    };
 
     // ********************* RENDER***********************
     
@@ -334,6 +330,12 @@ export default function EditPlan() {
                                 <span id="total-sum-outgoings">0,00 €</span>
                             </span> */}
                             <button
+                                className="submit-btn-two"
+                                onClick={handleUpdateOutgoings}
+                            >
+                                update
+                            </button>
+                            <button
                                 className="add-btn"
                                 onClick={handleSubmitOutgoings}
                             >
@@ -344,137 +346,12 @@ export default function EditPlan() {
                 </div>
 
                 <div className="project-plan-income">
-
-
-
-
-
-
-
-{/* FIXME: OLD INCOME FORM BELOW */}
-
-                    {/* <h2>INCOME</h2>
-
-                    <form action="">
-                        <div className="edit-plan-form-top">
-                            <div className="group-container">
-                                <label htmlFor="incomeCategory">
-                                    Select Category
-                                </label>
-                                <select
-                                    name="incomeCategory"
-                                    id="selection-group"
-                                    onChange={handleIncomeChange}
-                                >
-                                    <option value="hide">-- Category --</option>
-                                    <option value="Mittelanforderung">
-                                        Mittelanforderung
-                                    </option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label htmlFor="incomePosition">Position</label>
-                                <input
-                                    type="text"
-                                    id="incomePosition"
-                                    name="incomePosition"
-                                    onChange={handleIncomeChange}
-                                    placeholder="Describe Position"
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="incomeAmount">Amount</label>
-                                <input
-                                    type="number"
-                                    id="incomeAmount"
-                                    name="incomeAmount"
-                                    onChange={handleIncomeChange}
-                                    placeholder="1000,00"
-                                    min="0.01"
-                                    step="0.01"
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="isIncomePaid">Received?</label>
-                                <input
-                                    type="checkbox"
-                                    id="isIncomePaid"
-                                    name="isIncomePaid"
-                                    onChange={handleIncomeChange}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="edit-plan-form-bottom">
-                            <div>
-                                <label htmlFor="incomePaidDate">
-                                    Date of Payment
-                                </label>
-                                <input
-                                    type="date"
-                                    id="incomePaidDate"
-                                    name="incomePaidDate"
-                                    onChange={handleIncomeChange}
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="incomeReceived">
-                                    Received Amount
-                                </label>
-                                <input
-                                    type="number"
-                                    id="incomeReceived"
-                                    name="incomeReceived"
-                                    onChange={handleIncomeChange}
-                                    placeholder="10.000,00"
-                                    min="0.01"
-                                    step="0.01"
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="incomeNotes">Notes</label>
-                                <input
-                                    type="text"
-                                    id="incomeNotes"
-                                    name="incomeNotes"
-                                    onChange={handleIncomeChange}
-                                    placeholder="Please enter Notes"
-                                />
-                            </div> */}
-
-                            {/* <div>
-                                <label
-                                    className="file-label"
-                                    htmlFor="incomeFile"
-                                >
-                                    <img src="/upload-btn.svg" alt="" />
-                                </label>
-                                <input
-                                    type="file"
-                                    id="incomeFile"
-                                    name="incomeFile"
-                                    onChange={handleIncomeChange}
-                                    title="upload file here"
-                                />
-                            </div> */}
-                        {/* </div>
-
-                        <div className="single-position-costs">
-                            <button
-                                className="add-btn income"
-                                onClick={handleSubmitIncome}
-                            >
-                                <img src="/add-btn.svg" alt="" />
-                            </button>
-                        </div>
-                    </form> */}
-
-                    {/* <button className="submit-btn">Show Table</button> */}
+                    {/* <Route exact path="/projects/edit-plan/:id" component={OutgoingsTable}>
+                        <OutgoingsTable />
+                    </Route> */}
+                    {/* <Route exact path="/projects/edit-plan/:id" render={(props)=>{return(
+                        <OutgoingsTable id={props.match.params.id}/>);
+                    }} /> */}
                 </div>
             </div>
         </div>
