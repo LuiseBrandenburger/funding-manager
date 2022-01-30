@@ -1,9 +1,9 @@
 /*
 
-TODO: Fix Params issue
-TODO: Fix Table
-TODO: fix calculations
 TODO: fix update Project Sum State - to avoid reloading
+
+
+
 
 TODO: NICE TO HAVE: fix file input 
 TODO: setup income table and chart as soon as outcome is fixed

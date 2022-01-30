@@ -22,6 +22,27 @@ export default function EditPlan() {
         (state) => state.currentProjectId || {}
     );
 
+    // *********************************** EFFECTS *******************************
+
+    useEffect(() => {
+        // fetch(`/all-outgoings`)
+        //     .then((data) => data.json())
+        //     .then(({ data }) => {
+        //         console.log(
+        //             "data in GET Route /all-projects: ",
+        //             data,
+        //             data[0].id
+        //         );
+        //         dispatch(currentProjectIdReceived(data[0].id));
+        //         dispatch(projectsReceived(data));
+        //     })
+        //     .catch((err) => {
+        //         //    location.replace("/");
+        //         console.log("error to get all Projects: ", err);
+        //     });
+    }, []);
+
+
     // ******************************* HANDLE CHANGES *************************
   
 
@@ -111,10 +132,10 @@ export default function EditPlan() {
             .then((data) => {
                 if (data.success) {
                     // TODO: SOMETHING WHEN SUCCESS
-                    location.reload();
                     console.log("data when posted:", data);
                     console.log("this worked");
-                    // dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
+                    dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
+                    // location.reload();
                 } else {
                     setError(true);
                 }
@@ -125,44 +146,48 @@ export default function EditPlan() {
             });
     };
 
-    const handleSubmitIncome = (e) => {
-        e.preventDefault();
-        fetch("/api/edit-incomings", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({userInputIncome, currentProjectId}),
-        })
-            .then((data) => {
-                return data.json();
-            })
-            .then((data) => {
-                if (data.success) {
-                    // TODO: SOMETHING WHEN SUCCESS
-                    // Show a succsess notification and remove the inputs
-                    // location.replace("/");
-                    console.log("this worked");
-                } else {
-                    setError(true);
-                }
-            })
-            .catch((err) => {
-                console.log("error in fetch /incomings", err);
-                setError(true);
-            });
-    };
+    // const handleSubmitIncome = (e) => {
+    //     e.preventDefault();
+    //     fetch("/api/edit-incomings", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify({userInputIncome, currentProjectId}),
+    //     })
+    //         .then((data) => {
+    //             return data.json();
+    //         })
+    //         .then((data) => {
+    //             if (data.success) {
+    //                 // TODO: SOMETHING WHEN SUCCESS
+    //                 // Show a succsess notification and remove the inputs
+    //                 // location.replace("/");
+    //                 console.log("this worked");
+    //             } else {
+    //                 setError(true);
+    //             }
+    //         })
+    //         .catch((err) => {
+    //             console.log("error in fetch /incomings", err);
+    //             setError(true);
+    //         });
+    // };
 
 
 
     // ********************* RENDER***********************
+    
+    
+    // 
+    
 
     return (
         <div className="main-content-right-container">
             <div className="edit-project-container">
                 <h3>You can add Positions to your Project Plan here:</h3>
                 <div className="project-plan-outgoings">
-                    <h2>OUTGOINGS</h2>
+                    <h2>PROJECT COSTS</h2>
                     <form action="">
                         <div className="edit-plan-form-top">
                             <div className="group-container">
@@ -319,7 +344,16 @@ export default function EditPlan() {
                 </div>
 
                 <div className="project-plan-income">
-                    <h2>INCOME</h2>
+
+
+
+
+
+
+
+{/* FIXME: OLD INCOME FORM BELOW */}
+
+                    {/* <h2>INCOME</h2>
 
                     <form action="">
                         <div className="edit-plan-form-top">
@@ -411,7 +445,7 @@ export default function EditPlan() {
                                     onChange={handleIncomeChange}
                                     placeholder="Please enter Notes"
                                 />
-                            </div>
+                            </div> */}
 
                             {/* <div>
                                 <label
@@ -428,7 +462,7 @@ export default function EditPlan() {
                                     title="upload file here"
                                 />
                             </div> */}
-                        </div>
+                        {/* </div>
 
                         <div className="single-position-costs">
                             <button
@@ -438,7 +472,7 @@ export default function EditPlan() {
                                 <img src="/add-btn.svg" alt="" />
                             </button>
                         </div>
-                    </form>
+                    </form> */}
 
                     {/* <button className="submit-btn">Show Table</button> */}
                 </div>

@@ -6,7 +6,7 @@ import { DataGrid } from "@mui/x-data-grid";
 
 export default function OutgoingsTable() {
     const { id } = useParams();
-    // console.log("id in params: ", id);
+    console.log("id in params: ", id);
     const history = useHistory();
 
     const dispatch = useDispatch();
@@ -78,28 +78,13 @@ export default function OutgoingsTable() {
 
 
     return (
-        <div>
-            <h1>HelloI am in table</h1>
+        <div className="data-table">
             <div
-                className="data-table"
-                style={{ height: "100%", width: "100%" }}
+                style={{ flexGrow: 1 }}
             >
                 <DataGrid
-                    rows={[
-                        { id: 1, lastName: "Snow", age: 35 },
-                        { id: 2, lastName: "Lannister",  age: 42 },
-                        { id: 3, lastName: "Lannister",  age: 45 },
-                    ]}
-                    columns={[
-                        { field: "id", headerName: "ID", width: 70 },
-                        { field: "lastName", headerName: "Last name", width: 130 },
-                        {
-                            field: "age",
-                            headerName: "Age",
-                            type: "number",
-                            width: 90,
-                        },
-                    ]}
+                    rows={dataRows}
+                    columns={dataColumns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
                     checkboxSelection

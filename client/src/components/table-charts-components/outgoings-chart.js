@@ -9,7 +9,7 @@ import { Bar } from "react-chartjs-2";
 
 export default function OutgoingsChart() {
     const { id } = useParams();
-    // TODO: console.log("id in params: ", id);
+    console.log("id in params: ", id);
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -26,8 +26,7 @@ export default function OutgoingsChart() {
                 return item.price;
             }) || {}
     );
-    // console.log(labelArr);
-    // console.log(dataArr);
+
 
     // *********************************** STATE FOR CHART *******************************
 
