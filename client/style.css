@@ -504,16 +504,22 @@ h4 {
     background-color: var(--main-bg-color);
     border-radius: 3px;
 }
+
+.edit-plan-form-top {
+    height: 40%;
+}
+
 .edit-plan-form-top,
 .edit-plan-form-bottom {
     display: flex;
     flex-direction: row;
-    height: 50%;
+    /* height: 50%; */
     margin-bottom: 12px;
 }
 
 .edit-plan-form-bottom div {
     align-self: flex-end;
+    height: 100%;
 }
 
 .edit-project-container input,
@@ -588,7 +594,7 @@ h4 {
 .project-plan-outgoings {
     width: 100%;
     height: 100%;
-    margin-top: 20px;
+    margin-top: 5px;
     background-color: var(--main-bg-color);
     border-radius: 3px;
     padding: 10px;

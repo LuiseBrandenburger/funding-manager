@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateProjectFCSumOutgoings } from "../../redux/projects/slice";
 import {OutgoingsTable} from "../table-charts-components/outgoings-table";
 import { BrowserRouter, Route, Link } from "react-router-dom";
+import { DataGrid } from "@mui/x-data-grid";
 
 
 export default function EditPlan() {
@@ -16,7 +17,8 @@ export default function EditPlan() {
     // const [fileInputOutgoings, setFileInputOutgoings] = useState({});
     const [error, setError] = useState(false);
     const categorySelectionRef = useRef();
-
+    const [dataColumns, setDataColumns] = useState([]);
+    const [dataRows, setDataRows] = useState([]);
 
     // *********************************** STATE *******************************
 
@@ -27,23 +29,47 @@ export default function EditPlan() {
     // *********************************** EFFECTS *******************************
 
     useEffect(() => {
-        // fetch(`/all-outgoings`)
-        //     .then((data) => data.json())
-        //     .then(({ data }) => {
-        //         console.log(
-        //             "data in GET Route /all-projects: ",
-        //             data,
-        //             data[0].id
-        //         );
-        //         dispatch(currentProjectIdReceived(data[0].id));
-        //         dispatch(projectsReceived(data));
-        // dispatch(outgoingsReceived())
-        //     })
-        //     .catch((err) => {
-        //         //    location.replace("/");
-        //         console.log("error to get all Projects: ", err);
-        //     });
-    }, []);
+        // console.log("id in params after mounted: ", id);
+
+        fetch(`/all-outgoings/${id}`)
+            .then((data) => data.json())
+            .then(({ data }) => {
+                console.log(
+                    "data in GET Route /all-outgoings: ",
+                    data,
+                );
+                // setCurrentProjectId(data[0].id);
+                // dispatch(currentProjectIdReceived(data[0].id));
+                // dispatch(projectsReceived(data));
+
+
+                setDataColumns([
+                    { field: "id", headerName: "ID", width: 60 },
+                    { field: "position", headerName: "Position", width: 100 },
+                    { field: "option", headerName: "Option", width: 170 },
+                    {
+                        field: "price",
+                        headerName: "Costs",
+                        type: "number",
+                        width: 120,
+                        editable: true 
+                    },
+                    {
+                        field: "total",
+                        headerName: "Paid",
+                        type: "number",
+                        width: 120,
+                        editable: true 
+                    }   
+                ]);
+                setDataRows(data);
+            })
+            .catch((err) => {
+                //    location.replace("/");
+                console.log("error to get all Projects: ", err);
+            });
+    }, [currentProjectId]);
+
 
     // ******************************* HANDLE CHANGES *************************
   
@@ -139,8 +165,6 @@ export default function EditPlan() {
     };
 
 
-
-
     const handleUpdateOutgoings = (e) => {
         e.preventDefault();
 
@@ -174,14 +198,10 @@ export default function EditPlan() {
 
     // ********************* RENDER***********************
     
-    
-    // 
-    
 
     return (
         <div className="main-content-right-container">
             <div className="edit-project-container">
-                <h3>You can add Positions to your Project Plan here:</h3>
                 <div className="project-plan-outgoings">
                     <h2>PROJECT COSTS</h2>
                     <form action="">
@@ -323,18 +343,13 @@ export default function EditPlan() {
                                 />
                             </div> */}
                         </div>
-
                         <div className="single-position-costs">
-                            {/* <span>
-                                TOTAL:
-                                <span id="total-sum-outgoings">0,00 €</span>
-                            </span> */}
-                            <button
+                            {/* <button
                                 className="submit-btn-two"
                                 onClick={handleUpdateOutgoings}
                             >
                                 update
-                            </button>
+                            </button> */}
                             <button
                                 className="add-btn"
                                 onClick={handleSubmitOutgoings}
@@ -346,6 +361,23 @@ export default function EditPlan() {
                 </div>
 
                 <div className="project-plan-income">
+                    <div className="data-table">
+                        <div
+                            style={{ flexGrow: 1 }}
+                        >
+                            <DataGrid
+                                rows={dataRows}
+                                columns={dataColumns}
+                                pageSize={10}
+                                rowsPerPageOptions={[10]}
+                                checkboxSelection
+                                onSelectionModelChange={itm => 
+                                // define a function what should happen once the itm is clicked
+                                    console.log(itm[0])
+                                }
+                            />
+                        </div>
+                    </div>
                     {/* <Route exact path="/projects/edit-plan/:id" component={OutgoingsTable}>
                         <OutgoingsTable />
                     </Route> */}

@@ -65,21 +65,6 @@ export default function OutgoingsTable() {
 
     // *********************************** TABLE *******************************
 
-// category: "Tour"
-// created_at: "2022-01-30T18:08:45.996Z"
-// fc_total: "0.00"
-// file: null
-// id: 92
-// notes: null
-// option: "1.03.\tMastering"
-// paid: true
-// paiddate: null
-// position: "production"
-// price: "1000.00"
-// project_id: 1
-// quantity: "1"
-// sender_id: 1
-// total: "100.00"
 
     useEffect(() => {
     }, []);
