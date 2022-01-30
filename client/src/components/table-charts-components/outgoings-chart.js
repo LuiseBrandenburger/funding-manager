@@ -9,7 +9,7 @@ import { Bar } from "react-chartjs-2";
 
 export default function OutgoingsChart() {
     const { id } = useParams();
-    // console.log("id in params: ", id);
+    // TODO: console.log("id in params: ", id);
 
     const history = useHistory();
     const dispatch = useDispatch();

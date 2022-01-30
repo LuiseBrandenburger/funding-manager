@@ -3,6 +3,8 @@ const plan = express.Router();
 // const { validateEmail } = require("../utils/helpers");
 // const { hash } = require("../utils/bc");
 // const { compare } = require("../utils/bc");
+const s3 = require("../utils/s3");
+const { uploader } = require("../utils/upload");
 
 const { addOutgoing, addIcomings } = require("../sql/db");
 
@@ -10,33 +12,28 @@ const { addOutgoing, addIcomings } = require("../sql/db");
 
 console.log("Hello from Projects");
 
-// projects.get("/api/user-id", function (req, res) {
-//     res.json({
-//         userId: req.session.userId,
-//     });
-// });
-
-// plan.get("/all-projects", function (req, res) {
-//     getProjectsById(req.session.userId).then(({ rows }) => {
-//         // console.log("rows after projects have been fetched: ", rows);
-//         res.json({
-//             data: rows,
-//         });
-//     });
-// });
-
-plan.post("/api/edit-outgoings", (req, res) => {
-    console.log("req.body in registration.json request: ", req.body);
+plan.post("/api/edit-outgoings", uploader.single("file"), s3.upload, (req, res) => {
 
     // TODO: PROJECT ID AND SUM ANPASSEN!!!
     let totalSum = 0;
-    let projectId = 1;
 
-    const data = req.body;
+    console.log("body in post outgoings:", req.body);
+    // console.log("body.file in post outgoings:", req.file);
+
+    const data = req.body.userInputOutgoings;
+    const projectId = req.body.currentProjectId;
+
+    console.log(data, projectId);
    
     if (!data.quantity) {
         data.quantity = 1;
     }
+
+    // ********************** ADD FILE *******************
+   
+    // const fileName = req.file.filename;
+    // const urlToSaveInDB = `https://s3.amazonaws.com/spicedling/${fileName}`;
+
 
     addOutgoing(
         projectId,
@@ -68,9 +65,9 @@ plan.post("/api/edit-incomings", (req, res) => {
 
     // TODO: PROJECT ID AND SUM ANPASSEN!!!
     // let totalSum = 0;
-    let projectId = 1;
 
-    const data = req.body;
+    const data = req.body.userInputIncome;
+    const projectId = req.body.currentProjectId;
 
     if (!data.quantity) {
         data.quantity = 1;

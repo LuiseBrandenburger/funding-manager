@@ -1,15 +1,26 @@
 import useForm from "../../hooks/use-form";
 import { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 
 export default function EditPlan() {
     const [userInputOutgoings, setUserInputOutgoings] = useState({});
     const [userInputIncome, setUserInputIncome] = useState({});
+    const [fileInputOutgoings, setFileInputOutgoings] = useState({});
+    const [file, setFile] = useState({});
+
     const [error, setError] = useState(false);
     const categorySelectionRef = useRef();
-    // const [sumTotalOutgoings, setSumTotalOutgoings] = useState(0);
-    // const [sumTotalIncome, setSumTotalOutgoings] = useState(0);
-    // const [categoryInput, setCategoryInput] = useState();
 
+
+    // *********************************** STATE *******************************
+
+
+    const currentProjectId = useSelector(
+        (state) => state.currentProjectId || {}
+    );
+
+    console.log("currentProject ID in edit form: ", currentProjectId);
 
     const handleChange = ({ target }) =>
         setUserInputOutgoings({
@@ -23,37 +34,45 @@ export default function EditPlan() {
             [target.name]: target.value,
         });
 
+    const handleFileChangeOutgoings = ({ target }) =>
+        setFileInputOutgoings({
+            ...userInputOutgoings,
+            [target.name]: target.files[0],
+        });
 
-    // TODO: ADD diffrent categories to diffrent selections
     
     useEffect(() => {
-        // console.log("userInput Outgoings is:", userInputOutgoings.price);
-        // console.log("userInput Outgoings is:", userInputOutgoings.quantity);
 
-        // let price = userInputOutgoings.price;
-        // let quantity = userInputOutgoings.quantity;
+        // TODO: finish
+        // if (userInputOutgoings.category === "Marketing") {
+        //     console.log("Marketing was choosen");
+        //     setOptionValues(
+        //         <option value="1.01.	Studiomiete/Aufnahme">
+        //                                 1.01. Studiomiete/Aufnahme
+        //         </option>
+        //     )
+        // } else {
+        // }
+        console.log(userInputOutgoings.category);
 
-        // const outgoingPositionSum = (price, quantity) => {
-        //     let newPrice = parseInt(price);
-        //     let newQuantity = parseInt(quantity);
-        //     // let sum = (((newPrice * 100) * (newQuantity * 100)) / 100);
-        //     let sum = 0;
-        //     // let sum = newPrice * newQuantity;
-        //     return sum;
-        // };
-        // console.log(outgoingPositionSum());
     }, [userInputOutgoings]);
 
 
 
     const handleSubmitOutgoings = (e) => {
         e.preventDefault();
+        console.log("project id in handle submit: ", currentProjectId);
+        const fd = new FormData();
+        
+        // TODO: fix file input
+        // fd.append("file", this.state.file);
+
         fetch("/api/edit-outgoings", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(userInputOutgoings),
+            body: JSON.stringify({userInputOutgoings, currentProjectId}),
         })
             .then((data) => {
                 return data.json();
@@ -74,14 +93,13 @@ export default function EditPlan() {
     };
 
     const handleSubmitIncome = (e) => {
-
         e.preventDefault();
         fetch("/api/edit-incomings", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(userInputIncome),
+            body: JSON.stringify({userInputIncome, currentProjectId}),
         })
             .then((data) => {
                 return data.json();
@@ -100,8 +118,6 @@ export default function EditPlan() {
                 console.log("error in fetch /incomings", err);
                 setError(true);
             });
-
-
     };
 
     return (
@@ -121,7 +137,6 @@ export default function EditPlan() {
                                     name="category"
                                     id="category"
                                     onChange={handleChange}
-                                    // onChange={handleCategoryChange}
                                 >
                                     <option value="hide">-- Category --</option>
                                     <option value="Production">
@@ -245,8 +260,8 @@ export default function EditPlan() {
                                     type="file"
                                     id="file"
                                     title="upload file here"
-                                    name="fileUrl"
-                                    onChange={handleChange}
+                                    name="file"
+                                    onChange={handleFileChangeOutgoings}
                                 />
                             </div>
                         </div>
