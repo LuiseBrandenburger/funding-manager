@@ -71,14 +71,13 @@ module.exports.addOutgoing = (
     file,
     notes,
     finalSum,
-    total,
     isPaid,
     paidDate,
     userId
 ) => {
-    const q = `INSERT INTO outgoings (project_id, category, option, position, price, quantity, file, notes, fc_total, total, paid, paiddate, sender_id)
+    const q = `INSERT INTO outgoings (project_id, category, option, position, price, quantity, file, notes, total, paid, paiddate, sender_id)
 
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
     RETURNING id`;
 
     const params = [
@@ -91,7 +90,6 @@ module.exports.addOutgoing = (
         file,
         notes,
         finalSum,
-        total,
         isPaid,
         paidDate,
         userId,

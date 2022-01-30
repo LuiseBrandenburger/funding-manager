@@ -17,8 +17,6 @@ const {
 
 /*************************** ROUTES ***************************/
 
-console.log("Hello from Projects");
-
 plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload, 
     (req, res) => {
 
@@ -32,6 +30,9 @@ plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload,
 
         if (!data.quantity) {
             data.quantity = 1;
+        }
+        if (!data.finalSum){
+            data.finalSum = 0;
         }
 
         // ********************** ADD FILE *******************
@@ -48,7 +49,6 @@ plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload,
             data.file,
             data.notes,
             data.finalSum,
-            totalSum,
             data.isPaid,
             data.paidDate,
             req.session.userId
@@ -56,21 +56,25 @@ plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload,
             .then(({ rows }) => {
                 // console.log(rows);
 
-                // Promise.all([getOutgoingsSumFC(projectId), getOutgoingsSumFinal(projectId)]).then((result)=> {
-                //     console.log("log rows after promis.all", result);
-                //     console.log("log rows after promis.all", result[0].rows[0].sum);
-                //     console.log("log rows after promis.all", result[1].rows[0].sum);
-                // })
+                // i need to get all sums I also need to get the funding sum 
+                Promise.all([getOutgoingsSumFC(projectId), getOutgoingsSumFinal(projectId)]).then((result)=> {
+                    console.log("log rows after promis.all", result);
+                    console.log("log rows after promis.all", result[0].rows[0].sum);
+                    console.log("log rows after promis.all", result[1].rows[0].sum);
 
-                getOutgoingsSumFC(projectId).then((result) => {
-                    console.log(result.rows[0].sum);
-                    updateProjectFCSum(result.rows[0].sum, projectId).then((project) => {
-                        console.log("result in update project sum: ", project.rows[0].sum_fc_total);
-                        res.json({ success: true,
-                            sumFcTotalCosts: project.rows[0].sum_fc_total
-                        });
-                    });
-                });
+
+
+                })
+
+                // getOutgoingsSumFC(projectId).then((result) => {
+                //     console.log(result.rows[0].sum);
+                //     updateProjectFCSum(result.rows[0].sum, projectId).then((project) => {
+                //         console.log("result in update project sum: ", project.rows[0].sum_fc_total);
+                //         res.json({ success: true,
+                //             sumFcTotalCosts: project.rows[0].sum_fc_total
+                //         });
+                //     });
+                // });
             })
             .catch((err) => {
                 console.log("error adding project: ", err);
