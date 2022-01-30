@@ -172,7 +172,7 @@ module.exports.getOutgoingsSumFC= (projectId) => {
 };
 
 module.exports.getOutgoingsSumFinal= (projectId) => {
-    const q = `SELECT sum(CAST(total AS decimal(8,2))) FROM outgoings WHERE project_id = ($1)`;
+    const q = `SELECT sum(CAST(fc_total AS decimal(8,2))) FROM outgoings WHERE project_id = ($1)`;
     const params = [projectId];
     return db.query(q, params);
 };
@@ -191,10 +191,18 @@ module.exports.getIncomingsSumFinal= (projectId) => {
 
 // ************** UPDATE PROJECT ***************
 
-module.exports.updateProjectSum = (fcOutgoingsSum, projectId) => {
+module.exports.updateProjectFCSum = (fcOutgoingsSum, projectId) => {
     const q = `UPDATE projects SET sum_fc_total = ($1)
     WHERE id = ($2)
     RETURNING sum_fc_total`;
     const params = [fcOutgoingsSum, projectId];
+    return db.query(q, params);
+};
+
+module.exports.updateProjectFinalSum = (finalOutgoingsSum, projectId) => {
+    const q = `UPDATE projects SET sum_total = ($1)
+    WHERE id = ($2)
+    RETURNING sum_total`;
+    const params = [finalOutgoingsSum, projectId];
     return db.query(q, params);
 };

@@ -8,6 +8,7 @@ export function currentProjectReducer(currentProject = null, action) {
         return newCurrentProject;
     } else if (action.type == "project/updateProjectFCSumOutgoings") {
         
+        // TODO: add logic to update forecast sum in the new project
         // const newCurrentProject = action.payload.project;
         // console.log("newCurrentProject in Reducer: ", newCurrentProject);
 

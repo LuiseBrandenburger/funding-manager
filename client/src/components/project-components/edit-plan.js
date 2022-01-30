@@ -1,9 +1,11 @@
 import useForm from "../../hooks/use-form";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { updateProjectFCSumOutgoings } from "../../redux/projects/slice";
 
 
 export default function EditPlan() {
+    const dispatch = useDispatch();
     const [userInputOutgoings, setUserInputOutgoings] = useState({});
     const [userInputIncome, setUserInputIncome] = useState({});
     const [fileInputOutgoings, setFileInputOutgoings] = useState({});
@@ -91,7 +93,7 @@ export default function EditPlan() {
     const handleSubmitOutgoings = (e) => {
         e.preventDefault();
         console.log("project id in handle submit: ", currentProjectId);
-        const fd = new FormData();
+        // const fd = new FormData();
 
         // TODO: fix file input
         // fd.append("file", this.state.file);
@@ -109,9 +111,10 @@ export default function EditPlan() {
             .then((data) => {
                 if (data.success) {
                     // TODO: SOMETHING WHEN SUCCESS
-                    // location.replace("/");
+                    location.reload();
                     console.log("data when posted:", data);
                     console.log("this worked");
+                    // dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
                 } else {
                     setError(true);
                 }
@@ -286,7 +289,7 @@ export default function EditPlan() {
                                 />
                             </div>
 
-                            <div>
+                            {/* <div>
                                 <label className="file-label" htmlFor="file">
                                     <img src="/upload-btn.svg" alt="" />
                                 </label>
@@ -297,7 +300,7 @@ export default function EditPlan() {
                                     name="file"
                                     onChange={handleFileChangeOutgoings}
                                 />
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="single-position-costs">
@@ -410,7 +413,7 @@ export default function EditPlan() {
                                 />
                             </div>
 
-                            <div>
+                            {/* <div>
                                 <label
                                     className="file-label"
                                     htmlFor="incomeFile"
@@ -424,7 +427,7 @@ export default function EditPlan() {
                                     onChange={handleIncomeChange}
                                     title="upload file here"
                                 />
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="single-position-costs">
@@ -437,7 +440,7 @@ export default function EditPlan() {
                         </div>
                     </form>
 
-                    <button className="submit-btn">Show Table</button>
+                    {/* <button className="submit-btn">Show Table</button> */}
                 </div>
             </div>
         </div>

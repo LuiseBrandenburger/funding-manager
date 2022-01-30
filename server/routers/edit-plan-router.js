@@ -6,7 +6,14 @@ const plan = express.Router();
 const s3 = require("../utils/s3");
 const { uploader } = require("../utils/upload");
 
-const { addOutgoing, addIcomings, getOutgoingsSumFC, updateProjectSum } = require("../sql/db");
+const { 
+    addOutgoing, 
+    addIcomings, 
+    getOutgoingsSumFC, 
+    updateProjectFCSum,
+    updateProjectFinalSum,
+    getOutgoingsSumFinal 
+} = require("../sql/db");
 
 /*************************** ROUTES ***************************/
 
@@ -20,18 +27,14 @@ plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload,
 
         console.log("body in post outgoings:", req.body);
         // console.log("body.file in post outgoings:", req.file);
-
         const data = req.body.userInputOutgoings;
         const projectId = req.body.currentProjectId;
 
-        console.log(data, projectId);
-   
         if (!data.quantity) {
             data.quantity = 1;
         }
 
         // ********************** ADD FILE *******************
-   
         // const fileName = req.file.filename;
         // const urlToSaveInDB = `https://s3.amazonaws.com/spicedling/${fileName}`;
 
@@ -51,16 +54,22 @@ plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload,
             req.session.userId
         )
             .then(({ rows }) => {
-                console.log(rows);
+                // console.log(rows);
+
+                // Promise.all([getOutgoingsSumFC(projectId), getOutgoingsSumFinal(projectId)]).then((result)=> {
+                //     console.log("log rows after promis.all", result);
+                //     console.log("log rows after promis.all", result[0].rows[0].sum);
+                //     console.log("log rows after promis.all", result[1].rows[0].sum);
+                // })
+
                 getOutgoingsSumFC(projectId).then((result) => {
                     console.log(result.rows[0].sum);
-                    updateProjectSum(result.rows[0].sum, projectId).then((project) => {
+                    updateProjectFCSum(result.rows[0].sum, projectId).then((project) => {
                         console.log("result in update project sum: ", project.rows[0].sum_fc_total);
                         res.json({ success: true,
                             sumFcTotalCosts: project.rows[0].sum_fc_total
                         });
                     });
-                    // res.json({ success: true });
                 });
             })
             .catch((err) => {

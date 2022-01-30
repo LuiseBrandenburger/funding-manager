@@ -153,26 +153,26 @@ export default function Projects({ userId }) {
                             ) : (
                                 ""
                             )}
-                            <Link to="/edit-project">
+                            <Link to="/projects/edit-project">
                                 <button className="submit-btn">
                                     Edit Project
                                 </button>
                             </Link>
 
-                            <Link to="/edit-plan">
+                            <Link to="/projects/edit-plan">
                                 <button className="submit-btn">
                                     Edit Plan
                                 </button>
                             </Link>
 
-                            <Link to="/show-project">
+                            <Link to="/projects/show-project">
                                 <button className="submit-btn">
                                     Show Overview
                                 </button>
                             </Link>
                         </div>
                         <div className="btns-left">
-                            <Link to="/add-project">
+                            <Link to="/projects/add-project">
                                 <button className="submit-btn-two">
                                     Add New Project
                                 </button>
@@ -184,16 +184,16 @@ export default function Projects({ userId }) {
                 {/*PROJECTS MAIN CONTENT RIGHT */}
 
                 <div className="main-content-right">
-                    <Route exact path="/show-project">
+                    <Route exact path="/projects/show-project">
                         <ShowProjectOverview userId={userId} />
                     </Route>
-                    <Route path="/edit-project">
+                    <Route path="/projects/edit-project">
                         <EditProject userId={userId} />
                     </Route>
-                    <Route path="/edit-plan">
+                    <Route path="/projects/edit-plan">
                         <EditPlan userId={userId} />
                     </Route>
-                    <Route path="/add-project">
+                    <Route path="/projects/add-project">
                         <AddNewProject userId={userId} />
                     </Route>
                     {/* <Route path="/projects">
