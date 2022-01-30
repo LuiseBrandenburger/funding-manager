@@ -12,7 +12,8 @@ const {
     getOutgoingsSumFC, 
     updateProjectFCSum,
     updateProjectFinalSum,
-    getOutgoingsSumFinal 
+    getOutgoingsSumFinal,
+    getApprovedFundingSumById 
 } = require("../sql/db");
 
 /*************************** ROUTES ***************************/
@@ -57,12 +58,13 @@ plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload,
                 // console.log(rows);
 
                 // i need to get all sums I also need to get the funding sum 
-                Promise.all([getOutgoingsSumFC(projectId), getOutgoingsSumFinal(projectId)]).then((result)=> {
+                Promise.all([getOutgoingsSumFC(projectId), getOutgoingsSumFinal(projectId), getApprovedFundingSumById(projectId)]).then((result)=> {
                     console.log("log rows after promis.all", result);
                     console.log("log rows after promis.all", result[0].rows[0].sum);
                     console.log("log rows after promis.all", result[1].rows[0].sum);
+                    console.log("log rows after promis.all", result[2].rows[0].approved_funding);
 
-
+                    console.log(((result[0].rows[0].sum * 100) - (result[2].rows[0].approved_funding * 100))/100);
 
                 })
 

@@ -204,3 +204,10 @@ module.exports.updateProjectFinalSum = (finalOutgoingsSum, projectId) => {
     const params = [finalOutgoingsSum, projectId];
     return db.query(q, params);
 };
+
+
+module.exports.getApprovedFundingSumById = (projectId) => {
+    const q = `SELECT approved_funding FROM projects WHERE id = ($1)`;
+    const params = [projectId];
+    return db.query(q, params);
+};
