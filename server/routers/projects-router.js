@@ -19,7 +19,7 @@ console.log("Hello from Projects");
 projects.get("/all-projects", function (req, res) {
 
     getProjectsById(req.session.userId).then(({ rows }) => {
-        // console.log("rows after projects have been fetched: ", rows);
+        console.log("rows after projects have been fetched: ", rows);
         res.json({
             data: rows,
         });

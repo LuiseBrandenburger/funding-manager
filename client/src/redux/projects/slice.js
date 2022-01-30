@@ -14,10 +14,4 @@ export function projectsReceived(projects) {
     };
 }
 
-export function setViewedId(id) {
-    return {
-        type: "projects/setViewedId",
-        payload: { id },
-    };
-}
 

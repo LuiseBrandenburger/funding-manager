@@ -6,7 +6,7 @@ import { projectsReceived } from "../../redux/projects/slice";
 import {
     currentProjectIdReceived,
     updateCurrentProjectId,
-} from "../../redux/currentProject/slice";
+} from "../../redux/currentProjectId/slice";
 
 import useForm from "../../hooks/use-form";
 import EditPlan from "./edit-plan";
@@ -23,7 +23,6 @@ export default function Projects({ userId }) {
     const currentProjectId = useSelector(
         (state) => state.currentProjectId || {}
     );
-    // console.log("current Project ID aus state: ", currentProjectId);
     const currentProjectData = useSelector((state) => {
         if (state.projects) {
             return state.projects.filter((project) => {
@@ -57,12 +56,10 @@ export default function Projects({ userId }) {
 
     useEffect(() => {
         if (userInput) {
-            // console.log("user Input after change: ", userInput.selection);
             let inputId = parseInt(userInput.selection);
             dispatch(updateCurrentProjectId(inputId));
         }
     }, [userInput]);
-
 
 
     // useEffect(() => {
@@ -95,7 +92,6 @@ export default function Projects({ userId }) {
         }, this);
 
 
-
     return (
         <div className="main-content-container">
             {/* PROJECTS MAIN CONTENT LEFT */}
@@ -119,9 +115,9 @@ export default function Projects({ userId }) {
                                 <ul>
                                     <li>
                                         <h4>
-                                            {currentProjectData[0].sumspend}
+                                            {currentProjectData[0].sum_fc_total}
                                         </h4>
-                                        <h5>Money Spend</h5>
+                                        <h5>Costs FC</h5>
                                     </li>
                                     <li>
                                         <h4>

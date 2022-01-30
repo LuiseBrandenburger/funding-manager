@@ -1,27 +1,40 @@
-export function currentProjectIdReducer(currentProjectId = null, action) {
-    if (action.type == "project/receivedCurrentProjectId") {
-        currentProjectId = action.payload.id;
-        console.log("currentProjectId im REducer", currentProjectId);
-    } else if (action.type == "project/updateCurrentProjectId") {
-        const newCurrentProjectId = action.payload.id;
-        console.log("newCurrentProjectId in Reducer: ", newCurrentProjectId);
-        return newCurrentProjectId;
+export function currentProjectReducer(currentProject = null, action) {
+    if (action.type == "project/receivedCurrentProject") {
+        currentProject = action.payload.project;
+        console.log("currentProject im REducer", currentProject);
+    } else if (action.type == "project/updateCurrentProject") {
+        const newCurrentProject = action.payload.project;
+        console.log("newCurrentProject in Reducer: ", newCurrentProject);
+        return newCurrentProject;
+    } else if (action.type == "project/updateProjectFCSumOutgoings") {
+        
+        // const newCurrentProject = action.payload.project;
+        // console.log("newCurrentProject in Reducer: ", newCurrentProject);
+
+        return newCurrentProject;
     }
-    return currentProjectId;
+    return currentProject;
 }
 
 // ********************* ACTIONS ***********************
 
-export function currentProjectIdReceived(id ) {
+export function currentProjectReceived(project) {
     return {
-        type: "project/receivedCurrentProjectId",
-        payload: { id },
+        type: "project/receivedCurrentProject",
+        payload: { project },
     };
 }
 
-export function updateCurrentProjectId(id) {
+export function updateCurrentProject(project) {
     return {
-        type: "project/updateCurrentProjectId",
-        payload: { id },
+        type: "project/updateCurrentProject",
+        payload: { project },
+    };
+}
+
+export function updateProjectFCSumOutgoings(sum) {
+    return {
+        type: "project/updateProjectFCSumOutgoings",
+        payload: { sum },
     };
 }

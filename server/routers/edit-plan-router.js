@@ -6,59 +6,68 @@ const plan = express.Router();
 const s3 = require("../utils/s3");
 const { uploader } = require("../utils/upload");
 
-const { addOutgoing, addIcomings } = require("../sql/db");
+const { addOutgoing, addIcomings, getOutgoingsSumFC, updateProjectSum } = require("../sql/db");
 
 /*************************** ROUTES ***************************/
 
 console.log("Hello from Projects");
 
 plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload, 
-                                (req, res) => {
+    (req, res) => {
 
-    // TODO: PROJECT ID AND SUM ANPASSEN!!!
-    let totalSum = 0;
+        // TODO: PROJECT ID AND SUM ANPASSEN!!!
+        let totalSum = 0;
 
-    console.log("body in post outgoings:", req.body);
-    // console.log("body.file in post outgoings:", req.file);
+        console.log("body in post outgoings:", req.body);
+        // console.log("body.file in post outgoings:", req.file);
 
-    const data = req.body.userInputOutgoings;
-    const projectId = req.body.currentProjectId;
+        const data = req.body.userInputOutgoings;
+        const projectId = req.body.currentProjectId;
 
-    console.log(data, projectId);
+        console.log(data, projectId);
    
-    if (!data.quantity) {
-        data.quantity = 1;
-    }
+        if (!data.quantity) {
+            data.quantity = 1;
+        }
 
-    // ********************** ADD FILE *******************
+        // ********************** ADD FILE *******************
    
-    // const fileName = req.file.filename;
-    // const urlToSaveInDB = `https://s3.amazonaws.com/spicedling/${fileName}`;
+        // const fileName = req.file.filename;
+        // const urlToSaveInDB = `https://s3.amazonaws.com/spicedling/${fileName}`;
 
-    addOutgoing(
-        projectId,
-        data.category,
-        data.option,
-        data.position,
-        data.price,
-        data.quantity,
-        data.file,
-        data.notes,
-        data.finalSum,
-        totalSum,
-        data.isPaid,
-        data.paidDate,
-        req.session.userId
-    )
-        .then(({ rows }) => {
-            console.log(rows);
-            res.json({ success: true });
-        })
-        .catch((err) => {
-            console.log("error adding project: ", err);
-            res.json({ success: false });
-        });
-});
+        addOutgoing(
+            projectId,
+            data.category,
+            data.option,
+            data.position,
+            data.price,
+            data.quantity,
+            data.file,
+            data.notes,
+            data.finalSum,
+            totalSum,
+            data.isPaid,
+            data.paidDate,
+            req.session.userId
+        )
+            .then(({ rows }) => {
+                console.log(rows);
+                getOutgoingsSumFC(projectId).then((result) => {
+                    console.log(result.rows[0].sum);
+                    updateProjectSum(result.rows[0].sum, projectId).then((project) => {
+                        console.log("result in update project sum: ", project.rows[0].sum_fc_total);
+                        res.json({ success: true,
+                            sumFcTotalCosts: project.rows[0].sum_fc_total
+                        });
+                    });
+                    // res.json({ success: true });
+                });
+            })
+            .catch((err) => {
+                console.log("error adding project: ", err);
+                res.json({ success: false });
+            });
+    });
 
 plan.post("/api/edit-incomings", (req, res) => {
     console.log("req.body in registration.json request: ", req.body);

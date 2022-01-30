@@ -99,11 +99,7 @@ module.exports.addOutgoing = (
     return db.query(q, params);
 };
 
-module.exports.getOutgoingsSumFC= (projectId) => {
-    const q = `SELECT sum(CAST(price AS decimal(8,2))) FROM outgoings WHERE project_id = ($1)`;
-    const params = [projectId];
-    return db.query(q, params);
-};
+
 
 
 module.exports.addIcomings = (
@@ -141,7 +137,7 @@ module.exports.addIcomings = (
 
 
 module.exports.getProjectsById = (owner_id) => {
-    const q = `SELECT name, project_number, artist_name, id, approved_funding, sum_spend AS sumSpend, sum_left, sum_accounted, funding_received, sum_total FROM projects WHERE owner_id = ($1)
+    const q = `SELECT name, project_number, artist_name, id, approved_funding, sum_spend AS sumSpend, sum_left, sum_accounted, funding_received, sum_total, sum_fc_total FROM projects WHERE owner_id = ($1)
     ORDER by created_at DESC`;
     const params = [owner_id];
     return db.query(q, params);
@@ -163,5 +159,42 @@ module.exports.getIncomingsByProjectId = (projectId) => {
     ORDER by created_at DESC`;
 
     const params = [projectId];
+    return db.query(q, params);
+};
+
+
+// ************** SUMS ***************
+
+module.exports.getOutgoingsSumFC= (projectId) => {
+    const q = `SELECT sum(CAST(price AS decimal(8,2))) FROM outgoings WHERE project_id = ($1)`;
+    const params = [projectId];
+    return db.query(q, params);
+};
+
+module.exports.getOutgoingsSumFinal= (projectId) => {
+    const q = `SELECT sum(CAST(total AS decimal(8,2))) FROM outgoings WHERE project_id = ($1)`;
+    const params = [projectId];
+    return db.query(q, params);
+};
+
+module.exports.getIncomingsSumFC= (projectId) => {
+    const q = `SELECT sum(CAST(price AS decimal(8,2))) FROM incomings WHERE project_id = ($1)`;
+    const params = [projectId];
+    return db.query(q, params);
+};
+
+module.exports.getIncomingsSumFinal= (projectId) => {
+    const q = `SELECT sum(CAST(total AS decimal(8,2))) FROM incomings WHERE project_id = ($1)`;
+    const params = [projectId];
+    return db.query(q, params);
+};
+
+// ************** UPDATE PROJECT ***************
+
+module.exports.updateProjectSum = (fcOutgoingsSum, projectId) => {
+    const q = `UPDATE projects SET sum_fc_total = ($1)
+    WHERE id = ($2)
+    RETURNING sum_fc_total`;
+    const params = [fcOutgoingsSum, projectId];
     return db.query(q, params);
 };
