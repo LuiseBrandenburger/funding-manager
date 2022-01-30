@@ -99,6 +99,13 @@ module.exports.addOutgoing = (
     return db.query(q, params);
 };
 
+module.exports.getOutgoingsSumFC= (projectId) => {
+    const q = `SELECT sum(CAST(price AS decimal(8,2))) FROM outgoings WHERE project_id = ($1)`;
+    const params = [projectId];
+    return db.query(q, params);
+};
+
+
 module.exports.addIcomings = (
     projectId,
     category,

@@ -17,7 +17,25 @@ export default function Projects({ userId }) {
     const dispatch = useDispatch();
     const [userInput, handleChange] = useForm();
     // const [currentProject, setCurrentProject] = useState(0);
+
+    // ********************* STATE ***************************
     const projects = useSelector((state) => state.projects || {});
+    const currentProjectId = useSelector(
+        (state) => state.currentProjectId || {}
+    );
+    // console.log("current Project ID aus state: ", currentProjectId);
+    const currentProjectData = useSelector((state) => {
+        if (state.projects) {
+            return state.projects.filter((project) => {
+                return project.id === state.currentProjectId;
+            });
+        } else {
+            return {};
+        }
+    });
+
+
+    // ********************* EFFECTS ***************************
 
     useEffect(() => {
         fetch(`/all-projects`)
@@ -28,7 +46,6 @@ export default function Projects({ userId }) {
                     data,
                     data[0].id
                 );
-                // setCurrentProjectId(data[0].id);
                 dispatch(currentProjectIdReceived(data[0].id));
                 dispatch(projectsReceived(data));
             })
@@ -38,20 +55,33 @@ export default function Projects({ userId }) {
             });
     }, []);
 
-    const currentProjectId = useSelector(
-        (state) => state.currentProjectId || {}
-    );
-    // console.log("current Project ID aus state: ", currentProjectId);
-
-    const currentProjectData = useSelector((state) => {
-        if (state.projects) {
-            return state.projects.filter((project) => {
-                return project.id === state.currentProjectId;
-            });
-        } else {
-            return {};
+    useEffect(() => {
+        if (userInput) {
+            // console.log("user Input after change: ", userInput.selection);
+            let inputId = parseInt(userInput.selection);
+            dispatch(updateCurrentProjectId(inputId));
         }
-    });
+    }, [userInput]);
+
+
+
+    // useEffect(() => {
+    //     console.log("project ID has changed");
+
+    //     fetch(`/project-sum-fc/${currentProjectId}`)
+    //         .then((data) => data.json())
+    //         .then(({ data }) => {
+    //             console.log(
+    //                 "data in GET Route /project-sum-fc/:id",
+    //                 data,
+    //             );
+    //         })
+    //         .catch((err) => {
+    //             //    location.replace("/");
+    //             console.log("error to get all Projects: ", err);
+    //         });
+    // }, [currentProjectId]);
+    
     // console.log("currentProjectData", currentProjectData);
 
     let projectsList =
@@ -64,13 +94,7 @@ export default function Projects({ userId }) {
             );
         }, this);
 
-    useEffect(() => {
-        if (userInput) {
-            // console.log("user Input after change: ", userInput.selection);
-            let inputId = parseInt(userInput.selection);
-            dispatch(updateCurrentProjectId(inputId));
-        }
-    }, [userInput]);
+
 
     return (
         <div className="main-content-container">

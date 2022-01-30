@@ -12,7 +12,8 @@ const { addOutgoing, addIcomings } = require("../sql/db");
 
 console.log("Hello from Projects");
 
-plan.post("/api/edit-outgoings", uploader.single("file"), s3.upload, (req, res) => {
+plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload, 
+                                (req, res) => {
 
     // TODO: PROJECT ID AND SUM ANPASSEN!!!
     let totalSum = 0;
@@ -33,7 +34,6 @@ plan.post("/api/edit-outgoings", uploader.single("file"), s3.upload, (req, res) 
    
     // const fileName = req.file.filename;
     // const urlToSaveInDB = `https://s3.amazonaws.com/spicedling/${fileName}`;
-
 
     addOutgoing(
         projectId,
