@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { outgoingsReceived } from "../../redux/outgoings/slice";
 import { DataGrid } from "@mui/x-data-grid";
 
 export default function OutgoingsTable() {
@@ -11,62 +10,64 @@ export default function OutgoingsTable() {
 
     // *********************************** STATE *******************************
 
+    const [dataColumns, setDataColumns] = useState([
+        { field: "position", headerName: "Position", width: 100 },
+        { field: "option", headerName: "Option", width: 170 },
+        {
+            field: "price",
+            headerName: "Costs",
+            type: "number",
+            width: 120,
+            editable: true 
+        },
+        {
+            field: "total",
+            headerName: "Paid",
+            type: "number",
+            width: 120,
+            editable: true 
+        },
+        {
+            field: "paiddate",
+            headerName: "Date",
+            type: "date",
+            width: 100,
+            editable: true 
+        }, 
+        { field: "id", headerName: "ID", width: 60 },
+    ]);
+    const [dataRows, setDataRows] = useState([]);
+    const [idItemPopulateList, setIdItemPopulateList] = useState();
+    const outgoings = useSelector((state) => state.outgoings || {});
     const currentProjectId = useSelector(
         (state) => state.currentProjectId || {}
     );
-    const outgoings = useSelector((state) => state.outgoings || {});
-    console.log("outgoings from state: ", outgoings);
+    const currentOutgoingData = useSelector((state) => {
+        if (state.outgoings) {
+            return state.outgoings.filter((outgoing) => {
+                return outgoing.project_id === state.currentProjectId;
+            });
+        } else {
+            return {};
+        }
+    });
 
-    const [dataColumns, setDataColumns] = useState([]);
-    const [dataRows, setDataRows] = useState([]);
-
+    console.log("current Outgoing data:", currentOutgoingData)
     // *********************************** EFFECTS *******************************
 
     useEffect(() => {
-        // console.log("id in params after mounted: ", id);
-        fetch(`/all-outgoings/${id}`)
-            .then((data) => data.json())
-            .then(({ data }) => {
-                console.log(
-                    "data in GET Route /all-outgoings: ",
-                    data,
-                );
-                // setCurrentProjectId(data[0].id);
-                // dispatch(currentProjectIdReceived(data[0].id));
-                // dispatch(projectsReceived(data));
-
-
-                setDataColumns([
-                    { field: "id", headerName: "ID", width: 60 },
-                    { field: "position", headerName: "Position", width: 170 },
-                    { field: "option", headerName: "Option", width: 170 },
-                    {
-                        field: "price",
-                        headerName: "Costs",
-                        type: "number",
-                        width: 100,
-                        editable: true 
-                    },
-                    {
-                        field: "total",
-                        headerName: "Paid",
-                        type: "number",
-                        width: 100,
-                        editable: true 
-                    }   
-                ]);
-                setDataRows(data);
-            })
-            .catch((err) => {
-                //    location.replace("/");
-                console.log("error to get all Projects: ", err);
-            });
+        setDataRows(currentOutgoingData);
     }, [currentProjectId]);
+
+    useEffect(() => {
+        setDataRows(currentOutgoingData);
+    }, [outgoings]);
 
     // *********************************** TABLE *******************************
 
-
     useEffect(() => {
+        setDataRows(currentOutgoingData);
+
     }, []);
 
 

@@ -22,7 +22,7 @@ export default function EditPlan() {
     const [userInputOutgoings, setUserInputOutgoings] = useState({});
     const [error, setError] = useState(false);
     const [dataColumns, setDataColumns] = useState([
-        { field: "position", headerName: "Position", width: 100 },
+        { field: "position", headerName: "Position", width: 170 },
         { field: "option", headerName: "Option", width: 170 },
         {
             field: "price",
