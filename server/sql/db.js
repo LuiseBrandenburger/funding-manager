@@ -231,3 +231,11 @@ module.exports.updateOutgoingById = (
     ];
     return db.query(q, params);
 };
+
+
+module.exports.deleteOutgoing = (outgoingId) => {
+    const q = `DELETE FROM outgoings WHERE id = ($1)
+    RETURNING id, project_id`;
+    const params = [outgoingId];
+    return db.query(q, params);
+};

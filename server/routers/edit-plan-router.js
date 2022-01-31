@@ -15,6 +15,7 @@ const {
     getOutgoingById,
     updateOutgoingById,
     getOutgoingsSumFinal,
+    deleteOutgoing,
     getApprovedFundingSumById 
 } = require("../sql/db");
 
@@ -132,10 +133,6 @@ plan.post("/api/update-outgoings", (req, res) => {
                 getOutgoingsSumFinal(rows[0].project_id), 
                 getApprovedFundingSumById(rows[0].project_id), 
             ]).then((result)=> {
-                // console.log("log rows after promis.all", result);
-                // console.log("log rows after promis.all", result[0].rows[0].sum);
-                // console.log("log rows after promis.all", result[1].rows[0].sum);
-                // console.log("log rows after promis.all", result[2].rows[0].approved_funding);
 
                 let sumCostsFC = result[0].rows[0].sum;
                 let sumCostsFinal = result[1].rows[0].sum;
@@ -148,10 +145,6 @@ plan.post("/api/update-outgoings", (req, res) => {
                     updateProjectSumLeft(sumLeft, rows[0].project_id),
                     updateProjectFinalSum(result[1].rows[0].sum, rows[0].project_id)
                 ]).then((result) =>{
-                    // console.log("result in update project forecast sum: ", result[0].rows[0].sum_fc_total);
-                    // console.log("log outgoings by id", result[1].rows[0]);
-                    // console.log("log sum whats left of funding", result[2].rows[0]);
-                    // console.log("log sum all final outgoings", result[3].rows[0]);
 
                     res.json({ success: true,
                         sumFcTotalCosts: result[0].rows[0].sum_fc_total,
@@ -170,7 +163,53 @@ plan.post("/api/update-outgoings", (req, res) => {
         });
 });
 
+plan.post("/api/delete-outgoings", (req, res) => {
 
+    console.log("body in post outgoings:", req.body);
+
+    const outgoingId = req.body.clickedItemInTable[0].id;
+    console.log("outgoingId:", outgoingId);
+
+
+    deleteOutgoing(
+        outgoingId
+    )
+        .then(({ rows }) => {
+            console.log("rows in delete:", rows);
+            console.log("rows were deleted:", rows[0].project_id);
+
+            Promise.all([
+                getOutgoingsSumFC(rows[0].project_id), 
+                getOutgoingsSumFinal(rows[0].project_id), 
+                getApprovedFundingSumById(rows[0].project_id), 
+            ]).then((result)=> {
+
+                let sumCostsFC = result[0].rows[0].sum;
+                let sumCostsFinal = result[1].rows[0].sum;
+                let approvedFunding = result[2].rows[0].approved_funding;
+                let sumLeft = ((approvedFunding * 100) - (sumCostsFinal * 100))/100;
+
+                Promise.all([
+                    updateProjectFCSum(sumCostsFC, rows[0].project_id), 
+                    updateProjectSumLeft(sumLeft, rows[0].project_id),
+                    updateProjectFinalSum(result[0].rows[0].sum, rows[0].project_id)
+                ]).then((result) =>{
+
+                    res.json({ success: true,
+                        sumFcTotalCosts: result[0].rows[0].sum_fc_total,
+                        sumFundingLeft: result[1].rows[0].sum_left,
+                        sumTotalCostsPaid: result[2].rows[0].sum_total
+                    });
+
+                });
+
+            });
+        })
+        .catch((err) => {
+            console.log("error adding project: ", err);
+            res.json({ success: false });
+        });
+});
 
 
 /*************************** EXPORT ***************************/

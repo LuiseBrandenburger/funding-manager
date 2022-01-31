@@ -7,8 +7,7 @@ import {
     updateProjectSumFundingLeft, 
     updateProjectSumTotalCostsPaid 
 } from "../../redux/projects/slice";
-import { outgoingsReceived, addOutgoing } from "../../redux/outgoings/slice";
-
+import { outgoingsReceived, addOutgoing, deleteOutgoing } from "../../redux/outgoings/slice";
 import {OutgoingsTable} from "../table-charts-components/outgoings-table";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
@@ -17,10 +16,8 @@ import { DataGrid } from "@mui/x-data-grid";
 export default function EditPlan() {
     const dispatch = useDispatch();
     const { id } = useParams();
-    // console.log("id in params: ", id);
 
     const [userInputOutgoings, setUserInputOutgoings] = useState({});
-    // const [fileInputOutgoings, setFileInputOutgoings] = useState({});
     const [error, setError] = useState(false);
     const [dataColumns, setDataColumns] = useState([
         { field: "id", headerName: "ID", width: 60 },
@@ -61,7 +58,6 @@ export default function EditPlan() {
     const totalRef = useRef();
     const paidDateRef = useRef();
 
-
     // *********************************** STATE *******************************
 
     const outgoings = useSelector((state) => state.outgoings || {});
@@ -77,6 +73,7 @@ export default function EditPlan() {
             return {};
         }
     });
+
     const clickedItemInTable = useSelector((state) => {
         if (state.outgoings) {
             return state.outgoings.filter((outgoing) => {
@@ -105,9 +102,9 @@ export default function EditPlan() {
         setDataRows(currentOutgoingData);
     }, [currentProjectId]);
 
-    // useEffect(() => {
-    //     setDataRows(currentOutgoingData);
-    // }, [outgoings]);
+    useEffect(() => {
+        setDataRows(currentOutgoingData);
+    }, [outgoings]);
 
     useEffect(()=>{
         if (clickedItemInTable[0]) {
@@ -210,13 +207,29 @@ export default function EditPlan() {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({userInputOutgoings, clickedItemInTable}),
+            body: JSON.stringify({clickedItemInTable}),
         })
             .then((data) => {
                 return data.json();
             })
             .then((data) => {
+                console.log("data post deletion", data)
+                if (data.success) {
+                    // console.log("this worked");
+                    // console.log("data when posted:", data);
+                    console.log("clickedItemInTable",clickedItemInTable[0].id);
 
+                    dispatch(deleteOutgoing(clickedItemInTable[0].id));
+                    dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
+                    dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
+                    dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
+                    
+                    // console.log("current Outgoing Data: ", currentOutgoingData)
+                } else {
+                    setError(true);
+                }
+            }).then(()=>{
+                // setDataRows(currentOutgoingData);
             })
             .catch((err) => {
                 console.log("error in fetch /edit-outgoings", err);
@@ -367,10 +380,10 @@ export default function EditPlan() {
                         </div>
                         <div className="single-position-costs">
                             <button
-                                className="add-btn"
-                                onClick={handleSubmitOutgoings}
+                                className="submit-btn-delete"
+                                onClick={handleDeleteOutgoings}
                             >
-                                <img src="/add-btn.svg" alt="" />
+                                delete
                             </button>
                             <button
                                 className="submit-btn-three"
@@ -379,10 +392,10 @@ export default function EditPlan() {
                                 update
                             </button>
                             <button
-                                className="submit-btn-delete"
-                                onClick={handleDeleteOutgoings}
+                                className="add-btn"
+                                onClick={handleSubmitOutgoings}
                             >
-                                delete
+                                <img src="/add-btn.svg" alt="" />
                             </button>
                         </div>
                     </form>
