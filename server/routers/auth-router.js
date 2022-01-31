@@ -8,8 +8,6 @@ const { getUserForLogin, registerUser } = require("../sql/db");
 
 /*************************** ROUTES ***************************/
 
-console.log("Hello from auth");
-
 auth.get("/api/user-id", function (req, res) {
     res.json({
         userId: req.session.userId,
@@ -18,7 +16,7 @@ auth.get("/api/user-id", function (req, res) {
 
 // login.json vorher
 auth.post("/api/login", (req, res) => {
-    console.log("req.body in login.json request: ", req.body);
+    // console.log("req.body in login.json request: ", req.body);
 
     const data = req.body;
     const pw = data.password;
@@ -29,7 +27,7 @@ auth.post("/api/login", (req, res) => {
                 .then((match) => {
                     if (match) {
                         req.session.userId = rows[0].id;
-                        console.log("console.log req.session: ", req.session);
+                        // console.log("console.log req.session: ", req.session);
                         res.json({ success: true });
                     } else {
                         console.log("Error in Match");
@@ -48,7 +46,7 @@ auth.post("/api/login", (req, res) => {
 });
 
 auth.post("/api/register", (req, res) => {
-    console.log("req.body in registration.json request: ", req.body);
+    // console.log("req.body in registration.json request: ", req.body);
 
     const data = req.body;
     const pw = data.password;
@@ -70,9 +68,7 @@ auth.post("/api/register", (req, res) => {
 
                     .then(({ rows }) => {
                         req.session.userId = rows[0].id;
-
-                        console.log("console.log req.session: ", req.session);
-
+                        // console.log("console.log req.session: ", req.session);
                         res.json({ success: true });
                     })
                     .catch((err) => {

@@ -173,34 +173,8 @@ export default function EditPlan() {
                     dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
                     dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
 
-
                     // dispatch(outgoingsReceived())
                     // location.reload();
-
-
-                    // addedOutgoing:
-                        // category: "Marketing"
-                        // created_at: "2022-01-31T10:09:26.474Z"
-                        // fc_total: "0.00"
-                        // file: null
-                        // id: 110
-                        // notes: null
-                        // option: "1.02.\tStudiomiete/Mischen"
-                        // paid: null
-                        // paiddate: null
-                        // position: "production"
-                        // price: "10.00"
-                        // project_id: 3
-                        // quantity: "1"
-                        // sender_id: 1
-                        // total: "1.00"
-                        // [[Prototype]]: Object
-                    // success: true
-                    // sumFcTotalCosts: "5180.00"
-                    // sumFundingLeft: "98443.00"
-                    // sumTotalCostsPaid: "1557.00"
-
-
 
                 } else {
                     setError(true);

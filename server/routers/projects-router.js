@@ -8,18 +8,11 @@ const { registerProject, getProjectsById } = require("../sql/db");
 
 /*************************** ROUTES ***************************/
 
-console.log("Hello from Projects");
-
-// projects.get("/api/user-id", function (req, res) {
-//     res.json({
-//         userId: req.session.userId,
-//     });
-// });
 
 projects.get("/all-projects", function (req, res) {
 
     getProjectsById(req.session.userId).then(({ rows }) => {
-        console.log("rows after projects have been fetched: ", rows);
+        // console.log("rows after projects have been fetched: ", rows);
         res.json({
             data: rows,
         });
@@ -30,7 +23,7 @@ projects.get("/all-projects", function (req, res) {
 
 
 projects.post("/api/projects", (req, res) => {
-    console.log("req.body in registration.json request: ", req.body);
+    // console.log("req.body in registration.json request: ", req.body);
 
     const data = req.body;
 

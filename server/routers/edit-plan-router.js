@@ -39,8 +39,6 @@ plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload,
         }
 
         // ********************** ADD FILE *******************
-        // const fileName = req.file.filename;
-        // const urlToSaveInDB = `https://s3.amazonaws.com/spicedling/${fileName}`;
 
         addOutgoing(
             projectId,
@@ -57,7 +55,7 @@ plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload,
             req.session.userId
         )
             .then(({ rows }) => {
-                console.log("rows in add outgoing:", rows[0].id);
+                // console.log("rows in add outgoing:", rows[0].id);
 
                 Promise.all([
                     getOutgoingsSumFC(projectId), 
@@ -94,26 +92,8 @@ plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload,
 
                     });
 
-                    // updateProjectFCSum(result.rows[0].sum, projectId).then((project) => {
-                    //     console.log("result in update project sum: ", project.rows[0].sum_fc_total);
-                    
-                    
-                //     res.json({ success: true,
-                //         sumFcTotalCosts: project.rows[0].sum_fc_total
-                //     });
-                });
-                // })
 
-                // getOutgoingsSumFC(projectId).then((result) => {
-                //     console.log(result.rows[0].sum);
-                //     updateProjectFCSum(result.rows[0].sum, projectId).then((project) => {
-                //         console.log("result in update project sum: ", project.rows[0].sum_fc_total);
-                        
-                //         res.json({ success: true,
-                //             sumFcTotalCosts: project.rows[0].sum_fc_total
-                //         });
-                //     });
-                // });
+                });
             })
             .catch((err) => {
                 console.log("error adding project: ", err);
