@@ -9,7 +9,7 @@ export function outgoingsReducer(outgoings = [], action) {
         // console.log("newOutgoings: ", newOutgoings);
         // return newOutgoings;
     }
-    console.log("outgoings in Reducer 3: ", outgoings);
+    // console.log("outgoings in Reducer 3: ", outgoings);
     return outgoings;
 }
 

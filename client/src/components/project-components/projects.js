@@ -98,27 +98,27 @@ export default function Projects({ userId }) {
                                     <li>
                                         <h4>
                                             {
-                                                currentProjectData[0]
-                                                    .approved_funding
+                                                new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(currentProjectData[0]
+                                                    .approved_funding)
                                             }
                                         </h4>
                                         <h5>Funding Sum</h5>
                                     </li>
                                     <li>
                                         <h4>
-                                            {currentProjectData[0].sum_fc_total}
+                                            {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(currentProjectData[0].sum_fc_total)}
                                         </h4>
                                         <h5>Costs Calculated</h5>
                                     </li>
                                     <li>
                                         <h4>
-                                            {currentProjectData[0].sumspend}
+                                            {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(currentProjectData[0].sum_total)}
                                         </h4>
                                         <h5>Costs Paid</h5>
                                     </li>
                                     <li>
                                         <h4>
-                                            {currentProjectData[0].sum_left}
+                                            {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(currentProjectData[0].sum_left)}
                                         </h4>
                                         <h5>Left</h5>
                                     </li>

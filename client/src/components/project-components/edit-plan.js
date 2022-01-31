@@ -2,7 +2,11 @@ import useForm from "../../hooks/use-form";
 import { useState, useEffect, useRef } from "react";
 import { useParams, useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProjectFCSumOutgoings } from "../../redux/projects/slice";
+import { 
+    updateProjectFCSumOutgoings, 
+    updateProjectSumFundingLeft, 
+    updateProjectSumTotalCostsPaid 
+} from "../../redux/projects/slice";
 import { outgoingsReceived } from "../../redux/outgoings/slice";
 
 import {OutgoingsTable} from "../table-charts-components/outgoings-table";
@@ -18,7 +22,9 @@ export default function EditPlan() {
     const [userInputOutgoings, setUserInputOutgoings] = useState({});
     // const [fileInputOutgoings, setFileInputOutgoings] = useState({});
     const [error, setError] = useState(false);
+    
     const categorySelectionRef = useRef();
+
     const [dataColumns, setDataColumns] = useState([]);
     const [dataRows, setDataRows] = useState([]);
 
@@ -47,10 +53,10 @@ export default function EditPlan() {
         fetch(`/all-outgoings`)
             .then((data) => data.json())
             .then(({ data }) => {
-                console.log(
-                    "data in GET Route /all-outgoings: ",
-                    data,
-                );
+                // console.log(
+                //     "data in GET Route /all-outgoings: ",
+                //     data,
+                // );
                 dispatch(outgoingsReceived(data));
             })
             .catch((err) => {
@@ -97,61 +103,18 @@ export default function EditPlan() {
             [target.name]: target.value,
         });
 
-    // const handleFileChangeOutgoings = ({ target }) =>
-    //     setFileInputOutgoings({
-    //         ...userInputOutgoings,
-    //         [target.name]: target.files[0],
-    //     });
 
-    // **********************TODO: SET OPTION VALUES **********************
 
-    // let marketingArr = ["2.01.	Promotion Print",
-    //     "2.02.	Promotion Radio",
-    //     "2.03.	Promotion TV ",
-    //     "2.04.	Promotion Online ",
-    //     "2.05.	Anzeigen",
-    //     "2.06.	Online Marketing",
-    //     "2.07.	Sonstiges Marketing ",
-    //     "2.08.	Pressetexte, Biographie ",
-    //     "2.09.	Internetauftritt ",
-    //     "2.10.	Produktionskosten ",
-    //     "2.11.	Versandkosten",
-    //     "2.12.	PR-Reisen ", 
-    //     "2.13.	Video-/Contentproduktion", 
-    //     "2.14.	Produktmanagement", 
-    //     "2.15.	Sonstiges" ]
-    
-    // let optionListMarketing =
-    //     marketingArr.map((project, i) => {
-    //         return (
-    //             <option key={i} value={project}>
-    //                 {project}
-    //             </option>
-    //         );
-    //     }, this);
 
-    // useEffect(() => {
 
-    //     // TODO: finish
-    //     if (userInputOutgoings.category === "Marketing") {
-    //         console.log("Marketing was choosen");
-    //         setOptionValues(
-    //             <option value="1.01.	Studiomiete/Aufnahme">
-    //                                     1.01. Studiomiete/Aufnahme
-    //             </option>
-    //         )
-    //     } else {
-    //     }
-    //     console.log(userInputOutgoings.category);
 
-    // }, [userInputOutgoings]);
 
+  
 
     // ********************* SUBMITS ***********************
 
     const handleSubmitOutgoings = (e) => {
         e.preventDefault();
-        console.log("project id in handle submit: ", currentProjectId);
 
         fetch("/api/edit-outgoings", {
             method: "POST",
@@ -186,6 +149,11 @@ export default function EditPlan() {
     const handleUpdateOutgoings = (e) => {
         e.preventDefault();
 
+            // TODO: UPSERT For editing outcome values
+    // defaultValue=
+    // default Value wenn es kein Value gibt
+
+
         fetch("/api/update-outgoings", {
             method: "POST",
             headers: {
@@ -202,8 +170,38 @@ export default function EditPlan() {
                     console.log("data when posted:", data);
                     console.log("this worked");
                     dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
+                    dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
+                    dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
+
+
                     // dispatch(outgoingsReceived())
                     // location.reload();
+
+
+                    // addedOutgoing:
+                        // category: "Marketing"
+                        // created_at: "2022-01-31T10:09:26.474Z"
+                        // fc_total: "0.00"
+                        // file: null
+                        // id: 110
+                        // notes: null
+                        // option: "1.02.\tStudiomiete/Mischen"
+                        // paid: null
+                        // paiddate: null
+                        // position: "production"
+                        // price: "10.00"
+                        // project_id: 3
+                        // quantity: "1"
+                        // sender_id: 1
+                        // total: "1.00"
+                        // [[Prototype]]: Object
+                    // success: true
+                    // sumFcTotalCosts: "5180.00"
+                    // sumFundingLeft: "98443.00"
+                    // sumTotalCostsPaid: "1557.00"
+
+
+
                 } else {
                     setError(true);
                 }
@@ -289,17 +287,6 @@ export default function EditPlan() {
                                 />
                             </div>
 
-                            {/* <div>
-                                <label htmlFor="quantity">Quantity</label>
-                                <input
-                                    type="number"
-                                    id="quantity"
-                                    name="quantity"
-                                    placeholder="1"
-                                    step="1"
-                                    onChange={handleChange}
-                                />
-                            </div> */}
                             <div>
                                 <label htmlFor="paid">Paid?</label>
                                 <input
@@ -348,26 +335,14 @@ export default function EditPlan() {
                                 />
                             </div>
 
-                            {/* <div>
-                                <label className="file-label" htmlFor="file">
-                                    <img src="/upload-btn.svg" alt="" />
-                                </label>
-                                <input
-                                    type="file"
-                                    id="file"
-                                    title="upload file here"
-                                    name="file"
-                                    onChange={handleFileChangeOutgoings}
-                                />
-                            </div> */}
                         </div>
                         <div className="single-position-costs">
-                            {/* <button
+                            <button
                                 className="submit-btn-two"
                                 onClick={handleUpdateOutgoings}
                             >
                                 update
-                            </button> */}
+                            </button>
                             <button
                                 className="add-btn"
                                 onClick={handleSubmitOutgoings}

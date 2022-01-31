@@ -1,10 +1,10 @@
 export function currentProjectReducer(currentProject = null, action) {
     if (action.type == "project/receivedCurrentProject") {
         currentProject = action.payload.project;
-        console.log("currentProject im REducer", currentProject);
+        // console.log("currentProject im REducer", currentProject);
     } else if (action.type == "project/updateCurrentProject") {
         const newCurrentProject = action.payload.project;
-        console.log("newCurrentProject in Reducer: ", newCurrentProject);
+        // console.log("newCurrentProject in Reducer: ", newCurrentProject);
         return newCurrentProject;
     } else if (action.type == "project/updateProjectFCSumOutgoings") {
         
@@ -33,9 +33,16 @@ export function updateCurrentProject(project) {
     };
 }
 
-export function updateProjectFCSumOutgoings(sum) {
-    return {
-        type: "project/updateProjectFCSumOutgoings",
-        payload: { sum },
-    };
-}
+// export function updateProjectFCSumOutgoings(sum) {
+//     return {
+//         type: "project/updateProjectFCSumOutgoings",
+//         payload: { sum },
+//     };
+// }
+
+// export function updateProjectsumFundingLeft(sum) {
+//     return {
+//         type: "project/sumFundingLeft",
+//         payload: { sum },
+//     };
+// }
