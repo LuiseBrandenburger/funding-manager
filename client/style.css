@@ -48,11 +48,13 @@
     background-color: var(--main-bg-color);
 }
 
+.MuiDataGrid-columnHeaders{
+    height: 30px;
+}
+
 .MuiDataGrid-columnHeadersInner{
     background-color: var(--main-bg-color);
     background-color: var(--main-btn-text-color);
-
-
 }
 
 html {
@@ -638,6 +640,7 @@ h4 {
 
 .project-plan-income {
     border: 4px solid var(--main-headline-color);
+    padding: 0;
 }
 
 /******************************************* SHOW TABLE ******************************************/
