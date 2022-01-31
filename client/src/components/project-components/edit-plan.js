@@ -22,7 +22,6 @@ export default function EditPlan() {
     const [userInputOutgoings, setUserInputOutgoings] = useState({});
     // const [fileInputOutgoings, setFileInputOutgoings] = useState({});
     const [error, setError] = useState(false);
-    const categorySelectionRef = useRef();
     const [dataColumns, setDataColumns] = useState([
         { field: "id", headerName: "ID", width: 60 },
         { field: "position", headerName: "Position", width: 100 },
@@ -52,6 +51,16 @@ export default function EditPlan() {
     const [dataRows, setDataRows] = useState([]);
     const [idItemPopulateList, setIdItemPopulateList] = useState();
 
+    // *********************************** REF *******************************
+
+    const categoryRef = useRef();
+    const optionRef = useRef();
+    const positionRef = useRef();
+    const priceRef = useRef();
+    const notesRef = useRef();
+    const totalRef = useRef();
+    const paidDateRef = useRef();
+
 
     // *********************************** STATE *******************************
 
@@ -78,15 +87,14 @@ export default function EditPlan() {
         }
     });
 
-
     // *********************************** EFFECTS *******************************
     
     useEffect(() => {
         fetch(`/all-outgoings`)
             .then((data) => data.json())
             .then(({ data }) => {
-                dispatch(outgoingsReceived(data));
                 setDataRows(currentOutgoingData);
+                dispatch(outgoingsReceived(data));
             })
             .catch((err) => {
                 console.log("error to get all Projects: ", err);
@@ -97,6 +105,10 @@ export default function EditPlan() {
         setDataRows(currentOutgoingData);
     }, [currentProjectId]);
 
+    // useEffect(() => {
+    //     setDataRows(currentOutgoingData);
+    // }, [outgoings]);
+
     useEffect(()=>{
         if (clickedItemInTable[0]) {
             console.log(clickedItemInTable[0]);
@@ -104,6 +116,7 @@ export default function EditPlan() {
 
         }
     },[clickedItemInTable]);
+
     // ******************************* HANDLE CHANGES *************************
   
     const handleChange = ({ target }) =>
@@ -112,12 +125,11 @@ export default function EditPlan() {
             [target.name]: target.value,
         });
 
-    console.log("userInput: ", userInputOutgoings);
+    // console.log("userInput: ", userInputOutgoings);
     // ********************* SUBMITS ***********************
 
     const handleSubmitOutgoings = (e) => {
         e.preventDefault();
-
 
         fetch("/api/edit-outgoings", {
             method: "POST",
@@ -137,7 +149,7 @@ export default function EditPlan() {
                     dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
                     dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
                     dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
-                    // FIXME: dispatch(addOutgoing(data.addedOutgoing));
+                    dispatch(addOutgoing(data.addedOutgoing));
                     
                 } else {
                     setError(true);
@@ -149,20 +161,33 @@ export default function EditPlan() {
             });
     };
 
-
     const handleUpdateOutgoings = (e) => {
         e.preventDefault();
 
-        console.log("handle Outgoing Update");
+        // console.log("categoryRef: ", categoryRef.current.value);
+        // console.log("categoryRef: ", optionRef.current.value);
+        // console.log("categoryRef: ", positionRef.current.value);
+        // console.log("categoryRef: ", parseInt(priceRef.current.value));
+        // console.log("categoryRef: ", notesRef.current.value);
+        // console.log("categoryRef: ", parseInt(totalRef.current.value));
+        // console.log("categoryRef: ", new Date(paidDateRef.current.value));
 
-        // TODO: UPSERT For editing outcome values
- 
+        const userInputForUpdate = {
+            category: categoryRef.current.value,
+            option: optionRef.current.value,
+            position: positionRef.current.value,
+            price: parseInt(priceRef.current.value),
+            notes: notesRef.current.value,
+            total: parseInt(totalRef.current.value),
+            paidDate: new Date(paidDateRef.current.value)
+        }
+        
         fetch("/api/update-outgoings", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({userInputOutgoings, clickedItemInTable}),
+            body: JSON.stringify({userInputForUpdate, clickedItemInTable}),
         })
             .then((data) => {
                 return data.json();
@@ -186,6 +211,29 @@ export default function EditPlan() {
             });
     };
 
+    const handleDeleteOutgoings = (e) => {
+        e.preventDefault();
+
+        fetch("/api/delete-outgoings", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({userInputOutgoings, clickedItemInTable}),
+        })
+            .then((data) => {
+                return data.json();
+            })
+            .then((data) => {
+
+            })
+            .catch((err) => {
+                console.log("error in fetch /edit-outgoings", err);
+                setError(true);
+            });
+
+    };
+
     // ********************* RENDER***********************
     
 
@@ -203,6 +251,7 @@ export default function EditPlan() {
                                 <select
                                     name="category"
                                     id="category"
+                                    ref={categoryRef}
                                     onChange={handleChange}
                                 >
                                     { (clickedItemInTable[0] && clickedItemInTable[0].category)?
@@ -219,6 +268,7 @@ export default function EditPlan() {
                                 <select
                                     name="option"
                                     id="option"
+                                    ref={optionRef}
                                     onChange={handleChange}
                                     defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].option : ""}
                                 >
@@ -245,6 +295,7 @@ export default function EditPlan() {
                                 <input
                                     type="text"
                                     id="position"
+                                    ref={positionRef}
                                     defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].position : ""}
                                     name="position"
                                     placeholder="Describe Position"
@@ -258,6 +309,7 @@ export default function EditPlan() {
                                     type="number"
                                     id="price"
                                     name="price"
+                                    ref={priceRef}
                                     placeholder="1000,00"
                                     defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].price : ""}
                                     min="0.01"
@@ -286,6 +338,7 @@ export default function EditPlan() {
                                 <input
                                     type="date"
                                     id="paiddate"
+                                    ref={paidDateRef}
                                     name="paidDate"
                                     defaultValue={(clickedItemInTable[0] && clickedItemInTable[0].paiddate)? new Date(clickedItemInTable[0].paiddate).toISOString().slice(0, 10) : ""}
                                     onChange={handleChange}
@@ -298,6 +351,7 @@ export default function EditPlan() {
                                     type="number"
                                     id="finalsum"
                                     name="finalSum"
+                                    ref={totalRef}
                                     placeholder="10.000,00"
                                     defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].total : ""}
                                     min="0.01"
@@ -311,6 +365,7 @@ export default function EditPlan() {
                                 <input
                                     type="text"
                                     id="notes"
+                                    ref={notesRef}
                                     placeholder="Please enter Notes"
                                     name="notes"
                                     defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].notes: ""}
@@ -321,16 +376,22 @@ export default function EditPlan() {
                         </div>
                         <div className="single-position-costs">
                             <button
-                                className="submit-btn-two"
+                                className="add-btn"
+                                onClick={handleSubmitOutgoings}
+                            >
+                                <img src="/add-btn.svg" alt="" />
+                            </button>
+                            <button
+                                className="submit-btn-three"
                                 onClick={handleUpdateOutgoings}
                             >
                                 update
                             </button>
                             <button
-                                className="add-btn"
-                                onClick={handleSubmitOutgoings}
+                                className="submit-btn-delete"
+                                onClick={handleDeleteOutgoings}
                             >
-                                <img src="/add-btn.svg" alt="" />
+                                delete
                             </button>
                         </div>
                     </form>

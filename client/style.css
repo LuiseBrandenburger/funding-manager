@@ -213,6 +213,26 @@ h4 {
     border: 3px solid var(--btn-submit-bg-color);
 }
 
+.submit-btn-three {
+    width: 70px;
+    height: 30px;
+    margin-right: 5px;
+    background-color: transparent;
+    color: var(--btn-submit-bg-color);
+    border: 3px solid var(--btn-submit-bg-color);
+    align-self: flex-end;
+}
+
+.submit-btn-delete{
+    width: 70px;
+    height: 30px;
+    margin-right: 5px;
+    background-color: transparent;
+    color: #9f4a5471;
+    border: 3px solid #9f4a5471;
+    align-self: flex-end;
+}
+
 /******************* MAIN SETUP *******************/
 
 .main-container {
@@ -549,9 +569,8 @@ h4 {
     height: 30px;
     width: 30px;
     background-color: var(--btn-submit-bg-color);
-    align-self: baseline;
-    align-self: flex-end;
     padding: 3px;
+    margin-right: 5px;
 }
 
 .income {
@@ -586,8 +605,8 @@ h4 {
 }
 
 .single-position-costs {
-    margin-top: 10px;
     align-self: flex-end;
+    display: flex;
 }
 
 .project-plan-income,

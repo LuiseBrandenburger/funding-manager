@@ -1,8 +1,6 @@
 /*
 
-TODO: fix update Project Sum State - to avoid reloading
-
-
+TODO: fix update Outgoing state
 
 
 TODO: NICE TO HAVE: fix file input 

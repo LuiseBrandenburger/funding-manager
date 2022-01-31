@@ -98,42 +98,6 @@ module.exports.addOutgoing = (
 };
 
 
-
-
-module.exports.addIcomings = (
-    projectId,
-    category,
-    position,
-    incomeAmount,
-    file,
-    notes,
-    finalSum,
-    isPaid,
-    paidDate,
-    userId
-) => {
-    const q = `INSERT INTO incomings (project_id, category, position, price, file, notes, total, paid, paiddate, sender_id)
-
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-    RETURNING id`;
-
-    const params = [
-        projectId,
-        category,
-        position,
-        incomeAmount,
-        file,
-        notes,
-        finalSum,
-        isPaid,
-        paidDate,
-        userId,
-    ];
-    return db.query(q, params);
-};
-
-
-
 module.exports.getProjectsById = (owner_id) => {
     const q = `SELECT name, project_number, artist_name, id, approved_funding, sum_spend AS sumSpend, sum_left, sum_accounted, funding_received, sum_total, sum_fc_total FROM projects WHERE owner_id = ($1)
     ORDER by created_at DESC`;
@@ -231,5 +195,41 @@ module.exports.updateProjectFinalSum = (finalOutgoingsSum, projectId) => {
 module.exports.getApprovedFundingSumById = (projectId) => {
     const q = `SELECT approved_funding FROM projects WHERE id = ($1)`;
     const params = [projectId];
+    return db.query(q, params);
+};
+
+
+module.exports.updateOutgoingById = (
+    category,
+    option,
+    position,
+    sumFC,
+    notes,
+    sumPaid,
+    paidDate,
+    outgoingId
+) => {
+    const q = `UPDATE outgoings 
+    SET category = ($1),
+    SET option = ($2),
+    SET position = ($3),
+    SET price = ($4),
+    SET notes = ($5),
+    SET total = ($6),
+    SET paiddate = ($7)
+    WHERE id = ($8)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+    RETURNING id, project_id`;
+
+    const params = [
+        category,
+        option,
+        position,
+        sumFC,
+        notes,
+        sumPaid,
+        paidDate,
+        outgoingId
+    ];
     return db.query(q, params);
 };
