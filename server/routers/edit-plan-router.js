@@ -22,9 +22,6 @@ const {
 plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload, 
     (req, res) => {
 
-        // TODO: PROJECT ID AND SUM ANPASSEN!!!
-        let totalSum = 0;
-
         console.log("body in post outgoings:", req.body);
         // console.log("body.file in post outgoings:", req.file);
         const data = req.body.userInputOutgoings;

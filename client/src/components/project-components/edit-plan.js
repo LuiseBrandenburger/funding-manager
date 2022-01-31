@@ -100,6 +100,8 @@ export default function EditPlan() {
     useEffect(()=>{
         if (clickedItemInTable[0]) {
             console.log(clickedItemInTable[0]);
+            console.log("category item clicked: ",clickedItemInTable[0].category);
+
         }
     },[clickedItemInTable]);
     // ******************************* HANDLE CHANGES *************************
@@ -110,10 +112,12 @@ export default function EditPlan() {
             [target.name]: target.value,
         });
 
+    console.log("userInput: ", userInputOutgoings);
     // ********************* SUBMITS ***********************
 
     const handleSubmitOutgoings = (e) => {
         e.preventDefault();
+
 
         fetch("/api/edit-outgoings", {
             method: "POST",
@@ -153,33 +157,33 @@ export default function EditPlan() {
 
         // TODO: UPSERT For editing outcome values
  
-        // fetch("/api/update-outgoings", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({userInputOutgoings, outgoingId}),
-        // })
-        //     .then((data) => {
-        //         return data.json();
-        //     })
-        //     .then((data) => {
-        //         if (data.success) {
-        //             // TODO: SOMETHING WHEN SUCCESS
-        //             console.log("data when posted:", data);
-        //             // console.log("this worked");
-        //             // dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
-        //             // dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
-        //             // dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
-        //             // location.reload();
-        //         } else {
-        //             setError(true);
-        //         }
-        //     })
-        //     .catch((err) => {
-        //         console.log("error in fetch /edit-outgoings", err);
-        //         setError(true);
-        //     });
+        fetch("/api/update-outgoings", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({userInputOutgoings, clickedItemInTable}),
+        })
+            .then((data) => {
+                return data.json();
+            })
+            .then((data) => {
+                if (data.success) {
+                    // TODO: SOMETHING WHEN SUCCESS
+                    console.log("data when posted:", data);
+                    // console.log("this worked");
+                    // dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
+                    // dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
+                    // dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
+                    // location.reload();
+                } else {
+                    setError(true);
+                }
+            })
+            .catch((err) => {
+                console.log("error in fetch /edit-outgoings", err);
+                setError(true);
+            });
     };
 
     // ********************* RENDER***********************
@@ -199,15 +203,14 @@ export default function EditPlan() {
                                 <select
                                     name="category"
                                     id="category"
-                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].category: ""}
                                     onChange={handleChange}
                                 >
-                                    <option value="hide">-- Category --</option>
-                                    <option value="Production">
-                                        Production
-                                    </option>
-                                    <option value="Marketing">Marketing</option>
-                                    <option value="Tour">Tour</option>
+                                    { (clickedItemInTable[0] && clickedItemInTable[0].category)?
+                                        <option value={clickedItemInTable[0].category}>{clickedItemInTable[0].category}</option>:
+                                        <><option value="hide">-- Category --</option><option value="Production">
+                                            Production
+                                        </option><option value="Marketing">Marketing</option><option value="Tour">Tour</option></>
+                                    }
                                 </select>
                             </div>
 
@@ -219,18 +222,21 @@ export default function EditPlan() {
                                     onChange={handleChange}
                                     defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].option : ""}
                                 >
-                                    <option value="hide">
+                                    { (clickedItemInTable[0] && clickedItemInTable[0].option)?
+                                        <option value={clickedItemInTable[0].option}>{clickedItemInTable[0].option}</option>:
+                                        <><option value="hide">
                                         -- Expense Category --
-                                    </option>
-                                    <option value="1.01.	Studiomiete/Aufnahme">
+                                        </option>
+                                        <option value="1.01.	Studiomiete/Aufnahme">
                                         1.01. Studiomiete/Aufnahme
-                                    </option>
-                                    <option value="1.02.	Studiomiete/Mischen">
+                                        </option>
+                                        <option value="1.02.	Studiomiete/Mischen">
                                         1.02. Studiomiete/Mischen
-                                    </option>
-                                    <option value="1.03.	Mastering">
+                                        </option>
+                                        <option value="1.03.	Mastering">
                                         1.03. Mastering
-                                    </option>
+                                        </option></>
+                                    }
                                 </select>
                             </div>
 
@@ -260,16 +266,16 @@ export default function EditPlan() {
                                 />
                             </div>
 
-                            <div>
+                            {/* <div>
                                 <label htmlFor="paid">Paid?</label>
                                 <input
                                     type="checkbox"
                                     id="paid"
                                     name="isPaid"
-                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].idPaid : ""}
                                     onChange={handleChange}
+                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].idPaid : "" }
                                 />
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="edit-plan-form-bottom">
@@ -281,7 +287,7 @@ export default function EditPlan() {
                                     type="date"
                                     id="paiddate"
                                     name="paidDate"
-                                    defaultValue={(clickedItemInTable[0])? new Date(clickedItemInTable[0].paiddate).toISOString().slice(0, 10) : ""}
+                                    defaultValue={(clickedItemInTable[0] && clickedItemInTable[0].paiddate)? new Date(clickedItemInTable[0].paiddate).toISOString().slice(0, 10) : ""}
                                     onChange={handleChange}
                                 />
                             </div>
