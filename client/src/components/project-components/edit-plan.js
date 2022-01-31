@@ -101,7 +101,6 @@ export default function EditPlan() {
         if (clickedItemInTable[0]) {
             console.log(clickedItemInTable[0]);
         }
-
     },[clickedItemInTable]);
     // ******************************* HANDLE CHANGES *************************
   
@@ -198,9 +197,9 @@ export default function EditPlan() {
                                     Select Item Category
                                 </label>
                                 <select
-                                    ref={categorySelectionRef}
                                     name="category"
                                     id="category"
+                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].category: ""}
                                     onChange={handleChange}
                                 >
                                     <option value="hide">-- Category --</option>
@@ -218,6 +217,7 @@ export default function EditPlan() {
                                     name="option"
                                     id="option"
                                     onChange={handleChange}
+                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].option : ""}
                                 >
                                     <option value="hide">
                                         -- Expense Category --
@@ -239,6 +239,7 @@ export default function EditPlan() {
                                 <input
                                     type="text"
                                     id="position"
+                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].position : ""}
                                     name="position"
                                     placeholder="Describe Position"
                                     onChange={handleChange}
@@ -252,6 +253,7 @@ export default function EditPlan() {
                                     id="price"
                                     name="price"
                                     placeholder="1000,00"
+                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].price : ""}
                                     min="0.01"
                                     step="0.01"
                                     onChange={handleChange}
@@ -264,6 +266,7 @@ export default function EditPlan() {
                                     type="checkbox"
                                     id="paid"
                                     name="isPaid"
+                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].idPaid : ""}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -278,6 +281,7 @@ export default function EditPlan() {
                                     type="date"
                                     id="paiddate"
                                     name="paidDate"
+                                    defaultValue={(clickedItemInTable[0])? new Date(clickedItemInTable[0].paiddate).toISOString().slice(0, 10) : ""}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -289,6 +293,7 @@ export default function EditPlan() {
                                     id="finalsum"
                                     name="finalSum"
                                     placeholder="10.000,00"
+                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].total : ""}
                                     min="0.01"
                                     step="0.01"
                                     onChange={handleChange}
@@ -302,6 +307,7 @@ export default function EditPlan() {
                                     id="notes"
                                     placeholder="Please enter Notes"
                                     name="notes"
+                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].notes: ""}
                                     onChange={handleChange}
                                 />
                             </div>
