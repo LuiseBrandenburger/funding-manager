@@ -108,7 +108,7 @@ export default function Projects({ userId }) {
                                         <h4>
                                             {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(currentProjectData[0].sum_fc_total)}
                                         </h4>
-                                        <h5>Costs Calculated</h5>
+                                        <h5>Estimated Costs</h5>
                                     </li>
                                     <li>
                                         <h4>
@@ -120,7 +120,7 @@ export default function Projects({ userId }) {
                                         <h4>
                                             {new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(currentProjectData[0].sum_left)}
                                         </h4>
-                                        <h5>Left</h5>
+                                        <h5>Funding Balance</h5>
                                     </li>
                                 </ul>
                             ) : (

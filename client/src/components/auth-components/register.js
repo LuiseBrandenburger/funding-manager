@@ -36,7 +36,7 @@ export default function Register() {
 
     return (
         <div className="register-container">
-            <h1>Register Container</h1>
+            <h1>Register Here</h1>
             {error && (
                 <h4 style={{ color: "red" }}> Error, something went wrong </h4>
             )}

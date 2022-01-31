@@ -22,18 +22,19 @@ export default function EditPlan() {
     const [userInputOutgoings, setUserInputOutgoings] = useState({});
     const [error, setError] = useState(false);
     const [dataColumns, setDataColumns] = useState([
-        { field: "position", headerName: "Position", width: 170 },
-        { field: "option", headerName: "Option", width: 170 },
+        { field: "category", headerName: "Category", width: 100 },
+        { field: "option", headerName: "Option", width: 200 },
+        { field: "position", headerName: "Expense Description", width: 200 },
         {
             field: "price",
-            headerName: "Costs",
+            headerName: "Cost",
             type: "number",
             width: 120,
             editable: true 
         },
         {
             field: "total",
-            headerName: "Paid",
+            headerName: "Paid Amount",
             type: "number",
             width: 120,
             editable: true 
@@ -45,7 +46,9 @@ export default function EditPlan() {
             width: 100,
             editable: true 
         }, 
+        { field: "notes", headerName: "Transaction Notes", width: 300 },
         { field: "id", headerName: "ID", width: 60 },
+
     ]);
     const [dataRows, setDataRows] = useState([]);
     const [idItemPopulateList, setIdItemPopulateList] = useState();
@@ -237,7 +240,7 @@ export default function EditPlan() {
                         <div className="edit-plan-form-top">
                             <div className="group-container">
                                 <label htmlFor="category">
-                                    Select Item Category
+                                    Select Category
                                 </label>
                                 <select
                                     name="category"
@@ -282,7 +285,7 @@ export default function EditPlan() {
                             </div>
 
                             <div>
-                                <label htmlFor="position">Item Name</label>
+                                <label htmlFor="position">Expense Description</label>
                                 <input
                                     type="text"
                                     id="position"
@@ -295,13 +298,13 @@ export default function EditPlan() {
                             </div>
 
                             <div>
-                                <label htmlFor="price">Item Price</label>
+                                <label htmlFor="price">Estimated Cost</label>
                                 <input
                                     type="number"
                                     id="price"
                                     name="price"
                                     ref={priceRef}
-                                    placeholder="1000,00"
+                                    placeholder="E.g. 1000,00"
                                     defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].price : ""}
                                     min="0.01"
                                     step="0.01"
@@ -343,7 +346,7 @@ export default function EditPlan() {
                                     id="finalsum"
                                     name="finalSum"
                                     ref={totalRef}
-                                    placeholder="10.000,00"
+                                    placeholder="E.g. 1000,00"
                                     defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].total : ""}
                                     min="0.01"
                                     step="0.01"
@@ -352,12 +355,12 @@ export default function EditPlan() {
                             </div>
 
                             <div>
-                                <label htmlFor="notes">Notes on Payment</label>
+                                <label htmlFor="notes">Transaction Notes</label>
                                 <input
                                     type="text"
                                     id="notes"
                                     ref={notesRef}
-                                    placeholder="Please enter Notes"
+                                    placeholder="E.g. Invoice Number"
                                     name="notes"
                                     defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].notes: ""}
                                     onChange={handleChange}
