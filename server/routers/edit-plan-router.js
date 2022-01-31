@@ -133,7 +133,6 @@ plan.post("/api/update-outgoings", (req, res) => {
                 getOutgoingsSumFinal(rows[0].project_id), 
                 getApprovedFundingSumById(rows[0].project_id), 
             ]).then((result)=> {
-
                 let sumCostsFC = result[0].rows[0].sum;
                 let sumCostsFinal = result[1].rows[0].sum;
                 let approvedFunding = result[2].rows[0].approved_funding;
@@ -184,6 +183,8 @@ plan.post("/api/delete-outgoings", (req, res) => {
                 getApprovedFundingSumById(rows[0].project_id), 
             ]).then((result)=> {
 
+                // console.log("Result: ", result);
+
                 let sumCostsFC = result[0].rows[0].sum;
                 let sumCostsFinal = result[1].rows[0].sum;
                 let approvedFunding = result[2].rows[0].approved_funding;
@@ -192,7 +193,7 @@ plan.post("/api/delete-outgoings", (req, res) => {
                 Promise.all([
                     updateProjectFCSum(sumCostsFC, rows[0].project_id), 
                     updateProjectSumLeft(sumLeft, rows[0].project_id),
-                    updateProjectFinalSum(result[0].rows[0].sum, rows[0].project_id)
+                    updateProjectFinalSum(result[1].rows[0].sum, rows[0].project_id)
                 ]).then((result) =>{
 
                     res.json({ success: true,
