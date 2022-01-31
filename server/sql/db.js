@@ -211,6 +211,14 @@ module.exports.updateProjectFCSum = (fcOutgoingsSum, projectId) => {
     return db.query(q, params);
 };
 
+module.exports.updateProjectSumLeft = (sumLeft, projectId) => {
+    const q = `UPDATE projects SET sum_left = ($1)
+    WHERE id = ($2)
+    RETURNING sum_left`;
+    const params = [sumLeft, projectId];
+    return db.query(q, params);
+};
+
 module.exports.updateProjectFinalSum = (finalOutgoingsSum, projectId) => {
     const q = `UPDATE projects SET sum_total = ($1)
     WHERE id = ($2)

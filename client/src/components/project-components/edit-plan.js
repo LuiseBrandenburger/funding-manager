@@ -76,7 +76,14 @@ export default function EditPlan() {
                 type: "number",
                 width: 120,
                 editable: true 
-            }   
+            },
+            {
+                field: "paiddate",
+                headerName: "Date",
+                type: "date",
+                width: 100,
+                editable: true 
+            } 
         ]);
         setDataRows(currentOutgoingData);
     }, [currentProjectId]);
