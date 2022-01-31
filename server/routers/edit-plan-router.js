@@ -12,6 +12,7 @@ const {
     getOutgoingsSumFC, 
     updateProjectFCSum,
     updateProjectFinalSum,
+    getOutgoingById,
     getOutgoingsSumFinal,
     getApprovedFundingSumById 
 } = require("../sql/db");
@@ -55,34 +56,43 @@ plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload,
             req.session.userId
         )
             .then(({ rows }) => {
-                // console.log(rows);
+                console.log("rows in add outgoing:", rows[0].id);
 
-                // i need to get all sums I also need to get the funding sum 
-                // Promise.all([getOutgoingsSumFC(projectId), getOutgoingsSumFinal(projectId), getApprovedFundingSumById(projectId)]).then((result)=> {
+                Promise.all([getOutgoingsSumFC(projectId), getOutgoingsSumFinal(projectId), 
+                getApprovedFundingSumById(projectId), getOutgoingById(rows[0].id)]).then((result)=> {
                     
-                //     // TODO: FIX SUM PAID!
-                //     console.log("log rows after promis.all", result);
-                //     console.log("log rows after promis.all", result[0].rows[0].sum);
-                //     console.log("log rows after promis.all", result[1].rows[0].sum);
-                //     console.log("log rows after promis.all", result[2].rows[0].approved_funding);
+                    // TODO: FIX SUM PAID!
+                    console.log("log rows after promis.all", result);
+                    console.log("log rows after promis.all", result[0].rows[0].sum);
+                    console.log("log rows after promis.all", result[1].rows[0].sum);
+                    console.log("log rows after promis.all", result[2].rows[0].approved_funding);
+                    console.log("log rows after promis.all", result[3].rows[0]);
 
-                //     let sumCostsFC = result[0].rows[0].sum;
-                //     let sumCostsFinal = result[1].rows[0].sum;
-                //     let approvedFunding = result[2].rows[0].approved_funding;
-                //     let sumLeft = ((approvedFunding * 100) - (sumCostsFinal * 100))/100;
-                //     console.log(sumLeft);
+                    let sumCostsFC = result[0].rows[0].sum;
+                    let sumCostsFinal = result[1].rows[0].sum;
+                    let approvedFunding = result[2].rows[0].approved_funding;
+                    let sumLeft = ((approvedFunding * 100) - (sumCostsFinal * 100))/100;
+                    console.log(sumLeft);
 
+                // updateProjectFCSum(result.rows[0].sum, projectId).then((project) => {
+                //     console.log("result in update project sum: ", project.rows[0].sum_fc_total);
+                    
+                //     res.json({ success: true,
+                //         sumFcTotalCosts: project.rows[0].sum_fc_total
+                //     });
+                });
                 // })
 
-                getOutgoingsSumFC(projectId).then((result) => {
-                    console.log(result.rows[0].sum);
-                    updateProjectFCSum(result.rows[0].sum, projectId).then((project) => {
-                        console.log("result in update project sum: ", project.rows[0].sum_fc_total);
-                        res.json({ success: true,
-                            sumFcTotalCosts: project.rows[0].sum_fc_total
-                        });
-                    });
-                });
+                // getOutgoingsSumFC(projectId).then((result) => {
+                //     console.log(result.rows[0].sum);
+                //     updateProjectFCSum(result.rows[0].sum, projectId).then((project) => {
+                //         console.log("result in update project sum: ", project.rows[0].sum_fc_total);
+                        
+                //         res.json({ success: true,
+                //             sumFcTotalCosts: project.rows[0].sum_fc_total
+                //         });
+                //     });
+                // });
             })
             .catch((err) => {
                 console.log("error adding project: ", err);

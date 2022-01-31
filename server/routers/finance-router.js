@@ -7,23 +7,24 @@ const finance = express.Router();
 const {
     getOutgoingsByProjectId,
     getIncomingsByProjectId,
-    getOutgoingsSumFC
+    getOutgoingsSumFC,
+    getAllOutgoingsByuserId
 } = require("../sql/db");
 
 /*************************** ROUTES ***************************/
 
 console.log("Hello from Projects");
 
-// finance.get("/project-sum-fc/:id", function (req, res) {
-//     console.log("params in request body outgoings: ", req.params);
-//     // let projectId = 1;
-//     getOutgoingsSumFC(req.params.id).then(({ rows }) => {
-//         // console.log("rows after projects have been fetched: ", rows);
-//         res.json({
-//             data: rows,
-//         });
-//     });
-// });
+finance.get("/all-outgoings", function (req, res) {
+
+    getAllOutgoingsByuserId(req.session.userId).then(({ rows }) => {
+        console.log("rows after projects have been fetched: ", rows);
+        res.json({
+            data: rows,
+        });
+    });
+});
+
 
 finance.get("/all-outgoings/:id", function (req, res) {
     console.log("params in request body outgoings: ", req.params.id);

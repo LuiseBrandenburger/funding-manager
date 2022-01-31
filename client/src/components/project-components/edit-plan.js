@@ -3,6 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import { useParams, useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProjectFCSumOutgoings } from "../../redux/projects/slice";
+import { outgoingsReceived } from "../../redux/outgoings/slice";
+
 import {OutgoingsTable} from "../table-charts-components/outgoings-table";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
@@ -22,52 +24,61 @@ export default function EditPlan() {
 
     // *********************************** STATE *******************************
 
+    const outgoings = useSelector((state) => state.outgoings || {});
     const currentProjectId = useSelector(
         (state) => state.currentProjectId || {}
     );
+    const currentOutgoingData = useSelector((state) => {
+        if (state.outgoings) {
+            return state.outgoings.filter((outgoing) => {
+                return outgoing.project_id === state.currentProjectId;
+            });
+        } else {
+            return {};
+        }
+    });
+    // console.log("outgoings in state: ", outgoings);
+    // console.log("currentOutgoingData in state: ", currentOutgoingData);
+
 
     // *********************************** EFFECTS *******************************
-
+    
     useEffect(() => {
-        // console.log("id in params after mounted: ", id);
-
-        fetch(`/all-outgoings/${id}`)
+        fetch(`/all-outgoings`)
             .then((data) => data.json())
             .then(({ data }) => {
                 console.log(
                     "data in GET Route /all-outgoings: ",
                     data,
                 );
-                // setCurrentProjectId(data[0].id);
-                // dispatch(currentProjectIdReceived(data[0].id));
-                // dispatch(projectsReceived(data));
-
-
-                setDataColumns([
-                    { field: "id", headerName: "ID", width: 60 },
-                    { field: "position", headerName: "Position", width: 100 },
-                    { field: "option", headerName: "Option", width: 170 },
-                    {
-                        field: "price",
-                        headerName: "Costs",
-                        type: "number",
-                        width: 120,
-                        editable: true 
-                    },
-                    {
-                        field: "total",
-                        headerName: "Paid",
-                        type: "number",
-                        width: 120,
-                        editable: true 
-                    }   
-                ]);
-                setDataRows(data);
+                dispatch(outgoingsReceived(data));
             })
             .catch((err) => {
-                //    location.replace("/");
                 console.log("error to get all Projects: ", err);
             });
+    }, []);
+    
+    useEffect(() => {
+        setDataColumns([
+            { field: "id", headerName: "ID", width: 60 },
+            { field: "position", headerName: "Position", width: 100 },
+            { field: "option", headerName: "Option", width: 170 },
+            {
+                field: "price",
+                headerName: "Costs",
+                type: "number",
+                width: 120,
+                editable: true 
+            },
+            {
+                field: "total",
+                headerName: "Paid",
+                type: "number",
+                width: 120,
+                editable: true 
+            }   
+        ]);
+        setDataRows(currentOutgoingData);
     }, [currentProjectId]);
 
 
@@ -84,7 +95,6 @@ export default function EditPlan() {
     //         ...userInputOutgoings,
     //         [target.name]: target.files[0],
     //     });
-
 
     // **********************TODO: SET OPTION VALUES **********************
 
@@ -163,6 +173,7 @@ export default function EditPlan() {
                 setError(true);
             });
     };
+
 
 
     const handleUpdateOutgoings = (e) => {

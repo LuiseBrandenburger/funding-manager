@@ -149,6 +149,20 @@ module.exports.getOutgoingsByProjectId = (projectId) => {
     return db.query(q, params);
 };
 
+module.exports.getAllOutgoingsByuserId = (userId) => {
+    const q = `SELECT * FROM outgoings WHERE sender_id = ($1)
+    ORDER by created_at DESC`;
+    const params = [userId];
+    return db.query(q, params);
+};
+
+module.exports.getOutgoingById = (id) => {
+    const q = `SELECT * FROM outgoings WHERE id = ($1)
+    ORDER by created_at DESC`;
+    const params = [id];
+    return db.query(q, params);
+};
+
 // SELECT email, password, id FROM users WHERE email = ($1)
 
 module.exports.getIncomingsByProjectId = (projectId) => {
