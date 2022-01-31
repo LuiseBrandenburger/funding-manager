@@ -125,7 +125,6 @@ export default function EditPlan() {
             [target.name]: target.value,
         });
 
-    // console.log("userInput: ", userInputOutgoings);
     // ********************* SUBMITS ***********************
 
     const handleSubmitOutgoings = (e) => {
@@ -164,14 +163,6 @@ export default function EditPlan() {
     const handleUpdateOutgoings = (e) => {
         e.preventDefault();
 
-        // console.log("categoryRef: ", categoryRef.current.value);
-        // console.log("categoryRef: ", optionRef.current.value);
-        // console.log("categoryRef: ", positionRef.current.value);
-        // console.log("categoryRef: ", parseInt(priceRef.current.value));
-        // console.log("categoryRef: ", notesRef.current.value);
-        // console.log("categoryRef: ", parseInt(totalRef.current.value));
-        // console.log("categoryRef: ", new Date(paidDateRef.current.value));
-
         const userInputForUpdate = {
             category: categoryRef.current.value,
             option: optionRef.current.value,
@@ -181,7 +172,7 @@ export default function EditPlan() {
             total: parseInt(totalRef.current.value),
             paidDate: new Date(paidDateRef.current.value)
         }
-        
+
         fetch("/api/update-outgoings", {
             method: "POST",
             headers: {
@@ -195,11 +186,11 @@ export default function EditPlan() {
             .then((data) => {
                 if (data.success) {
                     // TODO: SOMETHING WHEN SUCCESS
-                    console.log("data when posted:", data);
+                    // console.log("data when posted:", data);
                     // console.log("this worked");
-                    // dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
-                    // dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
-                    // dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
+                    dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
+                    dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
+                    dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
                     // location.reload();
                 } else {
                     setError(true);

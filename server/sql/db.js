@@ -198,7 +198,6 @@ module.exports.getApprovedFundingSumById = (projectId) => {
     return db.query(q, params);
 };
 
-
 module.exports.updateOutgoingById = (
     category,
     option,
@@ -211,14 +210,13 @@ module.exports.updateOutgoingById = (
 ) => {
     const q = `UPDATE outgoings 
     SET category = ($1),
-    SET option = ($2),
-    SET position = ($3),
-    SET price = ($4),
-    SET notes = ($5),
-    SET total = ($6),
-    SET paiddate = ($7)
+    option = ($2),
+    position = ($3),
+    price = ($4),
+    notes = ($5),
+    total = ($6),
+    paiddate = ($7)
     WHERE id = ($8)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     RETURNING id, project_id`;
 
     const params = [
