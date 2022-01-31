@@ -7,7 +7,7 @@ import {
     updateProjectSumFundingLeft, 
     updateProjectSumTotalCostsPaid 
 } from "../../redux/projects/slice";
-import { outgoingsReceived } from "../../redux/outgoings/slice";
+import { outgoingsReceived, addOutgoing } from "../../redux/outgoings/slice";
 
 import {OutgoingsTable} from "../table-charts-components/outgoings-table";
 import { BrowserRouter, Route, Link } from "react-router-dom";
@@ -17,16 +17,41 @@ import { DataGrid } from "@mui/x-data-grid";
 export default function EditPlan() {
     const dispatch = useDispatch();
     const { id } = useParams();
-    console.log("id in params: ", id);
+    // console.log("id in params: ", id);
 
     const [userInputOutgoings, setUserInputOutgoings] = useState({});
     // const [fileInputOutgoings, setFileInputOutgoings] = useState({});
     const [error, setError] = useState(false);
-    
     const categorySelectionRef = useRef();
-
-    const [dataColumns, setDataColumns] = useState([]);
+    const [dataColumns, setDataColumns] = useState([
+        { field: "id", headerName: "ID", width: 60 },
+        { field: "position", headerName: "Position", width: 100 },
+        { field: "option", headerName: "Option", width: 170 },
+        {
+            field: "price",
+            headerName: "Costs",
+            type: "number",
+            width: 120,
+            editable: true 
+        },
+        {
+            field: "total",
+            headerName: "Paid",
+            type: "number",
+            width: 120,
+            editable: true 
+        },
+        {
+            field: "paiddate",
+            headerName: "Date",
+            type: "date",
+            width: 100,
+            editable: true 
+        } 
+    ]);
     const [dataRows, setDataRows] = useState([]);
+    const [idItemPopulateList, setIdItemPopulateList] = useState();
+
 
     // *********************************** STATE *******************************
 
@@ -43,8 +68,15 @@ export default function EditPlan() {
             return {};
         }
     });
-    // console.log("outgoings in state: ", outgoings);
-    // console.log("currentOutgoingData in state: ", currentOutgoingData);
+    const clickedItemInTable = useSelector((state) => {
+        if (state.outgoings) {
+            return state.outgoings.filter((outgoing) => {
+                return outgoing.id === idItemPopulateList;
+            });
+        } else {
+            return {};
+        }
+    });
 
 
     // *********************************** EFFECTS *******************************
@@ -53,11 +85,8 @@ export default function EditPlan() {
         fetch(`/all-outgoings`)
             .then((data) => data.json())
             .then(({ data }) => {
-                // console.log(
-                //     "data in GET Route /all-outgoings: ",
-                //     data,
-                // );
                 dispatch(outgoingsReceived(data));
+                setDataRows(currentOutgoingData);
             })
             .catch((err) => {
                 console.log("error to get all Projects: ", err);
@@ -65,36 +94,15 @@ export default function EditPlan() {
     }, []);
     
     useEffect(() => {
-        setDataColumns([
-            { field: "id", headerName: "ID", width: 60 },
-            { field: "position", headerName: "Position", width: 100 },
-            { field: "option", headerName: "Option", width: 170 },
-            {
-                field: "price",
-                headerName: "Costs",
-                type: "number",
-                width: 120,
-                editable: true 
-            },
-            {
-                field: "total",
-                headerName: "Paid",
-                type: "number",
-                width: 120,
-                editable: true 
-            },
-            {
-                field: "paiddate",
-                headerName: "Date",
-                type: "date",
-                width: 100,
-                editable: true 
-            } 
-        ]);
         setDataRows(currentOutgoingData);
     }, [currentProjectId]);
 
+    useEffect(()=>{
+        if (clickedItemInTable[0]) {
+            console.log(clickedItemInTable[0]);
+        }
 
+    },[clickedItemInTable]);
     // ******************************* HANDLE CHANGES *************************
   
     const handleChange = ({ target }) =>
@@ -102,14 +110,6 @@ export default function EditPlan() {
             ...userInputOutgoings,
             [target.name]: target.value,
         });
-
-
-
-
-
-
-
-  
 
     // ********************* SUBMITS ***********************
 
@@ -132,8 +132,10 @@ export default function EditPlan() {
                     console.log("data when posted:", data);
                     console.log("this worked");
                     dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
-                    // dispatch(outgoingsReceived())
-                    // location.reload();
+                    dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
+                    dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
+                    // FIXME: dispatch(addOutgoing(data.addedOutgoing));
+                    
                 } else {
                     setError(true);
                 }
@@ -145,45 +147,40 @@ export default function EditPlan() {
     };
 
 
-
     const handleUpdateOutgoings = (e) => {
         e.preventDefault();
 
-            // TODO: UPSERT For editing outcome values
-    // defaultValue=
-    // default Value wenn es kein Value gibt
+        console.log("handle Outgoing Update");
 
-
-        fetch("/api/update-outgoings", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({userInputOutgoings, outgoingId}),
-        })
-            .then((data) => {
-                return data.json();
-            })
-            .then((data) => {
-                if (data.success) {
-                    // TODO: SOMETHING WHEN SUCCESS
-                    console.log("data when posted:", data);
-                    console.log("this worked");
-                    dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
-                    dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
-                    dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
-
-                    // dispatch(outgoingsReceived())
-                    // location.reload();
-
-                } else {
-                    setError(true);
-                }
-            })
-            .catch((err) => {
-                console.log("error in fetch /edit-outgoings", err);
-                setError(true);
-            });
+        // TODO: UPSERT For editing outcome values
+ 
+        // fetch("/api/update-outgoings", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({userInputOutgoings, outgoingId}),
+        // })
+        //     .then((data) => {
+        //         return data.json();
+        //     })
+        //     .then((data) => {
+        //         if (data.success) {
+        //             // TODO: SOMETHING WHEN SUCCESS
+        //             console.log("data when posted:", data);
+        //             // console.log("this worked");
+        //             // dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
+        //             // dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
+        //             // dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
+        //             // location.reload();
+        //         } else {
+        //             setError(true);
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         console.log("error in fetch /edit-outgoings", err);
+        //         setError(true);
+        //     });
     };
 
     // ********************* RENDER***********************
@@ -338,9 +335,10 @@ export default function EditPlan() {
                                 pageSize={10}
                                 rowsPerPageOptions={[10]}
                                 checkboxSelection
-                                onSelectionModelChange={itm => 
-                                // define a function what should happen once the itm is clicked
-                                    console.log(itm[0])
+                                onSelectionModelChange={itm => {
+                                    // console.log(itm[0]);
+                                    setIdItemPopulateList(itm[0]);
+                                }
                                 }
                             />
                         </div>

@@ -2,6 +2,9 @@ export function outgoingsReducer(outgoings = [], action) {
     if (action.type == "outgoings/receivedOutgoings") {
         outgoings = action.payload.outgoings;
     } else if (action.type == "outgoing/addOutgoing") {
+        
+        // TODO: FIX THIS!
+        // const newOutgoings = outgoings.map(p => {...outgoings, newOutgoing: action.payload.outgoing} );
         // let newOutgoings = {
         //     ...outgoings,
         //     outgoing: action.payload.outgoing,

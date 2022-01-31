@@ -8,7 +8,6 @@ const { uploader } = require("../utils/upload");
 
 const { 
     addOutgoing, 
-    addIcomings, 
     getOutgoingsSumFC, 
     updateProjectFCSum,
     updateProjectFinalSum,
@@ -101,40 +100,7 @@ plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload,
             });
     });
 
-plan.post("/api/edit-incomings", (req, res) => {
-    console.log("req.body in registration.json request: ", req.body);
 
-    // TODO: PROJECT ID AND SUM ANPASSEN!!!
-    // let totalSum = 0;
-
-    const data = req.body.userInputIncome;
-    const projectId = req.body.currentProjectId;
-
-    if (!data.quantity) {
-        data.quantity = 1;
-    }
-
-    addIcomings(
-        projectId,
-        data.incomeCategory,
-        data.incomePosition,
-        data.incomeAmount,
-        data.incomeFile,
-        data.incomeNotes,
-        data.incomeReceived,
-        data.isIncomePaid,
-        data.incomePaidDate,
-        req.session.userId
-    )
-        .then(({ rows }) => {
-            console.log(rows);
-            res.json({ success: true });
-        })
-        .catch((err) => {
-            console.log("error adding project: ", err);
-            res.json({ success: false });
-        });
-});
 
 
 
