@@ -43,6 +43,18 @@
     --input-margin: 5px 10px 20px 10px;
 }
 
+.MuiDataGrid-row{ 
+    background-color: var(--main-btn-text-color);
+    background-color: var(--main-bg-color);
+}
+
+.MuiDataGrid-columnHeadersInner{
+    background-color: var(--main-bg-color);
+    background-color: var(--main-btn-text-color);
+
+
+}
+
 html {
     height: 100%;
     width: 100%;

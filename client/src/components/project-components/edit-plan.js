@@ -22,7 +22,6 @@ export default function EditPlan() {
     const [userInputOutgoings, setUserInputOutgoings] = useState({});
     const [error, setError] = useState(false);
     const [dataColumns, setDataColumns] = useState([
-        { field: "id", headerName: "ID", width: 60 },
         { field: "position", headerName: "Position", width: 100 },
         { field: "option", headerName: "Option", width: 170 },
         {
@@ -45,7 +44,8 @@ export default function EditPlan() {
             type: "date",
             width: 100,
             editable: true 
-        } 
+        }, 
+        { field: "id", headerName: "ID", width: 60 },
     ]);
     const [dataRows, setDataRows] = useState([]);
     const [idItemPopulateList, setIdItemPopulateList] = useState();
@@ -394,6 +394,7 @@ export default function EditPlan() {
                             style={{ flexGrow: 1 }}
                         >
                             <DataGrid
+                                rowHeight={30} 
                                 rows={dataRows}
                                 columns={dataColumns}
                                 pageSize={10}
