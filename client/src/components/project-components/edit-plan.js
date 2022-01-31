@@ -17,6 +17,8 @@ export default function EditPlan() {
     const dispatch = useDispatch();
     const { id } = useParams();
 
+    // *********************************** STATE *******************************
+
     const [userInputOutgoings, setUserInputOutgoings] = useState({});
     const [error, setError] = useState(false);
     const [dataColumns, setDataColumns] = useState([
@@ -108,8 +110,8 @@ export default function EditPlan() {
 
     useEffect(()=>{
         if (clickedItemInTable[0]) {
-            console.log(clickedItemInTable[0]);
-            console.log("category item clicked: ",clickedItemInTable[0].category);
+            // console.log(clickedItemInTable[0]);
+            // console.log("category item clicked: ",clickedItemInTable[0].category);
 
         }
     },[clickedItemInTable]);
@@ -126,7 +128,6 @@ export default function EditPlan() {
 
     const handleSubmitOutgoings = (e) => {
         e.preventDefault();
-
         fetch("/api/edit-outgoings", {
             method: "POST",
             headers: {
@@ -139,14 +140,11 @@ export default function EditPlan() {
             })
             .then((data) => {
                 if (data.success) {
-                    // TODO: SOMETHING WHEN SUCCESS
-                    console.log("data when posted:", data);
-                    console.log("this worked");
                     dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
                     dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
                     dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
                     dispatch(addOutgoing(data.addedOutgoing));
-                    
+                    setDataRows(currentOutgoingData);
                 } else {
                     setError(true);
                 }
@@ -168,7 +166,7 @@ export default function EditPlan() {
             notes: notesRef.current.value,
             total: parseInt(totalRef.current.value),
             paidDate: new Date(paidDateRef.current.value)
-        }
+        };
 
         fetch("/api/update-outgoings", {
             method: "POST",
@@ -182,13 +180,9 @@ export default function EditPlan() {
             })
             .then((data) => {
                 if (data.success) {
-                    // TODO: SOMETHING WHEN SUCCESS
-                    // console.log("data when posted:", data);
-                    // console.log("this worked");
                     dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
                     dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
                     dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
-                    // location.reload();
                 } else {
                     setError(true);
                 }
@@ -201,7 +195,6 @@ export default function EditPlan() {
 
     const handleDeleteOutgoings = (e) => {
         e.preventDefault();
-
         fetch("/api/delete-outgoings", {
             method: "POST",
             headers: {
@@ -213,23 +206,15 @@ export default function EditPlan() {
                 return data.json();
             })
             .then((data) => {
-                console.log("data post deletion", data)
                 if (data.success) {
-                    // console.log("this worked");
-                    // console.log("data when posted:", data);
-                    console.log("clickedItemInTable",clickedItemInTable[0].id);
-
                     dispatch(deleteOutgoing(clickedItemInTable[0].id));
                     dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
                     dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
                     dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
-                    
-                    // console.log("current Outgoing Data: ", currentOutgoingData)
+
                 } else {
                     setError(true);
                 }
-            }).then(()=>{
-                // setDataRows(currentOutgoingData);
             })
             .catch((err) => {
                 console.log("error in fetch /edit-outgoings", err);
