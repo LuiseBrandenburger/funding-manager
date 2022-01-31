@@ -7,7 +7,7 @@ import {
     updateProjectSumFundingLeft, 
     updateProjectSumTotalCostsPaid 
 } from "../../redux/projects/slice";
-import { outgoingsReceived, addOutgoing, deleteOutgoing } from "../../redux/outgoings/slice";
+import { outgoingsReceived, addOutgoing, deleteOutgoing, updateOutgoing } from "../../redux/outgoings/slice";
 import {OutgoingsTable} from "../table-charts-components/outgoings-table";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
@@ -183,6 +183,8 @@ export default function EditPlan() {
                     dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
                     dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
                     dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
+                    //FIXME:  dispatch(updateOutgoing())
+                    setDataRows(currentOutgoingData);
                 } else {
                     setError(true);
                 }

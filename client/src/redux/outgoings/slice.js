@@ -12,6 +12,14 @@ export function outgoingsReducer(outgoings = [], action) {
         outgoings = outgoings.filter((outgoing) => {
             return outgoing.id !== action.payload.id;
         });
+    } else if (action.type == "outgoing/updateOutgoing") {
+        // FIXME: 
+        // const newOutgoings = [
+        //     action.payload.outgoing,
+        //     ...outgoings
+        // ];
+        // console.log("newOutgoings: ", newOutgoings);
+        // return newOutgoings;
     }
     // console.log("outgoings in Reducer 3: ", outgoings);
     return outgoings;
@@ -29,6 +37,13 @@ export function outgoingsReceived(outgoings) {
 export function addOutgoing(outgoing) {
     return {
         type: "outgoing/addOutgoing",
+        payload: { outgoing },
+    };
+}
+
+export function updateOutgoing(outgoing) {
+    return {
+        type: "outgoing/updateOutgoing",
         payload: { outgoing },
     };
 }
