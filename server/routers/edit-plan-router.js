@@ -74,8 +74,10 @@ plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload,
                     let sumLeft = ((approvedFunding * 100) - (sumCostsFinal * 100))/100;
                     console.log(sumLeft);
 
+
                 // updateProjectFCSum(result.rows[0].sum, projectId).then((project) => {
                 //     console.log("result in update project sum: ", project.rows[0].sum_fc_total);
+                    
                     
                 //     res.json({ success: true,
                 //         sumFcTotalCosts: project.rows[0].sum_fc_total

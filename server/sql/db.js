@@ -184,7 +184,7 @@ module.exports.getOutgoingsSumFC= (projectId) => {
 };
 
 module.exports.getOutgoingsSumFinal= (projectId) => {
-    const q = `SELECT sum(CAST(fc_total AS decimal(8,2))) FROM outgoings WHERE project_id = ($1)`;
+    const q = `SELECT sum(CAST(total AS decimal(8,2))) FROM outgoings WHERE project_id = ($1)`;
     const params = [projectId];
     return db.query(q, params);
 };
