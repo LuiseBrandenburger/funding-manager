@@ -71,7 +71,7 @@
 -- option VARCHAR(255) NOT NULL,
 -- position VARCHAR(255) NOT NULL,
 -- price DECIMAL(8,2) NOT NULL,
--- quantity DECIMAL(8) DEFAULT 1,
+-- quantity DECIMAL(8,2) DEFAULT 1,
 -- file VARCHAR(255),
 -- notes VARCHAR(255),
 -- fc_total DECIMAL(8,2) DEFAULT 0,

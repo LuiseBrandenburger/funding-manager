@@ -14,12 +14,15 @@ export function outgoingsReducer(outgoings = [], action) {
         });
     } else if (action.type == "outgoing/updateOutgoing") {
         // FIXME: 
-        // const newOutgoings = [
-        //     action.payload.outgoing,
-        //     ...outgoings
-        // ];
-        // console.log("newOutgoings: ", newOutgoings);
-        // return newOutgoings;
+        
+        outgoings = outgoings.filter((outgoing) => {
+            return outgoing.id !== action.payload.id;
+        });
+        const newOutgoings  = [
+            action.payload.outgoing,
+            ...outgoings
+        ];
+        return newOutgoings;
     }
     // console.log("outgoings in Reducer 3: ", outgoings);
     return outgoings;
@@ -41,16 +44,18 @@ export function addOutgoing(outgoing) {
     };
 }
 
-export function updateOutgoing(outgoing) {
-    return {
-        type: "outgoing/updateOutgoing",
-        payload: { outgoing },
-    };
-}
 
 export function deleteOutgoing(id) {
     return {
         type: "outgoing/deleteOutgoing",
         payload: { id },
+    };
+}
+
+export function updateOutgoing(outgoing, id) {
+    console.log("in reducer 2: ", outgoing, id);
+    return {
+        type: "outgoing/updateOutgoing",
+        payload: { outgoing, id },
     };
 }

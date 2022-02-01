@@ -52,7 +52,51 @@ export default function EditPlan() {
     ]);
     const [dataRows, setDataRows] = useState([]);
     const [idItemPopulateList, setIdItemPopulateList] = useState();
-
+    const [selectionMarketing, setSelectionMarketing] = useState(['2.01. Promotion Print',
+        '2.02. Promotion Radio',
+        '2.03. Promotion TV',
+        '2.04. Promotion Online', 
+        '2.05. Advertisements',
+        '2.06. Online Marketing',
+        '2.07. Other Marketing',
+        '2.08. Press Releases, Biography', 
+        '2.09. Internet presence',
+        '2.10. Production Expenses', 
+        '2.11. Shipping Expenses',
+        '2.12. PR travel',
+        '2.13. Video / Content Production', 
+        '2.14. Product management',
+        '2.15. Other',
+    ]);
+    const [selectionProduction, setSelectionProduction] = useState(['1.01. Studio Rental for Recording',
+        '1.02. Studio Rental for Mixing',
+        '1.03. Mastering',
+        '1.04. Guest Musicians',
+        '1.05. Producer',
+        '1.05. Producer', 
+        '1.07. Pressing Expenses (CD, Vinyl, Tapes)',
+        '1.10. GEMA',
+        '1.13. Artwork', 
+        '1.14. Photography & Media', 
+        '1.15. Composition Creation - Material Expenses',
+        '1.16. Composition Creation - Fees',
+        '1.17. Rehearsal - Material Expenses', 
+        '1.18. Rehearsal - Fees', 
+        '1.20. Other',
+    ]);
+    const [selectionTour, setSelectionTour] = useState(['3.01. Travel Expenses',
+        '3.02. Vehicle Rental',
+        '3.03. Fuel Expenses',
+        '3.04. Toll, Ferry, Other Travel Expenses',
+        '3.05. Musician\'s Salary',
+        '3.06. Guest Musician\'s  Fees',
+        '3.07. Crew Technician\'s  (Sound, Lighting, Merchandise)  Fees',
+        '3.08. Tour Management',
+        '3.09. Equipment Rental',
+        '3.10. Booking Fees',
+        '3.11. Rehearsals Fees',
+        '3.12. Other',
+    ]);
     // *********************************** REF *******************************
 
     const categoryRef = useRef();
@@ -165,11 +209,13 @@ export default function EditPlan() {
             category: categoryRef.current.value,
             option: optionRef.current.value,
             position: positionRef.current.value,
-            price: parseInt(priceRef.current.value),
+            price: parseFloat(priceRef.current.value),
             notes: notesRef.current.value,
-            total: parseInt(totalRef.current.value),
+            total: parseFloat(totalRef.current.value),
             paidDate: new Date(paidDateRef.current.value)
         };
+
+        // console.log("userInputfor Update", userInputForUpdate);
 
         fetch("/api/update-outgoings", {
             method: "POST",
@@ -182,11 +228,14 @@ export default function EditPlan() {
                 return data.json();
             })
             .then((data) => {
+
+                console.log("data when updated: ",data);
+
                 if (data.success) {
                     dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
                     dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
                     dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
-                    //FIXME:  dispatch(updateOutgoing())
+                    dispatch(updateOutgoing(data.updatedOutgoing, data.updatedOutgoing.id));
                     setDataRows(currentOutgoingData);
                 } else {
                     setError(true);
@@ -228,8 +277,40 @@ export default function EditPlan() {
 
     };
 
-    // ********************* RENDER***********************
+    // ********************* OPTION LIST ***********************
     
+    let optionListMarketing =
+    selectionMarketing.length > 0 &&
+    selectionMarketing.map((item, i) => {
+        return (
+            <option key={i} value={item}>
+                {item}
+            </option>
+        );
+    }, this);
+
+    let optionListProduction =
+    selectionProduction.length > 0 &&
+    selectionProduction.map((item, i) => {
+        return (
+            <option key={i} value={item}>
+                {item}
+            </option>
+        );
+    }, this);
+
+    let optionListTour =
+    selectionTour.length > 0 &&
+    selectionTour.map((item, i) => {
+        return (
+            <option key={i} value={item}>
+                {item}
+            </option>
+        );
+    }, this);
+
+    // ********************* RENDER***********************
+
 
     return (
         <div className="main-content-right-container">
@@ -268,18 +349,7 @@ export default function EditPlan() {
                                 >
                                     { (clickedItemInTable[0] && clickedItemInTable[0].option)?
                                         <option value={clickedItemInTable[0].option}>{clickedItemInTable[0].option}</option>:
-                                        <><option value="hide">
-                                        -- Expense Category --
-                                        </option>
-                                        <option value="1.01.	Studiomiete/Aufnahme">
-                                        1.01. Studiomiete/Aufnahme
-                                        </option>
-                                        <option value="1.02.	Studiomiete/Mischen">
-                                        1.02. Studiomiete/Mischen
-                                        </option>
-                                        <option value="1.03.	Mastering">
-                                        1.03. Mastering
-                                        </option></>
+                                        <>{optionListMarketing}</>
                                     }
                                 </select>
                             </div>

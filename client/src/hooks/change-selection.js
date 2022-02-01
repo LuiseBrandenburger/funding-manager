@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useForm = () => {
+const selectOptions = () => {
     const [selectionMarketing, setSelectionMarketing] = useState(['2.01. Promotion Print',
         '2.02. Promotion Radio',
         '2.03. Promotion TV',
@@ -33,7 +33,7 @@ const useForm = () => {
         '1.18. Rehearsal - Fees', 
         '1.20. Other',
     ]);
-    const [selectionTour, setSselectionMarketing] = useState(['3.01. Travel Expenses',
+    const [selectionTour, setSelectionTour] = useState(['3.01. Travel Expenses',
         '3.02. Vehicle Rental',
         '3.03. Fuel Expenses',
         '3.04. Toll, Ferry, Other Travel Expenses',
@@ -45,28 +45,39 @@ const useForm = () => {
         '3.10. Booking Fees',
         '3.11. Rehearsals Fees',
         '3.12. Other',
-        ]);
+    ]);
 
+    const optionList = (category) => {
+        if(category === "Production"){
+            selectionProduction.map((option, i) => {
+                return (
+                    <option key={i} value={option}>
+                        {option}
+                    </option>
+                );
+            }, this);
+        } else if(category === "Marketing"){
+            selectionMarketing.map((option, i) => {
+                return (
+                    <option key={i} value={option}>
+                        {option}
+                    </option>
+                );
+            }, this);
+        } else if(category === "Tour"){
+            selectionTour.map((option, i) => {
+                return (
+                    <option key={i} value={option}>
+                        {option}
+                    </option>
+                );
+            }, this);
+        }
+    };
 
-    let projectsList =
-        projects.length > 0 &&
-        projects.map((project, i) => {
-            return (
-                <option key={i} value={project.id}>
-                    {project.name}
-                </option>
-            );
-        }, this);
+    console.log(optionList("Production"));
 
-
-
-    const handleChange = (category) =>
-        setUserInput({
-            ...userInput,
-            [target.name]: target.value,
-        });
-
-    return [userInput, handleChange];
+    return optionList;
 };
 
-export default useForm;
+export default selectOptions;

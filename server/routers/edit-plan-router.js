@@ -147,7 +147,7 @@ plan.post("/api/update-outgoings", (req, res) => {
 
                     res.json({ success: true,
                         sumFcTotalCosts: result[0].rows[0].sum_fc_total,
-                        addedOutgoing: result[1].rows[0],
+                        updatedOutgoing: result[1].rows[0],
                         sumFundingLeft: result[2].rows[0].sum_left,
                         sumTotalCostsPaid: result[3].rows[0].sum_total
                     });

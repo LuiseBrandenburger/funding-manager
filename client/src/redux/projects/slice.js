@@ -43,3 +43,4 @@ export function updateProjectSumTotalCostsPaid(id, sum) {
         payload: { id, sum }
     };
 }
+
