@@ -564,6 +564,15 @@ h4 {
     font-size: 0.8rem;
 }
 
+#category {
+    min-width: 150px;
+    /* max-width: 150px; */
+}
+#option, #position, #notes  {
+    min-width: 250px;
+    /* max-width: 250px; */
+}
+
 .edit-project-container label {
     font-size: 0.8rem;
     font-weight: bold;
