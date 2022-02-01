@@ -19,10 +19,10 @@ export default function AddNewProject() {
                 return data.json();
             })
             .then((data) => {
-                console.log("response data from /api/projects", data);
+                // console.log("response data from /api/projects", data);
 
                 if (data.success) {
-                    location.replace("/projects");
+                    location.replace("/projects/edit-plan");
                     
                 } else {
                     setError(true);

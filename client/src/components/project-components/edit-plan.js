@@ -1,6 +1,4 @@
-import useForm from "../../hooks/use-form";
 import { useState, useEffect, useRef } from "react";
-import { useParams, useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { 
     updateProjectFCSumOutgoings, 
@@ -8,14 +6,10 @@ import {
     updateProjectSumTotalCostsPaid 
 } from "../../redux/projects/slice";
 import { outgoingsReceived, addOutgoing, deleteOutgoing, updateOutgoing } from "../../redux/outgoings/slice";
-import {OutgoingsTable} from "../table-charts-components/outgoings-table";
-import { BrowserRouter, Route, Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
-
 
 export default function EditPlan() {
     const dispatch = useDispatch();
-    const { id } = useParams();
 
     // *********************************** STATE *******************************
 
@@ -97,6 +91,8 @@ export default function EditPlan() {
         '3.11. Rehearsals Fees',
         '3.12. Other',
     ]);
+    const [optionList, setOptionList] = useState([]);
+
     // *********************************** REF *******************************
 
     const categoryRef = useRef();
@@ -165,12 +161,49 @@ export default function EditPlan() {
 
     // ******************************* HANDLE CHANGES *************************
   
-    const handleChange = ({ target }) =>
+    const handleChange = ({ target }) => {
+
+        if (categoryRef.current.value === "Production") {
+            let optionList =
+            selectionProduction.length > 0 &&
+            selectionProduction.map((item, i) => {
+                return (
+                    <option key={i} value={item}>
+                        {item}
+                    </option>
+                );
+            }, this);
+            setOptionList(optionList);
+        } else if (categoryRef.current.value === "Marketing") {
+            let optionList =
+            selectionMarketing.length > 0 &&
+            selectionMarketing.map((item, i) => {
+                return (
+                    <option key={i} value={item}>
+                        {item}
+                    </option>
+                );
+            }, this);
+            setOptionList(optionList);
+        } else if (categoryRef.current.value === "Tour") {
+            let optionList =
+            selectionTour.length > 0 &&
+            selectionTour.map((item, i) => {
+                return (
+                    <option key={i} value={item}>
+                        {item}
+                    </option>
+                );
+            }, this);
+            setOptionList(optionList);
+        }
+    
+
         setUserInputOutgoings({
             ...userInputOutgoings,
             [target.name]: target.value,
         });
-
+    };
     // ********************* SUBMITS ***********************
 
     const handleSubmitOutgoings = (e) => {
@@ -214,8 +247,6 @@ export default function EditPlan() {
             total: parseFloat(totalRef.current.value),
             paidDate: new Date(paidDateRef.current.value)
         };
-
-        // console.log("userInputfor Update", userInputForUpdate);
 
         fetch("/api/update-outgoings", {
             method: "POST",
@@ -279,38 +310,9 @@ export default function EditPlan() {
 
     // ********************* OPTION LIST ***********************
     
-    let optionListMarketing =
-    selectionMarketing.length > 0 &&
-    selectionMarketing.map((item, i) => {
-        return (
-            <option key={i} value={item}>
-                {item}
-            </option>
-        );
-    }, this);
 
-    let optionListProduction =
-    selectionProduction.length > 0 &&
-    selectionProduction.map((item, i) => {
-        return (
-            <option key={i} value={item}>
-                {item}
-            </option>
-        );
-    }, this);
-
-    let optionListTour =
-    selectionTour.length > 0 &&
-    selectionTour.map((item, i) => {
-        return (
-            <option key={i} value={item}>
-                {item}
-            </option>
-        );
-    }, this);
 
     // ********************* RENDER***********************
-
 
     return (
         <div className="main-content-right-container">
@@ -349,7 +351,7 @@ export default function EditPlan() {
                                 >
                                     { (clickedItemInTable[0] && clickedItemInTable[0].option)?
                                         <option value={clickedItemInTable[0].option}>{clickedItemInTable[0].option}</option>:
-                                        <>{optionListMarketing}</>
+                                        <>{optionList}</>
                                     }
                                 </select>
                             </div>

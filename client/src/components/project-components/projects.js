@@ -132,7 +132,7 @@ export default function Projects({ userId }) {
                                 </button>
                             </Link> */}
 
-                            <Link to={`/projects/edit-plan/${id}`}>
+                            <Link to={`/projects/edit-plan`}>
                                 <button className="submit-btn">
                                     Edit Plan
                                 </button>
@@ -163,7 +163,7 @@ export default function Projects({ userId }) {
                     <Route path="/projects/edit-project">
                         <EditProject userId={userId} />
                     </Route>
-                    <Route path="/projects/edit-plan/:id">
+                    <Route path="/projects/edit-plan">
                         <EditPlan userId={userId} />
                     </Route>
                     <Route path="/projects/add-project">
