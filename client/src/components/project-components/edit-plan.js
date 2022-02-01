@@ -154,8 +154,17 @@ export default function EditPlan() {
     useEffect(()=>{
         if (clickedItemInTable[0]) {
             console.log(clickedItemInTable[0].total);
-            
+            console.log("clicked Item in Table", clickedItemInTable[0]);
+            // categoryRef.current.value = clickedItemInTable[0].category;
+            // optionRef.current.value = clickedItemInTable[0].option;
+            // positionRef.current.value = clickedItemInTable[0].position;
+            // priceRef.current.value = clickedItemInTable[0].price;
+            // notesRef.current.value = clickedItemInTable[0].notes;
+            // totalRef.current.value = clickedItemInTable[0].total;
+            // paidDateRef.current.value = clickedItemInTable[0].paid;
+
             // console.log("category item clicked: ",clickedItemInTable[0].category);
+
         }
     },[clickedItemInTable]);
 
@@ -205,12 +214,27 @@ export default function EditPlan() {
 
     },[userInputOutgoings]);
 
+
+    const setInputValues =() => {
+        console.log("category Re: ", categoryRef.current);
+
+        // categoryRef.current.value = clickedItemInTable[0].category;
+        // optionRef.current.value = clickedItemInTable[0].option;
+        // positionRef.current.value = clickedItemInTable[0].position;
+        // priceRef.current.value = clickedItemInTable[0].price;
+        // notesRef.current.value = clickedItemInTable[0].notes;
+        // totalRef.current.value = clickedItemInTable[0].total;
+        // paidDateRef.current.value = clickedItemInTable[0].paid;
+        // paidDateRef.current.value = clickedItemInTable[0].paiddate;
+
+    };
+
     // ******************************* HANDLE CHANGES *************************
   
     const handleChange = ({ target }) => {
 
         // console.log("UserInput Outgoings: ", userInputOutgoings);
-        // console.log("UserInput Outgoings: ", userInputOutgoings);
+        console.log("UserInput Outgoings: ", userInputOutgoings);
 
         setUserInputOutgoings({
             ...userInputOutgoings,
@@ -241,13 +265,13 @@ export default function EditPlan() {
                     dispatch(addOutgoing(data.addedOutgoing));
                     setDataRows(currentOutgoingData);
 
-                    // categoryRef.current.value ="";
-                    // optionRef.current.value="";
-                    // positionRef.current.value="";
-                    // priceRef.current.value=null;
-                    // notesRef.current.value="";
-                    // totalRef.current.value=null;
-                    // paidDateRef.current.value=null;
+                    categoryRef.current.value ="";
+                    optionRef.current.value="";
+                    positionRef.current.value="";
+                    priceRef.current.value=null;
+                    notesRef.current.value="";
+                    totalRef.current.value=null;
+                    paidDateRef.current.value=null;
 
                 } else {
                     setError(true);
@@ -292,6 +316,15 @@ export default function EditPlan() {
                     dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
                     dispatch(updateOutgoing(data.updatedOutgoing, data.updatedOutgoing.id));
                     setDataRows(currentOutgoingData);
+
+                    // categoryRef.current.value ="";
+                    // optionRef.current.value="";
+                    // positionRef.current.value="";
+                    // priceRef.current.value=null;
+                    // notesRef.current.value="";
+                    // totalRef.current.value=null;
+                    // paidDateRef.current.value=null;
+
                 } else {
                     setError(true);
                 }
@@ -405,7 +438,7 @@ export default function EditPlan() {
                                     name="price"
                                     ref={priceRef}
                                     placeholder="E.g. 1000,00"
-                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].price : ""}
+                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].price : null}
                                     min="0.01"
                                     step="0.01"
                                     onChange={handleChange}
@@ -447,7 +480,7 @@ export default function EditPlan() {
                                     name="finalSum"
                                     ref={totalRef}
                                     placeholder="E.g. 1000,00"
-                                    defaultValue={(clickedItemInTable[0] && clickedItemInTable[0].total)? clickedItemInTable[0].total : ""}
+                                    defaultValue={(clickedItemInTable[0] && clickedItemInTable[0].total)? clickedItemInTable[0].total : null}
                                     min="0.01"
                                     step="0.01"
                                     onChange={handleChange}
@@ -504,8 +537,8 @@ export default function EditPlan() {
                                 rowsPerPageOptions={[10]}
                                 checkboxSelection
                                 onSelectionModelChange={itm => {
-                                    // console.log(itm[0]);
                                     setIdItemPopulateList(itm[0]);
+                                    setInputValues();
                                 }
                                 }
                                 components={{ Toolbar: GridToolbar }}

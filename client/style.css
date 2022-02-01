@@ -792,6 +792,10 @@ h1, h3 {
     color: var(--btn-submit-bg-color)!important;
 }
 
+.css-1s0hp0k-MuiDataGrid-columnHeadersInner  {
+    pointer-events: none!important;
+}
+
 /******************* OTHERS *******************/
 
 /* Hide up down Buttons Input */
