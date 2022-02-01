@@ -1,6 +1,32 @@
 import { BrowserRouter, Route, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { projectsReceived } from "../../redux/projects/slice";
+
 
 export default function Dashboard() {
+    const projects = useSelector((state) => state.projects || {});
+    const dispatch = useDispatch();
+
+
+    useEffect(() => {
+        fetch(`/all-projects`)
+            .then((data) => data.json())
+            .then(({ data }) => {
+                console.log(
+                    "data in GET Route /all-projects: ",
+                    data,
+                    data[0].id
+                );
+                dispatch(projectsReceived(data));
+            })
+            .catch((err) => {
+                //    location.replace("/");
+                console.log("error to get all Projects: ", err);
+            });
+    }, []);
+
+
     return (
         <div className="main-content-container">
             {/* DASHBOARD MAIN CONTENT LEFT */}
