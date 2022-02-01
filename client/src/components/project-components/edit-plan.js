@@ -241,13 +241,13 @@ export default function EditPlan() {
                     dispatch(addOutgoing(data.addedOutgoing));
                     setDataRows(currentOutgoingData);
 
-                    categoryRef.current.value ="";
-                    optionRef.current.value="";
-                    positionRef.current.value="";
-                    priceRef.current.value=null;
-                    notesRef.current.value="";
-                    totalRef.current.value=null;
-                    paidDateRef.current.value=null;
+                    // categoryRef.current.value ="";
+                    // optionRef.current.value="";
+                    // positionRef.current.value="";
+                    // priceRef.current.value=null;
+                    // notesRef.current.value="";
+                    // totalRef.current.value=null;
+                    // paidDateRef.current.value=null;
 
                 } else {
                     setError(true);
@@ -261,7 +261,7 @@ export default function EditPlan() {
 
     const handleUpdateOutgoings = (e) => {
         e.preventDefault();
-
+        
         const userInputForUpdate = {
             category: categoryRef.current.value,
             option: optionRef.current.value,
@@ -292,15 +292,6 @@ export default function EditPlan() {
                     dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
                     dispatch(updateOutgoing(data.updatedOutgoing, data.updatedOutgoing.id));
                     setDataRows(currentOutgoingData);
-
-                    // categoryRef.current.value ="";
-                    // optionRef.current.value="";
-                    // positionRef.current.value="";
-                    // priceRef.current.value=null;
-                    // notesRef.current.value="";
-                    // totalRef.current.value=null;
-                    // paidDateRef.current.value=null;
-                    // setIdItemPopulateList();
                 } else {
                     setError(true);
                 }
@@ -330,13 +321,13 @@ export default function EditPlan() {
                     dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
                     dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
 
-                    categoryRef.current.value ="";
-                    optionRef.current.value="";
-                    positionRef.current.value="";
-                    priceRef.current.value=null;
-                    notesRef.current.value="";
-                    totalRef.current.value=null;
-                    paidDateRef.current.value=null;
+                    // categoryRef.current.value ="";
+                    // optionRef.current.value="";
+                    // positionRef.current.value="";
+                    // priceRef.current.value=null;
+                    // notesRef.current.value="";
+                    // totalRef.current.value=null;
+                    // paidDateRef.current.value=null;
                 } else {
                     setError(true);
                 }

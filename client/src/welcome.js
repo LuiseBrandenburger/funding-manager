@@ -13,7 +13,9 @@ import Login from "./components/auth-components/login";
 export default function Welcome() {
     return (
         <div className="welcome-container">
-            <h1>Go Fund Yourself</h1>
+            <h1>GO FUND YOURSELF</h1>
+            <br></br>
+            <h3>The place where artists can manage their grants & funding</h3>
             <br></br>
             <img className="bg-img-modal" src="/blur-background.svg" alt="" />
  

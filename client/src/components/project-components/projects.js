@@ -126,11 +126,11 @@ export default function Projects({ userId }) {
                             ) : (
                                 ""
                             )}
-                            {/* <Link to="/projects/edit-project">
+                            <Link to="/projects/edit-project">
                                 <button className="submit-btn">
                                     Edit Project
                                 </button>
-                            </Link> */}
+                            </Link>
 
                             <Link to={`/projects/edit-plan`}>
                                 <button className="submit-btn">
