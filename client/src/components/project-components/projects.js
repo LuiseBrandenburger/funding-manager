@@ -138,11 +138,11 @@ export default function Projects({ userId }) {
                                 </button>
                             </Link>
 
-                            <Link to={`/projects/show-project/${id}`}>
+                            {/* <Link to={`/projects/show-project/${id}`}>
                                 <button className="submit-btn">
                                     Show Overview
                                 </button>
-                            </Link>
+                            </Link> */}
                         </div>
                         <div className="btns-left">
                             <Link to="/projects/add-project">

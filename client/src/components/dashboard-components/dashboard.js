@@ -10,10 +10,28 @@ export default function Dashboard() {
     const dispatch = useDispatch();
     
     const projects = useSelector((state) => state.projects || {});
-    const dataArr = useSelector(
+    const dataArrApprovedFund = useSelector(
         (state) =>
             state.projects.map((item) => {
                 return item.approved_funding;
+            }) || {}
+    );
+    const dataArrFundBalance = useSelector(
+        (state) =>
+            state.projects.map((item) => {
+                return item.sum_left;
+            }) || {}
+    );
+    const dataArrCostsFC = useSelector(
+        (state) =>
+            state.projects.map((item) => {
+                return item.sum_fc_total;
+            }) || {}
+    );
+    const dataArrCostsFinal = useSelector(
+        (state) =>
+            state.projects.map((item) => {
+                return item.sum_total;
             }) || {}
     );
     const labelArr = useSelector((state) => state.projects.map((item)=> {
@@ -49,22 +67,54 @@ export default function Dashboard() {
     }, []);
 
 
-    console.log("projects in State", projects);
-
     useEffect(() => {
         setChartData({
+            labels: labelArr,
             datasets: [
                 {
-                    data: dataArr,
-                    backgroundColor: ["red"],
-                    barPercentage: 0.5,
-                    barThickness: 20,
-                    maxBarThickness: 8,
+                    data: dataArrApprovedFund,
+                    label: "Apporoved Funding Sum",
+                    backgroundColor: ["#124559"],
+                    hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                    barPercentage: 10,
+                    barThickness: 50,
+                    maxBarThickness: 50,
+                    minBarLength: 2,
+                },
+                {
+                    data: dataArrFundBalance,
+                    label: "Funding Balance",
+                    backgroundColor: ["#f5b700"],
+                    hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                    barPercentage: 10,
+                    barThickness: 50,
+                    maxBarThickness: 50,
+                    minBarLength: 2,
+                },
+                {
+                    data: dataArrCostsFC,
+                    label: "Estimated Costs",
+                    backgroundColor: ["#9f4a54"],
+                    hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                    barPercentage: 10,
+                    barThickness: 50,
+                    maxBarThickness: 50,
+                    minBarLength: 2,
+                },
+                {
+                    data: dataArrCostsFinal,
+                    label: "Costs Paid",
+                    backgroundColor: ["#7ca982"],
+                    hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                    barPercentage: 10,
+                    barThickness: 50,
+                    maxBarThickness: 50,
                     minBarLength: 2,
                 },
             ],
-            labels: labelArr,
-        });
+        },
+        
+        );
     }, [projects]);
 
     return (
