@@ -29,7 +29,7 @@ export default function App({userId}) {
                                 <Link to="/dashboard">
                                     <li>Dashboard</li>
                                 </Link>
-                                <Link to="/projects">
+                                <Link to="/projects/edit-plan">
                                     <li>Projects</li>
                                 </Link>
                             </ul>
@@ -46,7 +46,7 @@ export default function App({userId}) {
                         <Route path="/dashboard">
                             <Dashboard userId={userId} />
                         </Route>
-                        <Route path="/projects">
+                        <Route path="/projects/edit-plan">
                             <Projects userId={userId} />
                         </Route>
                     </div>
