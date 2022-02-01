@@ -6,7 +6,7 @@ import {
     updateProjectSumTotalCostsPaid 
 } from "../../redux/projects/slice";
 import { outgoingsReceived, addOutgoing, deleteOutgoing, updateOutgoing } from "../../redux/outgoings/slice";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 export default function EditPlan() {
     const dispatch = useDispatch();
@@ -517,6 +517,7 @@ export default function EditPlan() {
                                     setIdItemPopulateList(itm[0]);
                                 }
                                 }
+                                components={{ Toolbar: GridToolbar }}
                             />
                         </div>
                     </div>

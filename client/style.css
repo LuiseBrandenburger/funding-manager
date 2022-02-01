@@ -69,7 +69,7 @@ body {
     overflow: scroll;
     color: var(--main-text-color);
     font-family: var(--main-font);
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 main {
@@ -89,6 +89,8 @@ button {
     font-size: var(--btn-font-size);
     font-weight: bold;
 }
+
+
 
 button:hover {
     background-color: var(--highlight-bg-color);
@@ -769,6 +771,16 @@ h4 {
     right: 15px;
     top: 5px;
     background: transparent;
+}
+
+
+.css-1knaqv7-MuiButtonBase-root-MuiButton-root {
+    color: var(--btn-submit-bg-color)!important;
+}
+.css-ypofq1-MuiDataGrid-toolbarContainer, .css-okt5j6-MuiDataGrid-columnHeaders ,.css-1s0hp0k-MuiDataGrid-columnHeadersInner {
+    background-color: var(--bg-color-left-nav)!important;
+    height: 30px !important;
+    color: var(--btn-submit-bg-color)!important;
 }
 
 /******************* OTHERS *******************/
