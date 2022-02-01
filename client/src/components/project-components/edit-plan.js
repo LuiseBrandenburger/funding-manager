@@ -46,7 +46,7 @@ export default function EditPlan() {
     ]);
     const [dataRows, setDataRows] = useState([]);
     const [idItemPopulateList, setIdItemPopulateList] = useState();
-    const [selectionMarketing, setSelectionMarketing] = useState(['2.01. Promotion Print',
+    const [selectionMarketing, setSelectionMarketing] = useState(['-----Select Option-----','2.01. Promotion Print',
         '2.02. Promotion Radio',
         '2.03. Promotion TV',
         '2.04. Promotion Online', 
@@ -62,7 +62,7 @@ export default function EditPlan() {
         '2.14. Product management',
         '2.15. Other',
     ]);
-    const [selectionProduction, setSelectionProduction] = useState(['1.01. Studio Rental for Recording',
+    const [selectionProduction, setSelectionProduction] = useState(['-----Select Option-----','1.01. Studio Rental for Recording',
         '1.02. Studio Rental for Mixing',
         '1.03. Mastering',
         '1.04. Guest Musicians',
@@ -78,7 +78,7 @@ export default function EditPlan() {
         '1.18. Rehearsal - Fees', 
         '1.20. Other',
     ]);
-    const [selectionTour, setSelectionTour] = useState(['3.01. Travel Expenses',
+    const [selectionTour, setSelectionTour] = useState(['-----Select Option-----','3.01. Travel Expenses',
         '3.02. Vehicle Rental',
         '3.03. Fuel Expenses',
         '3.04. Toll, Ferry, Other Travel Expenses',
@@ -153,17 +153,16 @@ export default function EditPlan() {
 
     useEffect(()=>{
         if (clickedItemInTable[0]) {
-            // console.log(clickedItemInTable[0]);
+            console.log(clickedItemInTable[0].total);
+            
             // console.log("category item clicked: ",clickedItemInTable[0].category);
-
         }
     },[clickedItemInTable]);
 
-    // ******************************* HANDLE CHANGES *************************
-  
-    const handleChange = ({ target }) => {
-
+    useEffect(()=>{
+        setOptionList([]);
         if (categoryRef.current.value === "Production") {
+
             let optionList =
             selectionProduction.length > 0 &&
             selectionProduction.map((item, i) => {
@@ -174,7 +173,9 @@ export default function EditPlan() {
                 );
             }, this);
             setOptionList(optionList);
-        } else if (categoryRef.current.value === "Marketing") {
+        } 
+        if (categoryRef.current.value === "Marketing") {
+
             let optionList =
             selectionMarketing.length > 0 &&
             selectionMarketing.map((item, i) => {
@@ -185,7 +186,9 @@ export default function EditPlan() {
                 );
             }, this);
             setOptionList(optionList);
-        } else if (categoryRef.current.value === "Tour") {
+        } 
+        if (categoryRef.current.value === "Tour") {
+
             let optionList =
             selectionTour.length > 0 &&
             selectionTour.map((item, i) => {
@@ -197,13 +200,25 @@ export default function EditPlan() {
             }, this);
             setOptionList(optionList);
         }
-    
+       
+        console.log("UserInput Outgoings: ", userInputOutgoings);
+
+    },[userInputOutgoings]);
+
+    // ******************************* HANDLE CHANGES *************************
+  
+    const handleChange = ({ target }) => {
+
+        // console.log("UserInput Outgoings: ", userInputOutgoings);
+        // console.log("UserInput Outgoings: ", userInputOutgoings);
 
         setUserInputOutgoings({
             ...userInputOutgoings,
             [target.name]: target.value,
         });
+
     };
+
     // ********************* SUBMITS ***********************
 
     const handleSubmitOutgoings = (e) => {
@@ -225,6 +240,15 @@ export default function EditPlan() {
                     dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
                     dispatch(addOutgoing(data.addedOutgoing));
                     setDataRows(currentOutgoingData);
+
+                    categoryRef.current.value ="";
+                    optionRef.current.value="";
+                    positionRef.current.value="";
+                    priceRef.current.value=null;
+                    notesRef.current.value="";
+                    totalRef.current.value=null;
+                    paidDateRef.current.value=null;
+
                 } else {
                     setError(true);
                 }
@@ -268,6 +292,15 @@ export default function EditPlan() {
                     dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
                     dispatch(updateOutgoing(data.updatedOutgoing, data.updatedOutgoing.id));
                     setDataRows(currentOutgoingData);
+
+                    // categoryRef.current.value ="";
+                    // optionRef.current.value="";
+                    // positionRef.current.value="";
+                    // priceRef.current.value=null;
+                    // notesRef.current.value="";
+                    // totalRef.current.value=null;
+                    // paidDateRef.current.value=null;
+                    // setIdItemPopulateList();
                 } else {
                     setError(true);
                 }
@@ -297,6 +330,13 @@ export default function EditPlan() {
                     dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
                     dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
 
+                    categoryRef.current.value ="";
+                    optionRef.current.value="";
+                    positionRef.current.value="";
+                    priceRef.current.value=null;
+                    notesRef.current.value="";
+                    totalRef.current.value=null;
+                    paidDateRef.current.value=null;
                 } else {
                     setError(true);
                 }
@@ -328,9 +368,9 @@ export default function EditPlan() {
                                     ref={categoryRef}
                                     onChange={handleChange}
                                 >
-                                    { (clickedItemInTable[0] && clickedItemInTable[0].category)?
+                                    {(clickedItemInTable[0] && clickedItemInTable[0].category)?
                                         <option value={clickedItemInTable[0].category}>{clickedItemInTable[0].category}</option>:
-                                        <><option value="hide">-- Category --</option><option value="Production">
+                                        <><option value="">-- Category --</option><option value="Production">
                                             Production
                                         </option><option value="Marketing">Marketing</option><option value="Tour">Tour</option></>
                                     }
@@ -416,7 +456,7 @@ export default function EditPlan() {
                                     name="finalSum"
                                     ref={totalRef}
                                     placeholder="E.g. 1000,00"
-                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].total : ""}
+                                    defaultValue={(clickedItemInTable[0] && clickedItemInTable[0].total)? clickedItemInTable[0].total : ""}
                                     min="0.01"
                                     step="0.01"
                                     onChange={handleChange}

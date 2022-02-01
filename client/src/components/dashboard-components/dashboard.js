@@ -53,11 +53,11 @@ export default function Dashboard() {
         fetch(`/all-projects`)
             .then((data) => data.json())
             .then(({ data }) => {
-                console.log(
-                    "data in GET Route /all-projects: ",
-                    data,
-                    data[0].id
-                );
+                // console.log(
+                //     "data in GET Route /all-projects: ",
+                //     data,
+                //     data[0].id
+                // );
                 dispatch(projectsReceived(data));
             })
             .catch((err) => {
