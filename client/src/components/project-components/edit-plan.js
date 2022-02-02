@@ -45,6 +45,7 @@ export default function EditPlan() {
 
     ]);
     const [dataRows, setDataRows] = useState([]);
+    const [itemPopulateListClicked, setItemPopulateListClicked] = useState(false);
     const [idItemPopulateList, setIdItemPopulateList] = useState();
     const [selectionMarketing, setSelectionMarketing] = useState(['-----Select Option-----','2.01. Promotion Print',
         '2.02. Promotion Radio',
@@ -92,19 +93,6 @@ export default function EditPlan() {
         '3.12. Other',
     ]);
     const [optionList, setOptionList] = useState([]);
-
-    // *********************************** REF *******************************
-
-    const categoryRef = useRef();
-    const optionRef = useRef();
-    const positionRef = useRef();
-    const priceRef = useRef();
-    const notesRef = useRef();
-    const totalRef = useRef();
-    const paidDateRef = useRef();
-
-    // *********************************** STATE *******************************
-
     const outgoings = useSelector((state) => state.outgoings || {});
     const currentProjectId = useSelector(
         (state) => state.currentProjectId || {}
@@ -118,7 +106,6 @@ export default function EditPlan() {
             return {};
         }
     });
-
     const clickedItemInTable = useSelector((state) => {
         if (state.outgoings) {
             return state.outgoings.filter((outgoing) => {
@@ -128,6 +115,17 @@ export default function EditPlan() {
             return {};
         }
     });
+
+
+    // *********************************** REF *******************************
+
+    const categoryRef = useRef();
+    const optionRef = useRef();
+    const positionRef = useRef();
+    const priceRef = useRef();
+    const notesRef = useRef();
+    const totalRef = useRef();
+    const paidDateRef = useRef();
 
     // *********************************** EFFECTS *******************************
     
@@ -152,18 +150,12 @@ export default function EditPlan() {
     }, [outgoings]);
 
     useEffect(()=>{
-        if (clickedItemInTable[0]) {
-            console.log(clickedItemInTable[0].total);
-            console.log("clicked Item in Table", clickedItemInTable[0]);
-            // categoryRef.current.value = clickedItemInTable[0].category;
-            // optionRef.current.value = clickedItemInTable[0].option;
-            // positionRef.current.value = clickedItemInTable[0].position;
-            // priceRef.current.value = clickedItemInTable[0].price;
-            // notesRef.current.value = clickedItemInTable[0].notes;
-            // totalRef.current.value = clickedItemInTable[0].total;
-            // paidDateRef.current.value = clickedItemInTable[0].paid;
 
-            // console.log("category item clicked: ",clickedItemInTable[0].category);
+
+        if (clickedItemInTable[0]) {
+            // console.log("clicked Item in Table", clickedItemInTable[0].total);
+
+            console.log("clicked Item in Table", clickedItemInTable[0]);
 
         }
     },[clickedItemInTable]);
@@ -210,40 +202,42 @@ export default function EditPlan() {
             setOptionList(optionList);
         }
        
-        console.log("UserInput Outgoings: ", userInputOutgoings);
+        // console.log("UserInput Outgoings: ", userInputOutgoings);
 
     },[userInputOutgoings]);
 
+    useEffect(()=>{
 
-    const setInputValues =() => {
-        console.log("category Re: ", categoryRef.current);
+        console.log("item clicken?", itemPopulateListClicked);
 
-        // categoryRef.current.value = clickedItemInTable[0].category;
-        // optionRef.current.value = clickedItemInTable[0].option;
-        // positionRef.current.value = clickedItemInTable[0].position;
-        // priceRef.current.value = clickedItemInTable[0].price;
-        // notesRef.current.value = clickedItemInTable[0].notes;
-        // totalRef.current.value = clickedItemInTable[0].total;
-        // paidDateRef.current.value = clickedItemInTable[0].paid;
-        // paidDateRef.current.value = clickedItemInTable[0].paiddate;
-
-    };
-
-    // ******************************* HANDLE CHANGES *************************
-  
+    }, [itemPopulateListClicked]);
+    
+    // ******************************* HANDLE CHANGES & SUBMITS *************************
+    
     const handleChange = ({ target }) => {
-
-        // console.log("UserInput Outgoings: ", userInputOutgoings);
-        console.log("UserInput Outgoings: ", userInputOutgoings);
-
         setUserInputOutgoings({
             ...userInputOutgoings,
             [target.name]: target.value,
         });
-
+        // console.log("UserInput Outgoings: ", userInputOutgoings);
     };
 
-    // ********************* SUBMITS ***********************
+    const handleItemClick =() => {
+        
+        itemPopulateListClicked? setItemPopulateListClicked(false):setItemPopulateListClicked(true);
+
+        if (!itemPopulateListClicked) {
+            // setUserInputOutgoings();
+
+            // categoryRef.current.value ="";
+            // optionRef.current.defaultValue="";
+            // positionRef.current.defaultValue="";
+            // priceRef.current.defaultValue=null;
+            // notesRef.current.defaultValue="";
+            // totalRef.current.defaultValue=null;
+            // paidDateRef.current.defaultValue=null;
+        }
+    };
 
     const handleSubmitOutgoings = (e) => {
         e.preventDefault();
@@ -286,6 +280,7 @@ export default function EditPlan() {
     const handleUpdateOutgoings = (e) => {
         e.preventDefault();
         
+        // IF I CHANGE SOMETHING I OVERRIDE THE VALUES
         const userInputForUpdate = {
             category: categoryRef.current.value,
             option: optionRef.current.value,
@@ -295,6 +290,8 @@ export default function EditPlan() {
             total: parseFloat(totalRef.current.value),
             paidDate: new Date(paidDateRef.current.value)
         };
+
+        // ITEM CLICKED IS TRUE
 
         fetch("/api/update-outgoings", {
             method: "POST",
@@ -308,8 +305,6 @@ export default function EditPlan() {
             })
             .then((data) => {
 
-                console.log("data when updated: ",data);
-
                 if (data.success) {
                     dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
                     dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
@@ -317,17 +312,33 @@ export default function EditPlan() {
                     dispatch(updateOutgoing(data.updatedOutgoing, data.updatedOutgoing.id));
                     setDataRows(currentOutgoingData);
 
-                    // categoryRef.current.value ="";
-                    // optionRef.current.value="";
-                    // positionRef.current.value="";
-                    // priceRef.current.value=null;
-                    // notesRef.current.value="";
-                    // totalRef.current.value=null;
-                    // paidDateRef.current.value=null;
+                    // ITEM CLICKED IS TRUE
+                    // wenn ich etwas anderes aendere ich das User Input Outgoing Value
+                    // ich muss alle geaenderten Values leeren
+                    // console.log("user input outgoings when i change something: ", userInputOutgoings);
+                    // wenn ein Item Clicked false ist loesche setzte den user Input auf null
+
+                    // document.getElementById("price").value = "";
+                    categoryRef.current.value ="";
+                    optionRef.current.value="";
+                    positionRef.current.value="";
+                    priceRef.current.value=null;
+                    notesRef.current.value="";
+                    totalRef.current.value=null;
+                    paidDateRef.current.value=null;
 
                 } else {
                     setError(true);
                 }
+            }).then(()=>{
+                // setUserInputOutgoings();
+                // categoryRef.current.value ="";
+                // optionRef.current.value="";
+                // positionRef.current.value="";
+                // priceRef.current.value=null;
+                // notesRef.current.value="";
+                // totalRef.current.value=null;
+                // paidDateRef.current.value=null;
             })
             .catch((err) => {
                 console.log("error in fetch /edit-outgoings", err);
@@ -361,6 +372,8 @@ export default function EditPlan() {
                     // notesRef.current.value="";
                     // totalRef.current.value=null;
                     // paidDateRef.current.value=null;
+                    // setIdItemPopulateList();
+
                 } else {
                     setError(true);
                 }
@@ -371,6 +384,8 @@ export default function EditPlan() {
             });
 
     };
+
+
 
 
     // ********************* RENDER***********************
@@ -391,12 +406,22 @@ export default function EditPlan() {
                                     id="category"
                                     ref={categoryRef}
                                     onChange={handleChange}
+                                    defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].category : ""}
                                 >
-                                    {(clickedItemInTable[0] && clickedItemInTable[0].category)?
-                                        <option value={clickedItemInTable[0].category}>{clickedItemInTable[0].category}</option>:
-                                        <><option value="">-- Category --</option><option value="Production">
+                                    {(itemPopulateListClicked)?
+                                        <option 
+                                            defaultValue={clickedItemInTable[0].category}
+                                            value={clickedItemInTable[0].category}>{clickedItemInTable[0].category}
+                                        </option>:
+                                        <>
+                                            <option value="">-- Category --</option>
+                                            <option value="Production">
                                             Production
-                                        </option><option value="Marketing">Marketing</option><option value="Tour">Tour</option></>
+                                            </option>
+                                            <option value="Marketing">Marketing</option>
+                                            <option value="Tour">Tour</option>
+                                        </>
+
                                     }
                                 </select>
                             </div>
@@ -408,9 +433,9 @@ export default function EditPlan() {
                                     id="option"
                                     ref={optionRef}
                                     onChange={handleChange}
-                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].option : ""}
+                                    defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].option : ""}
                                 >
-                                    { (clickedItemInTable[0] && clickedItemInTable[0].option)?
+                                    { (itemPopulateListClicked)?
                                         <option value={clickedItemInTable[0].option}>{clickedItemInTable[0].option}</option>:
                                         <>{optionList}</>
                                     }
@@ -423,7 +448,8 @@ export default function EditPlan() {
                                     type="text"
                                     id="position"
                                     ref={positionRef}
-                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].position : ""}
+                                    defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].position : ""}
+                                    // value={(itemPopulateListClicked)? clickedItemInTable[0].position : ""}
                                     name="position"
                                     placeholder="Describe Position"
                                     onChange={handleChange}
@@ -438,7 +464,8 @@ export default function EditPlan() {
                                     name="price"
                                     ref={priceRef}
                                     placeholder="E.g. 1000,00"
-                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].price : null}
+                                    defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].price : null}
+                                    // value={(itemPopulateListClicked)? clickedItemInTable[0].price : null}
                                     min="0.01"
                                     step="0.01"
                                     onChange={handleChange}
@@ -467,7 +494,8 @@ export default function EditPlan() {
                                     id="paiddate"
                                     ref={paidDateRef}
                                     name="paidDate"
-                                    defaultValue={(clickedItemInTable[0] && clickedItemInTable[0].paiddate)? new Date(clickedItemInTable[0].paiddate).toISOString().slice(0, 10) : ""}
+                                    defaultValue={(itemPopulateListClicked)? new Date(clickedItemInTable[0].paiddate).toISOString().slice(0, 10) : ""}
+                                    // value={(itemPopulateListClicked)? new Date(clickedItemInTable[0].paiddate).toISOString().slice(0, 10) : ""}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -480,7 +508,8 @@ export default function EditPlan() {
                                     name="finalSum"
                                     ref={totalRef}
                                     placeholder="E.g. 1000,00"
-                                    defaultValue={(clickedItemInTable[0] && clickedItemInTable[0].total)? clickedItemInTable[0].total : null}
+                                    defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].total : null}
+                                    // value={(itemPopulateListClicked)? clickedItemInTable[0].total : null}
                                     min="0.01"
                                     step="0.01"
                                     onChange={handleChange}
@@ -495,7 +524,8 @@ export default function EditPlan() {
                                     ref={notesRef}
                                     placeholder="E.g. Invoice Number"
                                     name="notes"
-                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].notes: ""}
+                                    defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].notes: ""}
+                                    // value={(itemPopulateListClicked)? clickedItemInTable[0].notes: ""}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -538,19 +568,13 @@ export default function EditPlan() {
                                 checkboxSelection
                                 onSelectionModelChange={itm => {
                                     setIdItemPopulateList(itm[0]);
-                                    setInputValues();
+                                    handleItemClick();
                                 }
                                 }
                                 components={{ Toolbar: GridToolbar }}
                             />
                         </div>
                     </div>
-                    {/* <Route exact path="/projects/edit-plan/:id" component={OutgoingsTable}>
-                        <OutgoingsTable />
-                    </Route> */}
-                    {/* <Route exact path="/projects/edit-plan/:id" render={(props)=>{return(
-                        <OutgoingsTable id={props.match.params.id}/>);
-                    }} /> */}
                 </div>
             </div>
         </div>
