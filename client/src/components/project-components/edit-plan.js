@@ -198,7 +198,7 @@ export default function EditPlan() {
         if (clickedItemInTable[0]) {
             if(updateUserInput) {
                 // console.log("clicked Item in Table", clickedItemInTable[0]);
-                // clickedItemInTable[0].paiddate = new Date(clickedItemInTable[0].paiddate).toISOString().slice(0, 10);
+                // clickedItemInTable[0].paiddate = new Date(clickedItemInTable[0].paiddate).toLocaleDateString();
                 setUserInputOutgoings(clickedItemInTable[0]);
                 setUpdateUserInput(false);
 
@@ -373,24 +373,16 @@ export default function EditPlan() {
                                     id="category"
                                     ref={categoryRef}
                                     onChange={handleChange}
-                                    // value={userInputOutgoings?.category || ""}
+                                    value={userInputOutgoings?.category || "-- Category --"}
                                     // defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].category : ""}
                                 >
-                                    {(userInputOutgoings)?
-                                        <option 
-                                            // defaultValue={userInputOutgoings.category}
-                                            value={userInputOutgoings?.category}>{userInputOutgoings.category}
-                                        </option>:
-                                        <>
-                                            <option value="">-- Category --</option>
-                                            <option value="Production">
+                                    <option value="">-- Category --</option>
+                                    <option value="Production">
                                             Production
-                                            </option>
-                                            <option value="Marketing">Marketing</option>
-                                            <option value="Tour">Tour</option>
-                                        </>
-
-                                    }
+                                    </option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Tour">Tour</option>
+                                        
                                 </select>
                             </div>
 
@@ -401,11 +393,8 @@ export default function EditPlan() {
                                     id="option"
                                     ref={optionRef}
                                     onChange={handleChange}
-                                >
-                                    {(userInputOutgoings)?
-                                        <option value={userInputOutgoings.option}>{userInputOutgoings.option}</option>:
-                                        <>{optionList}</>
-                                    }
+                                    value={userInputOutgoings?.option || "-- Select Options --"}
+                                >{optionList}
                                 </select>
                             </div>
 
