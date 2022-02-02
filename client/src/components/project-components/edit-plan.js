@@ -15,6 +15,8 @@ export default function EditPlan() {
 
     const [userInputOutgoings, setUserInputOutgoings] = useState({});
     const [error, setError] = useState(false);
+    const [updateUserInput, setUpdateUserInput] = useState(false);
+
     const [dataColumns, setDataColumns] = useState([
         { field: "category", headerName: "Category", width: 100 },
         { field: "option", headerName: "Option", width: 200 },
@@ -150,17 +152,6 @@ export default function EditPlan() {
     }, [outgoings]);
 
     useEffect(()=>{
-
-
-        if (clickedItemInTable[0]) {
-            // console.log("clicked Item in Table", clickedItemInTable[0].total);
-
-            console.log("clicked Item in Table", clickedItemInTable[0]);
-
-        }
-    },[clickedItemInTable]);
-
-    useEffect(()=>{
         setOptionList([]);
         if (categoryRef.current.value === "Production") {
 
@@ -201,10 +192,24 @@ export default function EditPlan() {
             }, this);
             setOptionList(optionList);
         }
-       
-        // console.log("UserInput Outgoings: ", userInputOutgoings);
-
     },[userInputOutgoings]);
+
+
+    useEffect(()=>{
+        if (clickedItemInTable[0]) {
+            if(updateUserInput) {
+                console.log("clicked Item in Table", clickedItemInTable[0]);
+
+                // clickedItemInTable[0].paiddate = new Date(clickedItemInTable[0].paiddate).toISOString().slice(0, 10);
+                setUserInputOutgoings(clickedItemInTable[0]);
+                setUpdateUserInput(false);
+
+            }
+        }
+    },[updateUserInput, clickedItemInTable]);
+
+    // console.log("clicked Item in Table", clickedItemInTable[0]);
+
 
     useEffect(()=>{
 
@@ -219,24 +224,15 @@ export default function EditPlan() {
             ...userInputOutgoings,
             [target.name]: target.value,
         });
-        // console.log("UserInput Outgoings: ", userInputOutgoings);
-    };
-
-    const handleItemClick =() => {
+        console.log("UserInput Outgoings: ", [target.name], target.value);
         
+    };
+    // console.log("UserInput Outgoings: ", userInputOutgoings);
+
+    const handleItemClick =(itm) => {
+        setIdItemPopulateList(itm[0]);
         itemPopulateListClicked? setItemPopulateListClicked(false):setItemPopulateListClicked(true);
-
-        if (!itemPopulateListClicked) {
-            // setUserInputOutgoings();
-
-            // categoryRef.current.value ="";
-            // optionRef.current.defaultValue="";
-            // positionRef.current.defaultValue="";
-            // priceRef.current.defaultValue=null;
-            // notesRef.current.defaultValue="";
-            // totalRef.current.defaultValue=null;
-            // paidDateRef.current.defaultValue=null;
-        }
+        setUpdateUserInput(true);
     };
 
     const handleSubmitOutgoings = (e) => {
@@ -292,7 +288,6 @@ export default function EditPlan() {
         };
 
         // ITEM CLICKED IS TRUE
-
         fetch("/api/update-outgoings", {
             method: "POST",
             headers: {
@@ -304,7 +299,6 @@ export default function EditPlan() {
                 return data.json();
             })
             .then((data) => {
-
                 if (data.success) {
                     dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
                     dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
@@ -312,33 +306,11 @@ export default function EditPlan() {
                     dispatch(updateOutgoing(data.updatedOutgoing, data.updatedOutgoing.id));
                     setDataRows(currentOutgoingData);
 
-                    // ITEM CLICKED IS TRUE
-                    // wenn ich etwas anderes aendere ich das User Input Outgoing Value
-                    // ich muss alle geaenderten Values leeren
-                    // console.log("user input outgoings when i change something: ", userInputOutgoings);
-                    // wenn ein Item Clicked false ist loesche setzte den user Input auf null
-
-                    // document.getElementById("price").value = "";
-                    categoryRef.current.value ="";
-                    optionRef.current.value="";
-                    positionRef.current.value="";
-                    priceRef.current.value=null;
-                    notesRef.current.value="";
-                    totalRef.current.value=null;
-                    paidDateRef.current.value=null;
-
+                    setUserInputOutgoings({});
                 } else {
                     setError(true);
                 }
             }).then(()=>{
-                // setUserInputOutgoings();
-                // categoryRef.current.value ="";
-                // optionRef.current.value="";
-                // positionRef.current.value="";
-                // priceRef.current.value=null;
-                // notesRef.current.value="";
-                // totalRef.current.value=null;
-                // paidDateRef.current.value=null;
             })
             .catch((err) => {
                 console.log("error in fetch /edit-outgoings", err);
@@ -348,6 +320,9 @@ export default function EditPlan() {
 
     const handleDeleteOutgoings = (e) => {
         e.preventDefault();
+
+        console.log("clickedItemInTable Delete: ",clickedItemInTable);
+
         fetch("/api/delete-outgoings", {
             method: "POST",
             headers: {
@@ -365,15 +340,7 @@ export default function EditPlan() {
                     dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
                     dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
 
-                    // categoryRef.current.value ="";
-                    // optionRef.current.value="";
-                    // positionRef.current.value="";
-                    // priceRef.current.value=null;
-                    // notesRef.current.value="";
-                    // totalRef.current.value=null;
-                    // paidDateRef.current.value=null;
-                    // setIdItemPopulateList();
-
+                    setUserInputOutgoings({});
                 } else {
                     setError(true);
                 }
@@ -384,8 +351,6 @@ export default function EditPlan() {
             });
 
     };
-
-
 
 
     // ********************* RENDER***********************
@@ -406,12 +371,13 @@ export default function EditPlan() {
                                     id="category"
                                     ref={categoryRef}
                                     onChange={handleChange}
-                                    defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].category : ""}
+                                    value={userInputOutgoings?.category || ""}
+                                    // defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].category : ""}
                                 >
-                                    {(itemPopulateListClicked)?
+                                    {(userInputOutgoings)?
                                         <option 
-                                            defaultValue={clickedItemInTable[0].category}
-                                            value={clickedItemInTable[0].category}>{clickedItemInTable[0].category}
+                                            defaultValue={userInputOutgoings.category}
+                                            value={userInputOutgoings.category}>{userInputOutgoings.category}
                                         </option>:
                                         <>
                                             <option value="">-- Category --</option>
@@ -433,10 +399,10 @@ export default function EditPlan() {
                                     id="option"
                                     ref={optionRef}
                                     onChange={handleChange}
-                                    defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].option : ""}
+                                    value={userInputOutgoings?.option || ""}
                                 >
-                                    { (itemPopulateListClicked)?
-                                        <option value={clickedItemInTable[0].option}>{clickedItemInTable[0].option}</option>:
+                                    {(userInputOutgoings)?
+                                        <option value={userInputOutgoings.option}>{userInputOutgoings.option}</option>:
                                         <>{optionList}</>
                                     }
                                 </select>
@@ -448,8 +414,8 @@ export default function EditPlan() {
                                     type="text"
                                     id="position"
                                     ref={positionRef}
-                                    defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].position : ""}
-                                    // value={(itemPopulateListClicked)? clickedItemInTable[0].position : ""}
+                                    value={userInputOutgoings?.position || ""}
+                                    // defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].position : null}
                                     name="position"
                                     placeholder="Describe Position"
                                     onChange={handleChange}
@@ -464,24 +430,14 @@ export default function EditPlan() {
                                     name="price"
                                     ref={priceRef}
                                     placeholder="E.g. 1000,00"
-                                    defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].price : null}
-                                    // value={(itemPopulateListClicked)? clickedItemInTable[0].price : null}
+                                    value={userInputOutgoings?.price || ""}
+                                    // defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].price : ""}
                                     min="0.01"
                                     step="0.01"
                                     onChange={handleChange}
                                 />
                             </div>
 
-                            {/* <div>
-                                <label htmlFor="paid">Paid?</label>
-                                <input
-                                    type="checkbox"
-                                    id="paid"
-                                    name="isPaid"
-                                    onChange={handleChange}
-                                    defaultValue={(clickedItemInTable[0])? clickedItemInTable[0].idPaid : "" }
-                                />
-                            </div> */}
                         </div>
 
                         <div className="edit-plan-form-bottom">
@@ -494,8 +450,8 @@ export default function EditPlan() {
                                     id="paiddate"
                                     ref={paidDateRef}
                                     name="paidDate"
-                                    defaultValue={(itemPopulateListClicked)? new Date(clickedItemInTable[0].paiddate).toISOString().slice(0, 10) : ""}
-                                    // value={(itemPopulateListClicked)? new Date(clickedItemInTable[0].paiddate).toISOString().slice(0, 10) : ""}
+                                    value={userInputOutgoings?.paiddate || ""}
+                                    // defaultValue={(itemPopulateListClicked)? new Date(clickedItemInTable[0].paiddate).toISOString().slice(0, 10) : ""}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -504,12 +460,12 @@ export default function EditPlan() {
                                 <label htmlFor="finalsum">Paid Amount</label>
                                 <input
                                     type="number"
-                                    id="finalsum"
-                                    name="finalSum"
+                                    id="total"
+                                    name="total"
                                     ref={totalRef}
                                     placeholder="E.g. 1000,00"
-                                    defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].total : null}
-                                    // value={(itemPopulateListClicked)? clickedItemInTable[0].total : null}
+                                    value={userInputOutgoings?.total || ""}
+                                    // defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].total : null}
                                     min="0.01"
                                     step="0.01"
                                     onChange={handleChange}
@@ -524,8 +480,7 @@ export default function EditPlan() {
                                     ref={notesRef}
                                     placeholder="E.g. Invoice Number"
                                     name="notes"
-                                    defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].notes: ""}
-                                    // value={(itemPopulateListClicked)? clickedItemInTable[0].notes: ""}
+                                    value={userInputOutgoings?.notes|| ""}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -567,8 +522,7 @@ export default function EditPlan() {
                                 rowsPerPageOptions={[10]}
                                 checkboxSelection
                                 onSelectionModelChange={itm => {
-                                    setIdItemPopulateList(itm[0]);
-                                    handleItemClick();
+                                    handleItemClick(itm);
                                 }
                                 }
                                 components={{ Toolbar: GridToolbar }}

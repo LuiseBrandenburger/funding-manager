@@ -46,7 +46,7 @@ plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload,
             data.quantity,
             data.file,
             data.notes,
-            data.finalSum,
+            data.total,
             data.isPaid,
             data.paidDate,
             req.session.userId
@@ -168,11 +168,9 @@ plan.post("/api/update-outgoings", (req, res) => {
 
 plan.post("/api/delete-outgoings", (req, res) => {
 
-    console.log("body in post outgoings:", req.body);
-
+    console.log("body in post outgoings delete:", req.body);
     const outgoingId = req.body.clickedItemInTable[0].id;
     console.log("outgoingId:", outgoingId);
-
 
     deleteOutgoing(
         outgoingId

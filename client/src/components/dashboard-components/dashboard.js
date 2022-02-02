@@ -74,7 +74,7 @@ export default function Dashboard() {
                 {
                     data: dataArrApprovedFund,
                     label: "Apporoved Funding Sum",
-                    backgroundColor: ["#124559"],
+                    backgroundColor: ["#12455977"],
                     hoverBackgroundColor: 'rgba(255,99,132,0.4)',
                     barPercentage: 10,
                     barThickness: 50,
@@ -84,7 +84,7 @@ export default function Dashboard() {
                 {
                     data: dataArrFundBalance,
                     label: "Funding Balance",
-                    backgroundColor: ["#f5b700"],
+                    backgroundColor: ["#f5b80077"],
                     hoverBackgroundColor: 'rgba(255,99,132,0.4)',
                     barPercentage: 10,
                     barThickness: 50,
@@ -94,7 +94,7 @@ export default function Dashboard() {
                 {
                     data: dataArrCostsFC,
                     label: "Estimated Costs",
-                    backgroundColor: ["#9f4a54"],
+                    backgroundColor: ["#9f4a5477"],
                     hoverBackgroundColor: 'rgba(255,99,132,0.4)',
                     barPercentage: 10,
                     barThickness: 50,
@@ -104,7 +104,7 @@ export default function Dashboard() {
                 {
                     data: dataArrCostsFinal,
                     label: "Costs Paid",
-                    backgroundColor: ["#7ca982"],
+                    backgroundColor: ["#7ca98277"],
                     hoverBackgroundColor: 'rgba(255,99,132,0.4)',
                     barPercentage: 10,
                     barThickness: 50,
@@ -123,8 +123,8 @@ export default function Dashboard() {
 
             <div className="main-content-left">
                 <div className="main-content-left-container">
-                    <div>
-                        <h3>My Projects</h3>
+                    <div className="dashboard-left-container">
+                        <h3 className="headline-dashboard">My Projects</h3>
                         <ul>
                             {projects &&
                             projects.map((project) => (
@@ -137,11 +137,6 @@ export default function Dashboard() {
                             ))}
                         </ul>
                     </div>
-
-                    <div className="btns-left">
-                        {/* <button className="focus-btn">Show all Projects</button>
-                        <button className="focus-btn">Add Project</button> */}
-                    </div>
                 </div>
             </div>
             {/* DASHBOARD MAIN CONTENT RIGHT */}
@@ -152,12 +147,15 @@ export default function Dashboard() {
                         {projects &&
                             projects.map((project) => (
                                 <div className="project-preview-box" key={project.id}>
-                                    <h5 key={project.id}>
+                                    <h4 key={project.id}>
                                         {project.name}
-                                    </h5>
+                                    </h4>
                                     <h6>{project.artist_name}</h6>
+                                    <h5>Funding Sum</h5>
                                     <h6>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(project.approved_funding)}</h6>
+                                    <h5>Costs Paid</h5>
                                     <h6>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(project.sum_total)}</h6>
+                                    <h5>Funding Balance</h5>
                                     <h6>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(project.sum_left)}</h6>
                                 
                                 </div>
