@@ -118,7 +118,6 @@ export default function EditPlan() {
         }
     });
 
-
     // *********************************** REF *******************************
 
     const categoryRef = useRef();
@@ -198,8 +197,7 @@ export default function EditPlan() {
     useEffect(()=>{
         if (clickedItemInTable[0]) {
             if(updateUserInput) {
-                console.log("clicked Item in Table", clickedItemInTable[0]);
-
+                // console.log("clicked Item in Table", clickedItemInTable[0]);
                 // clickedItemInTable[0].paiddate = new Date(clickedItemInTable[0].paiddate).toISOString().slice(0, 10);
                 setUserInputOutgoings(clickedItemInTable[0]);
                 setUpdateUserInput(false);
@@ -231,7 +229,13 @@ export default function EditPlan() {
 
     const handleItemClick =(itm) => {
         setIdItemPopulateList(itm[0]);
-        itemPopulateListClicked? setItemPopulateListClicked(false):setItemPopulateListClicked(true);
+        if (itemPopulateListClicked) {
+            setItemPopulateListClicked(false);
+            setUserInputOutgoings({});
+        } else {
+            setItemPopulateListClicked(true);
+        }
+        // itemPopulateListClicked? setItemPopulateListClicked(false) :setItemPopulateListClicked(true);
         setUpdateUserInput(true);
     };
 
@@ -305,7 +309,6 @@ export default function EditPlan() {
                     dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
                     dispatch(updateOutgoing(data.updatedOutgoing, data.updatedOutgoing.id));
                     setDataRows(currentOutgoingData);
-
                     setUserInputOutgoings({});
                 } else {
                     setError(true);
@@ -339,7 +342,6 @@ export default function EditPlan() {
                     dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
                     dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
                     dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
-
                     setUserInputOutgoings({});
                 } else {
                     setError(true);
@@ -371,13 +373,13 @@ export default function EditPlan() {
                                     id="category"
                                     ref={categoryRef}
                                     onChange={handleChange}
-                                    value={userInputOutgoings?.category || ""}
+                                    // value={userInputOutgoings?.category || ""}
                                     // defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].category : ""}
                                 >
                                     {(userInputOutgoings)?
                                         <option 
-                                            defaultValue={userInputOutgoings.category}
-                                            value={userInputOutgoings.category}>{userInputOutgoings.category}
+                                            // defaultValue={userInputOutgoings.category}
+                                            value={userInputOutgoings?.category}>{userInputOutgoings.category}
                                         </option>:
                                         <>
                                             <option value="">-- Category --</option>
@@ -399,7 +401,6 @@ export default function EditPlan() {
                                     id="option"
                                     ref={optionRef}
                                     onChange={handleChange}
-                                    value={userInputOutgoings?.option || ""}
                                 >
                                     {(userInputOutgoings)?
                                         <option value={userInputOutgoings.option}>{userInputOutgoings.option}</option>:
