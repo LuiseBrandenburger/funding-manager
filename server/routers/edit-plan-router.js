@@ -1,8 +1,7 @@
 const express = require("express");
 const plan = express.Router();
-// const { validateEmail } = require("../utils/helpers");
-// const { hash } = require("../utils/bc");
-// const { compare } = require("../utils/bc");
+const moment = require("moment");
+
 const s3 = require("../utils/s3");
 const { uploader } = require("../utils/upload");
 
@@ -104,13 +103,19 @@ plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload,
 
 plan.post("/api/update-outgoings", (req, res) => {
 
-    console.log("body in post outgoings:", req.body);
+    // console.log("body in post outgoings:", req.body);
     // console.log("body.file in post outgoings:", req.file);
     const data = req.body.userInputForUpdate;
     const outgoingId = req.body.clickedItemInTable[0].id;
-    console.log("outgoingId:", outgoingId);
-    console.log("outgoing data:", data);
+    // console.log("outgoingId:", outgoingId);
+    // console.log("outgoing data:", data);
 
+    if(data.paidDate===null){
+    } else {
+        let datePaid = moment(data.paidDate).format("YYYY-MM-DD");
+        // console.log(datePaid);
+        data.paidDate = datePaid;
+    }
     if (!data.quantity) {
         data.quantity = 1;
     }
@@ -129,8 +134,8 @@ plan.post("/api/update-outgoings", (req, res) => {
         outgoingId
     )
         .then(({ rows }) => {
-            console.log("rows in update outgoing:", rows);
-            console.log("rows were updated, projectId:", rows[0].project_id);
+            // console.log("rows in update outgoing:", rows);
+            // console.log("rows were updated, projectId:", rows[0].project_id);
 
             Promise.all([
                 getOutgoingsSumFC(rows[0].project_id), 

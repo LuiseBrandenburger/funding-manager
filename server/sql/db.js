@@ -252,3 +252,17 @@ module.exports.deleteOutgoing = (outgoingId) => {
     const params = [outgoingId];
     return db.query(q, params);
 };
+
+
+module.exports.deleteOutgoingsByProjectId = (projectId) => {
+    const q = `DELETE FROM outgoings WHERE project_id = ($1)
+    RETURNING id, project_id, sender_id`;
+    const params = [projectId];
+    return db.query(q, params);
+};
+
+module.exports.deleteProjectByProjectId = (projectId) => {
+    const q = `DELETE FROM projects WHERE id = ($1)`;
+    const params = [projectId];
+    return db.query(q, params);
+};

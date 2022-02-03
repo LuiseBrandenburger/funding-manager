@@ -22,6 +22,7 @@ const auth = require("./routers/auth-router");
 const projects = require("./routers/projects-router");
 const plan = require("./routers/edit-plan-router");
 const finance = require("./routers/finance-router");
+const deleteProject = require("./routers/delete-project-router");
 
 
 /*************************** SECRET ***************************/
@@ -70,7 +71,7 @@ app.use(auth);
 app.use(projects);
 app.use(plan);
 app.use(finance);
-
+app.use(deleteProject);
 
 
 // ************************* SOCKET ******************************

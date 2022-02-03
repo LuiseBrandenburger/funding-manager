@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import ShowProjectOverview from "./show-project-overview";
+import DeleteProjectBtn from "./delete-project-btn";
+
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { projectsReceived } from "../../redux/projects/slice";
@@ -73,6 +75,9 @@ export default function Projects({ userId }) {
             );
         }, this);
 
+        const deleteProject = ()=> {
+            console.log("delete Project");
+        };
 
     return (
         <div className="main-content-container">
@@ -126,12 +131,14 @@ export default function Projects({ userId }) {
                             ) : (
                                 ""
                             )}
-                            <Link to="/projects/edit-project">
+                            {/* <Link to="/projects/edit-project">
                                 <button className="submit-btn">
                                     Edit Project
                                 </button>
-                            </Link>
+                            </Link> */}
 
+                            {/* <DeleteProjectBtn /> */}
+                        
                             <Link to={`/projects/edit-plan`}>
                                 <button className="submit-btn">
                                     Edit Plan

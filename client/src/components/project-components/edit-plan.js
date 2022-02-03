@@ -16,7 +16,6 @@ export default function EditPlan() {
     const [userInputOutgoings, setUserInputOutgoings] = useState({});
     const [error, setError] = useState(false);
     const [updateUserInput, setUpdateUserInput] = useState(false);
-
     const [dataColumns, setDataColumns] = useState([
         { field: "category", headerName: "Category", width: 100 },
         { field: "option", headerName: "Option", width: 200 },
@@ -134,6 +133,7 @@ export default function EditPlan() {
         fetch(`/all-outgoings`)
             .then((data) => data.json())
             .then(({ data }) => {
+                // console.log("data in get", data)
                 setDataRows(currentOutgoingData);
                 dispatch(outgoingsReceived(data));
             })
@@ -207,7 +207,6 @@ export default function EditPlan() {
     },[updateUserInput, clickedItemInTable]);
 
     // console.log("clicked Item in Table", clickedItemInTable[0]);
-
 
     useEffect(()=>{
 
@@ -291,7 +290,8 @@ export default function EditPlan() {
             paidDate: new Date(paidDateRef.current.value)
         };
 
-        // ITEM CLICKED IS TRUE
+        // console.log("Updated Paiddate: ", userInputForUpdate.paidDate); .toISOString().split('T')[0]
+
         fetch("/api/update-outgoings", {
             method: "POST",
             headers: {
@@ -324,8 +324,7 @@ export default function EditPlan() {
     const handleDeleteOutgoings = (e) => {
         e.preventDefault();
 
-        console.log("clickedItemInTable Delete: ",clickedItemInTable);
-
+        // console.log("clickedItemInTable Delete: ",clickedItemInTable);
         fetch("/api/delete-outgoings", {
             method: "POST",
             headers: {
@@ -351,7 +350,6 @@ export default function EditPlan() {
                 console.log("error in fetch /edit-outgoings", err);
                 setError(true);
             });
-
     };
 
 
