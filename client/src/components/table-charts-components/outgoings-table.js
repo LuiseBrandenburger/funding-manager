@@ -65,10 +65,6 @@ export default function OutgoingsTable() {
         setDataRows(currentOutgoingData);
     }, [currentProjectId]);
 
-    useEffect(() => {
-        setDataRows(currentOutgoingData);
-    }, [outgoings]);
-
     // *********************************** TABLE *******************************
 
 

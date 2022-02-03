@@ -10,22 +10,89 @@ export default function OutgoingsChart() {
     const currentProjectId = useSelector(
         (state) => state.currentProjectId || {}
     );
-    const outgoings = useSelector((state) => state.outgoings || {});
-    const labelArr = useSelector((state) => state.outgoings.map((item)=> {
-        return item.position;
-    }) || {});
-    const dataEstimatedCosts = useSelector(
-        (state) =>
-            state.outgoings.map((item) => {
-                return item.price;
-            }) || {}
-    );
-    const dataFinalCosts = useSelector(
-        (state) =>
-            state.outgoings.map((item) => {
-                return item.total;
-            }) || {}
-    );
+    // const outgoings = useSelector((state) => state.outgoings || {});
+
+    // const labelArr = useSelector((state) => state.outgoings.map((item)=> {
+    //     return item.position;
+    // }) || {});
+
+    // const dataEstimatedCosts = useSelector(
+    //     (state) =>
+    //         state.outgoings.map((item) => {
+    //             return item.price;
+    //         }) || {}
+    // );
+    // const dataFinalCosts = useSelector(
+    //     (state) =>
+    //         state.outgoings.map((item) => {
+    //             return item.total;
+    //         }) || {}
+    // );
+
+    // const currentOutgoingData = useSelector((state) => {
+    //     if (state.outgoings) {
+    //         return state.outgoings.filter((outgoing) => {
+    //             return outgoing.project_id === state.currentProjectId;
+    //         });
+    //     } else {
+    //         return {};
+    //     }
+    // });
+
+    const dataEstimatedCosts = useSelector((state) => {
+        if (state.outgoings) {
+
+            const currentOut = state.outgoings.filter((outgoing) => {
+                // I only want an array where there is a value
+                return outgoing.project_id === state.currentProjectId
+                // {
+                //     return outgoing.price;
+                // }
+            });
+            const currentPrice = currentOut.map((outgoing) => {
+                return outgoing.price;
+            });
+            return currentPrice;
+
+        } else {
+            return {};
+        }
+    });
+
+    const labelArr = useSelector((state) => {
+        if (state.outgoings) {
+
+            const currentOut = state.outgoings.filter((outgoing) => {
+                return outgoing.project_id === state.currentProjectId;
+            });
+            const currentPosition = currentOut.map((outgoing) => {
+                return outgoing.position;
+            });
+            return currentPosition;
+
+        } else {
+            return {};
+        }
+    });
+
+    const dataFinalCosts = useSelector((state) => {
+        if (state.outgoings) {
+
+            const currentOut = state.outgoings.filter((outgoing) => {
+                return outgoing.project_id === state.currentProjectId;
+            });
+            const currentTotal = currentOut.map((outgoing) => {
+                return outgoing.total;
+            })
+            return currentTotal;
+
+        } else {
+            return {};
+        }
+    });
+
+    console.log("cuurent Outgoing in Chart Price: ", dataEstimatedCosts);
+
 
 
     // *********************************** STATE FOR CHART *******************************
@@ -41,6 +108,15 @@ export default function OutgoingsChart() {
     });
 
     // *********************************** EFFECTS *******************************
+
+    // useEffect(() => {
+    //     setDataEstimatedCosts(currentOutgoingData);
+    // }, [currentProjectId]);
+
+    // useEffect(() => {
+    //     setDataFinalCosts(currentOutgoingData);
+    // }, [currentProjectId]);
+
 
     useEffect(() => {
         setChartData({
@@ -66,31 +142,11 @@ export default function OutgoingsChart() {
                     maxBarThickness: 20,
                     minBarLength: 2,
                 },
-                // {
-                //     data: dataArrCostsFC,
-                //     label: "Estimated Costs",
-                //     backgroundColor: ["#9f4a5477"],
-                //     hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-                //     barPercentage: 10,
-                //     barThickness: 50,
-                //     maxBarThickness: 50,
-                //     minBarLength: 2,
-                // },
-                // {
-                //     data: dataArrCostsFinal,
-                //     label: "Costs Paid",
-                //     backgroundColor: ["#7ca98277"],
-                //     hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-                //     barPercentage: 10,
-                //     barThickness: 50,
-                //     maxBarThickness: 50,
-                //     minBarLength: 2,
-                // },
             ],
         },
         
         );
-    }, [outgoings]);
+    }, [currentProjectId]);
 
     // *********************************** CHART *******************************
 
