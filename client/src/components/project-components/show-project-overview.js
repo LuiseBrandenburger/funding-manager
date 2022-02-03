@@ -43,35 +43,35 @@ export default function ShowProjectOverview() {
                             <h2>{currentProjectData[0].name || ""}</h2>
                             <br/>
                             <h3>Project Number:</h3>
-                            <h3>{currentProjectData[0].project_number || ""}</h3>
+                            <h3 className="text-highlight-yellow">{currentProjectData[0].project_number || ""}</h3>
                             <h3>Funding Received:</h3>
-                            <h3>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(currentProjectData[0].funding_received) || ""}</h3>
+                            <h3 className="text-highlight-yellow">{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(currentProjectData[0].funding_received) || ""}</h3>
                             
                             <h3>Estimated Costs:</h3>
-                            <h3>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(currentProjectData[0].sum_fc_total) || ""}</h3>
+                            <h3 className="text-highlight-yellow">{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(currentProjectData[0].sum_fc_total) || ""}</h3>
                             
                             
 
                         </div>
                         <div className="project-plan-overview-right">
                             <h3>Paid Costs:</h3>
-                            <h3>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(currentProjectData[0].sum_total) || ""}</h3>
+                            <h3 className="text-highlight-yellow">{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(currentProjectData[0].sum_total) || ""}</h3>
 
                             <h3>Funding Balance:</h3>
-                            <h3>{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(currentProjectData[0].sum_left) || ""}</h3>
+                            <h3 className="text-highlight-yellow">{new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(currentProjectData[0].sum_left) || ""}</h3>
                             <br/>
                             
                             <div>
                                 {currentProjectId ? (
                                     <Link to={`/projects/show-project/outgoings-table`}>
-                                        <button className="submit-btn-two">Outgoings Table</button>
+                                        <button className="focus-btn">Outgoings Table</button>
                                     </Link>
                                 ) : (
                                     ""
                                 )}
                                 {currentProjectId ? (
                                     <Link to={`/projects/show-project/outgoings-chart`}>
-                                        <button className="submit-btn-two">Outgoings Chart</button>
+                                        <button className="focus-btn">Outgoings Chart</button>
                                     </Link>
                                 ) : (
                                     ""
