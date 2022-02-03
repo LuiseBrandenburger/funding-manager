@@ -75,9 +75,9 @@ export default function Projects({ userId }) {
             );
         }, this);
 
-        const deleteProject = ()=> {
-            console.log("delete Project");
-        };
+        // const deleteProject = ()=> {
+        //     console.log("delete Project");
+        // };
 
     return (
         <div className="main-content-container">
@@ -145,11 +145,11 @@ export default function Projects({ userId }) {
                                 </button>
                             </Link>
 
-                            {/* <Link to={`/projects/show-project/${id}`}>
+                            <Link to={`/projects/show-project`}>
                                 <button className="submit-btn">
                                     Show Overview
                                 </button>
-                            </Link> */}
+                            </Link>
                         </div>
                         <div className="btns-left">
                             <Link to="/projects/add-project">
@@ -164,7 +164,7 @@ export default function Projects({ userId }) {
                 {/*PROJECTS MAIN CONTENT RIGHT */}
 
                 <div className="main-content-right">
-                    <Route exact path="/projects/show-project/:id">
+                    <Route exact path="/projects/show-project">
                         <ShowProjectOverview userId={userId} />
                     </Route>
                     <Route path="/projects/edit-project">
@@ -176,9 +176,6 @@ export default function Projects({ userId }) {
                     <Route path="/projects/add-project">
                         <AddNewProject userId={userId} />
                     </Route>
-                    {/* <Route path="/projects">
-                        <ShowProjectOverview />
-                    </Route> */}
                 </div>
             </BrowserRouter>
         </div>

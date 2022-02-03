@@ -1,28 +1,26 @@
 import { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 export default function OutgoingsTable() {
-    const { id } = useParams();
-    console.log("id in params: ", id);
-    const dispatch = useDispatch();
 
     // *********************************** STATE *******************************
 
+    const [dataRows, setDataRows] = useState([]);
     const [dataColumns, setDataColumns] = useState([
-        { field: "position", headerName: "Position", width: 100 },
-        { field: "option", headerName: "Option", width: 170 },
+        { field: "category", headerName: "Category", width: 100 },
+        { field: "option", headerName: "Option", width: 200 },
+        { field: "position", headerName: "Expense Description", width: 200 },
         {
             field: "price",
-            headerName: "Costs",
+            headerName: "Cost",
             type: "number",
             width: 120,
             editable: true 
         },
         {
             field: "total",
-            headerName: "Paid",
+            headerName: "Paid Amount",
             type: "number",
             width: 120,
             editable: true 
@@ -34,14 +32,20 @@ export default function OutgoingsTable() {
             width: 100,
             editable: true 
         }, 
+        { field: "notes", headerName: "Transaction Notes", width: 300 },
         { field: "id", headerName: "ID", width: 60 },
+
     ]);
-    const [dataRows, setDataRows] = useState([]);
-    const [idItemPopulateList, setIdItemPopulateList] = useState();
+    const currentProjectData = useSelector((state) => {
+        if (state.projects) {
+            return state.projects.filter((project) => {
+                return project.id === state.currentProjectId;
+            });
+        } else {
+            return {};
+        }
+    });
     const outgoings = useSelector((state) => state.outgoings || {});
-    const currentProjectId = useSelector(
-        (state) => state.currentProjectId || {}
-    );
     const currentOutgoingData = useSelector((state) => {
         if (state.outgoings) {
             return state.outgoings.filter((outgoing) => {
@@ -51,8 +55,10 @@ export default function OutgoingsTable() {
             return {};
         }
     });
+    const currentProjectId = useSelector(
+        (state) => state.currentProjectId || {}
+    );
 
-    console.log("current Outgoing data:", currentOutgoingData)
     // *********************************** EFFECTS *******************************
 
     useEffect(() => {
@@ -65,10 +71,6 @@ export default function OutgoingsTable() {
 
     // *********************************** TABLE *******************************
 
-    useEffect(() => {
-        setDataRows(currentOutgoingData);
-
-    }, []);
 
 
     return (
@@ -77,15 +79,17 @@ export default function OutgoingsTable() {
                 style={{ flexGrow: 1 }}
             >
                 <DataGrid
+                    rowHeight={30} 
                     rows={dataRows}
                     columns={dataColumns}
                     pageSize={10}
                     rowsPerPageOptions={[10]}
                     checkboxSelection
-                    onSelectionModelChange={itm => 
-                        // define a function what should happen once the itm is clicked
-                        console.log(itm[0])
-                    }
+                    // onSelectionModelChange={itm => {
+                    //     handleItemClick(itm);
+                    // }
+                    // }
+                    components={{ Toolbar: GridToolbar }}
                 />
             </div>
         </div>

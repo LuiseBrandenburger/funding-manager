@@ -10,8 +10,6 @@ export default function ShowProjectOverview() {
         (state) => state.currentProjectId || {}
     );
 
-    let id = currentProjectId;
-    console.log("both ids from overview", currentProjectId, id);
 
     return (
         <div className="main-content-right-container">
@@ -29,17 +27,15 @@ export default function ShowProjectOverview() {
                             <h2>Total:</h2>
                         </div>
                         <div className="project-plan-overview-right">
-                            {/* TODO: FIXME: */}
                             {currentProjectId ? (
-                                <Link to={`/projects/show-project/outgoings-table/${id}`}>
+                                <Link to={`/projects/show-project/outgoings-table`}>
                                     <button>Outgoings Table</button>
                                 </Link>
                             ) : (
                                 ""
                             )}
-
                             {currentProjectId ? (
-                                <Link to={`/projects/show-project/outgoings-chart/${id}`}>
+                                <Link to={`/projects/show-project/outgoings-chart`}>
                                     <button>Outgoings Chart</button>
                                 </Link>
                             ) : (
@@ -48,17 +44,15 @@ export default function ShowProjectOverview() {
                         </div>
                     </div>
                     <div className="project-plan-table">
-                        {/* TODO: FIXME: */}
                         {currentProjectId ? (
-                            <Route path={`/projects/show-project/outgoings-table/:id`}>
+                            <Route path={`/projects/show-project/outgoings-table`}>
                                 <OutgoingsTable />
                             </Route>
                         ) : (
                             ""
                         )}
-                        {/* TODO: FIXME: */}
                         {currentProjectId ? (
-                            <Route path={`/projects/show-project/outgoings-chart/:id`}>
+                            <Route path={`/projects/show-project/outgoings-chart`}>
                                 <OutgoingsChart />
                             </Route>
                         ) : (

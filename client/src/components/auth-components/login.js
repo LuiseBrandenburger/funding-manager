@@ -67,11 +67,11 @@ export default function Login() {
                 />
             </form>
             <div>
-                <Link to="/reset">
+                {/* <Link to="/reset">
                     <button className="submit-btn-two" id="reset-btn">
                         RESET PASSWORD
                     </button>
-                </Link>
+                </Link> */}
                 <button className="submit-btn" onClick={handleLogin}>
                     LOGIN
                 </button>
