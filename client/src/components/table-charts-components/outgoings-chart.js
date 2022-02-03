@@ -52,8 +52,8 @@ export default function OutgoingsChart() {
                     backgroundColor: ["#12455977"],
                     hoverBackgroundColor: 'rgba(255,99,132,0.4)',
                     barPercentage: 10,
-                    barThickness: 30,
-                    maxBarThickness: 30,
+                    barThickness: 20,
+                    maxBarThickness: 20,
                     minBarLength: 2,
                 },
                 {
@@ -62,8 +62,8 @@ export default function OutgoingsChart() {
                     backgroundColor: ["#f5b80077"],
                     hoverBackgroundColor: 'rgba(255,99,132,0.4)',
                     barPercentage: 10,
-                    barThickness: 30,
-                    maxBarThickness: 30,
+                    barThickness: 20,
+                    maxBarThickness: 20,
                     minBarLength: 2,
                 },
                 // {
