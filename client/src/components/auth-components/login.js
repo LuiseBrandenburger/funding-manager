@@ -50,7 +50,7 @@ export default function Login() {
             <h3>Please login here: </h3>
             <br></br>
             {error && (
-                <h3 style={{ color: "red" }}> Error, something went wrong </h3>
+                <h4 style={{ color: "red" }}> Error, something went wrong </h4>
             )}
             <form className="login-box">
                 <input

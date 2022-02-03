@@ -20,19 +20,6 @@ export default function ShowProjectOverview() {
         }
     });
 
-    console.log(currentProjectData[0]);
-
-    //     approved_funding: "20000.00"
-    // artist_name: "Elder"
-    // funding_received: "0.00"
-    // id: 6
-    // name: "Elder - New Album 2022"
-    // project_number: "E123"
-    // sum_accounted: "0.00"
-    // sum_fc_total: "24500.00"
-    // sum_left: "6499.44"
-    // sum_total: "13500.56"
-    // sumspend: "0.00"
 
     return (
         <div className="main-content-right-container">

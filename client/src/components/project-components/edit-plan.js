@@ -217,6 +217,7 @@ export default function EditPlan() {
             ...userInputOutgoings,
             [target.name]: target.value,
         });
+        setError(false);
         console.log("UserInput Outgoings: ", [target.name], target.value);
     };
     // console.log("UserInput Outgoings: ", userInputOutgoings);
@@ -354,6 +355,9 @@ export default function EditPlan() {
             <div className="edit-project-container">
                 <div className="project-plan-outgoings">
                     <h2>PROJECT COSTS</h2>
+                    {error && (
+                        <h4 style={{ color: "red" }}> Error, something went wrong </h4>
+                    )}
                     <form action="">
                         <div className="edit-plan-form-top">
                             <div className="group-container">

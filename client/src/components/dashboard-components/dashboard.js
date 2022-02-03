@@ -5,6 +5,8 @@ import { projectsReceived } from "../../redux/projects/slice";
 import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 import { Bar } from "react-chartjs-2";
+// import AddNewProject from "./add-new-project";
+
 
 export default function Dashboard() {
     const dispatch = useDispatch();
@@ -53,11 +55,6 @@ export default function Dashboard() {
         fetch(`/all-projects`)
             .then((data) => data.json())
             .then(({ data }) => {
-                // console.log(
-                //     "data in GET Route /all-projects: ",
-                //     data,
-                //     data[0].id
-                // );
                 dispatch(projectsReceived(data));
             })
             .catch((err) => {
@@ -119,6 +116,7 @@ export default function Dashboard() {
 
     return (
         <div className="main-content-container">
+         
             {/* DASHBOARD MAIN CONTENT LEFT */}
 
             <div className="main-content-left">
@@ -136,12 +134,20 @@ export default function Dashboard() {
                                 </li>
                             ))}
                         </ul>
+                        {/* <Link to="/projects/add-project">
+                                <button className="submit-btn-two">
+                                    Add New Project
+                                </button>
+                            </Link> */}
                     </div>
                 </div>
             </div>
             {/* DASHBOARD MAIN CONTENT RIGHT */}
 
             <div className="main-content-right">
+            {/* <Route path="/projects/add-project">
+                        <AddNewProject userId={userId} />
+                    </Route> */}
                 <div className="main-content-right-container">
                     <div className="project-preview-container">
                         {projects &&
@@ -182,6 +188,7 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
+
         </div>
     );
 }
