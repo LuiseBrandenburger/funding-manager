@@ -1,29 +1,29 @@
 import { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { outgoingsReceived } from "../../redux/outgoings/slice";
 import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 import { Bar } from "react-chartjs-2";
 
 
 export default function OutgoingsChart() {
-    const { id } = useParams();
-    console.log("id in params: ", id);
 
-    const history = useHistory();
-    const dispatch = useDispatch();
     const currentProjectId = useSelector(
         (state) => state.currentProjectId || {}
     );
     const outgoings = useSelector((state) => state.outgoings || {});
     const labelArr = useSelector((state) => state.outgoings.map((item)=> {
-        return item.option;
+        return item.position;
     }) || {});
-    const dataArr = useSelector(
+    const dataEstimatedCosts = useSelector(
         (state) =>
             state.outgoings.map((item) => {
                 return item.price;
+            }) || {}
+    );
+    const dataFinalCosts = useSelector(
+        (state) =>
+            state.outgoings.map((item) => {
+                return item.total;
             }) || {}
     );
 
@@ -43,48 +43,61 @@ export default function OutgoingsChart() {
     // *********************************** EFFECTS *******************************
 
     useEffect(() => {
-        console.log("id in params after mounted: ", currentProjectId);
-        console.log("id in params after mounted: ", id);
-
-        fetch(`/all-outgoings/${id}`)
-            .then((data) => data.json())
-            .then(({ data }) => {
-                console.log(
-                    "data in GET Route /all-outgoings: ",
-                    data,
-                );
-                // setCurrentProjectId(data[0].id);
-                // dispatch(currentProjectIdReceived(data[0].id));
-                // dispatch(projectsReceived(data));
-            })
-            .catch((err) => {
-                //    location.replace("/");
-                console.log("error to get all Projects: ", err);
-            });
-    }, [currentProjectId]);
+        setChartData({
+            labels: labelArr,
+            datasets: [
+                {
+                    data: dataEstimatedCosts,
+                    label: "Estimated Costs",
+                    backgroundColor: ["#12455977"],
+                    hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                    barPercentage: 10,
+                    barThickness: 30,
+                    maxBarThickness: 30,
+                    minBarLength: 2,
+                },
+                {
+                    data: dataFinalCosts,
+                    label: "Final Costs",
+                    backgroundColor: ["#f5b80077"],
+                    hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                    barPercentage: 10,
+                    barThickness: 30,
+                    maxBarThickness: 30,
+                    minBarLength: 2,
+                },
+                // {
+                //     data: dataArrCostsFC,
+                //     label: "Estimated Costs",
+                //     backgroundColor: ["#9f4a5477"],
+                //     hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                //     barPercentage: 10,
+                //     barThickness: 50,
+                //     maxBarThickness: 50,
+                //     minBarLength: 2,
+                // },
+                // {
+                //     data: dataArrCostsFinal,
+                //     label: "Costs Paid",
+                //     backgroundColor: ["#7ca98277"],
+                //     hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                //     barPercentage: 10,
+                //     barThickness: 50,
+                //     maxBarThickness: 50,
+                //     minBarLength: 2,
+                // },
+            ],
+        },
+        
+        );
+    }, [outgoings]);
 
     // *********************************** CHART *******************************
 
-    useEffect(() => {
-        setChartData({
-            datasets: [
-                {
-                    data: dataArr,
-                    backgroundColor: ["red"],
-                    barPercentage: 0.5,
-                    barThickness: 20,
-                    maxBarThickness: 8,
-                    minBarLength: 2,
-                },
-            ],
-            labels: labelArr,
-        });
-    }, [outgoings]);
 
 
     return (
         <div>
-            <h1>HelloI am in Chart</h1>
             <Bar
                 data={
                     chartData

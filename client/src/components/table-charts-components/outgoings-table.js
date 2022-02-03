@@ -72,7 +72,6 @@ export default function OutgoingsTable() {
     // *********************************** TABLE *******************************
 
 
-
     return (
         <div className="data-table">
             <div
