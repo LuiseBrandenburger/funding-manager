@@ -193,7 +193,6 @@ export default function EditPlan() {
         }
     },[userInputOutgoings]);
 
-
     useEffect(()=>{
         if (clickedItemInTable[0]) {
             if(updateUserInput) {
@@ -207,11 +206,8 @@ export default function EditPlan() {
     },[updateUserInput, clickedItemInTable]);
 
     // console.log("clicked Item in Table", clickedItemInTable[0]);
-
     useEffect(()=>{
-
-        console.log("item clicken?", itemPopulateListClicked);
-
+        // console.log("item clicken?", itemPopulateListClicked);
     }, [itemPopulateListClicked]);
     
     // ******************************* HANDLE CHANGES & SUBMITS *************************
@@ -222,7 +218,6 @@ export default function EditPlan() {
             [target.name]: target.value,
         });
         console.log("UserInput Outgoings: ", [target.name], target.value);
-        
     };
     // console.log("UserInput Outgoings: ", userInputOutgoings);
 
@@ -287,10 +282,8 @@ export default function EditPlan() {
             price: parseFloat(priceRef.current.value),
             notes: notesRef.current.value,
             total: parseFloat(totalRef.current.value),
-            paidDate: new Date(paidDateRef.current.value)
+            paiddate: new Date(paidDateRef.current.value)
         };
-
-        // console.log("Updated Paiddate: ", userInputForUpdate.paidDate); .toISOString().split('T')[0]
 
         fetch("/api/update-outgoings", {
             method: "POST",
@@ -303,6 +296,7 @@ export default function EditPlan() {
                 return data.json();
             })
             .then((data) => {
+                console.log("data after update: ", data)
                 if (data.success) {
                     dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
                     dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
@@ -437,7 +431,7 @@ export default function EditPlan() {
                                     type="date"
                                     id="paiddate"
                                     ref={paidDateRef}
-                                    name="paidDate"
+                                    name="paiddate"
                                     value={userInputOutgoings?.paiddate || ""}
                                     // defaultValue={(itemPopulateListClicked)? new Date(clickedItemInTable[0].paiddate).toISOString().slice(0, 10) : ""}
                                     onChange={handleChange}

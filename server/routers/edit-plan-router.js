@@ -103,18 +103,13 @@ plan.post("/api/edit-outgoings", //uploader.single("file"), s3.upload,
 
 plan.post("/api/update-outgoings", (req, res) => {
 
-    // console.log("body in post outgoings:", req.body);
-    // console.log("body.file in post outgoings:", req.file);
     const data = req.body.userInputForUpdate;
     const outgoingId = req.body.clickedItemInTable[0].id;
-    // console.log("outgoingId:", outgoingId);
-    // console.log("outgoing data:", data);
 
-    if(data.paidDate===null){
+    if(data.paiddate===null){
     } else {
-        let datePaid = moment(data.paidDate).format("YYYY-MM-DD");
-        // console.log(datePaid);
-        data.paidDate = datePaid;
+        let datePaid = moment(data.paiddate).format("YYYY-MM-DD");
+        data.paiddate = datePaid;
     }
     if (!data.quantity) {
         data.quantity = 1;
@@ -130,7 +125,7 @@ plan.post("/api/update-outgoings", (req, res) => {
         data.price,
         data.notes,
         data.total,
-        data.paidDate,
+        data.paiddate,
         outgoingId
     )
         .then(({ rows }) => {
@@ -154,6 +149,15 @@ plan.post("/api/update-outgoings", (req, res) => {
                     updateProjectFinalSum(result[1].rows[0].sum, rows[0].project_id)
                 ]).then((result) =>{
 
+                    console.log("result after updated:", result[1].rows[0].paiddate);
+                    if(result[1].rows.paiddate===null){
+                    } else {
+                        let datePaid = moment(result[1].rows[0].paiddate).format("YYYY-MM-DD");
+                        result[1].rows[0].paiddate = datePaid;
+                        console.log(result[1].rows[0].paiddate);
+                        console.log(result[1].rows[0]);
+                    }
+
                     res.json({ success: true,
                         sumFcTotalCosts: result[0].rows[0].sum_fc_total,
                         updatedOutgoing: result[1].rows[0],
@@ -173,16 +177,16 @@ plan.post("/api/update-outgoings", (req, res) => {
 
 plan.post("/api/delete-outgoings", (req, res) => {
 
-    console.log("body in post outgoings delete:", req.body);
+    // console.log("body in post outgoings delete:", req.body);
     const outgoingId = req.body.clickedItemInTable[0].id;
-    console.log("outgoingId:", outgoingId);
+    // console.log("outgoingId:", outgoingId);
 
     deleteOutgoing(
         outgoingId
     )
         .then(({ rows }) => {
-            console.log("rows in delete:", rows);
-            console.log("rows were deleted:", rows[0].project_id);
+            // console.log("rows in delete:", rows);
+            // console.log("rows were deleted:", rows[0].project_id);
 
             Promise.all([
                 getOutgoingsSumFC(rows[0].project_id), 
