@@ -15,7 +15,9 @@ You can keep track of how much money you have forecasted and eventuelly spend fo
 I created this project to practice my React and Redux skills, as well as SQL and getting more used to the Dataflow. 
 
 ## TODOS
-change user profile
-update project details
-add and save files in db to all cost positions
-add incoming positions
+- change user profile
+- update project details
+- add and save files in db to all cost positions
+- add incoming positions
+- add team members to the projects
+- chat function
