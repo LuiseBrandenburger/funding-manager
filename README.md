@@ -1,15 +1,15 @@
 # Go Fund Yourself
 Homepage where users can keep track of their grants and project funding. PERN Stack.
 
-## Tech
-React/Redux, Node.js/Express, PostgreSQL, Bycrypt for hashing pws
-
-  ## Libraries 
-  Chart.js, Datagrid/MUI
-
 ## Description
 This project is the first draft of a much bigger Project. With this app you can add funding projects to your profile and add, update and delete cost positions to your project. 
 You can keep track of how much money you have forecasted and eventuelly spend for your project.
+
+## Tech
+React/Redux, Node.js/Express, PostgreSQL, Bycrypt for hashing pws
+
+## Libraries 
+Chart.js, Datagrid/MUI
 
 ## Motivation
 I created this project to practice my React and Redux skills, as well as SQL and getting more used to the Dataflow. 
