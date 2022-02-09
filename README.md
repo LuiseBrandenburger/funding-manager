@@ -1,6 +1,8 @@
 # go-fund-yourself
 Homepage where users can keep track of their grants and project funding. PERN Stack.
 
+# Tech
+
 # Description
 This project is the first draft of a much bigger Project. With this app you can add funding projects to your profile and add, update and delete cost positions to your project. 
 You can keep track of how much money you have forecasted and eventuelly spend for your project.
