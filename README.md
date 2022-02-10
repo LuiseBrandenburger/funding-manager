@@ -6,8 +6,8 @@ This project was built within 6 days as my final project during my enrollment at
 So far, the project consists of some basic features. With this app you can add funding projects to your profile and add, update and delete cost positions and keep track of how much money you have forecasted and will eventually spend. Furthermore, charts and tables provide a visual expense overview making it easier for the user to track and analyze their project. 
 
 ## Tech
-This Project was build on the PERN Stack. I used React/Redux, Node.js/Express and PostgreSQL.
-Other Libraries I used are:
+This Project was built on the PERN Stack. I used React/Redux, Node.js/Express and PostgreSQL.
+Other Libraries I used were:
 - Bycrypt
 - chart.js
 - cookie session
@@ -15,7 +15,7 @@ Other Libraries I used are:
 - mui/x-data-grid for tables
 
 ## Motivation
-I created this project to practice my React and Redux skills, as well as SQL and getting more used to the Dataflow. A special challenge for me was figuring out the data flow and calculations with decimal numbers in JS.
+I created this project to practice my React and Redux skills, as well as SQL and getting more familiar with Dataflow. Particularly challenging for me was figuring out data flow and calculations with decimal numbers in JS.
 
 ## TODOS
 - change user profile
@@ -23,4 +23,4 @@ I created this project to practice my React and Redux skills, as well as SQL and
 - add and save files in db to all cost positions
 - add incoming positions
 - add team members to the projects
-- chat function
+- create chat function
