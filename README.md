@@ -1,7 +1,7 @@
 # Go Fund Yourself
 A Platform Where Users Can Keep Track of Their Grants and Project Funding.
 
-![gfy-landingpage](https://github.com/LuiseBrandenburger/go-fund-yourself/blob/master/client/public/go-fund-yourself-landing.png)
+![gfy-landingpage](https://github.com/LuiseBrandenburger/go-fund-yourself/blob/master/client/public/gfy-landingpage.png)
 
 ## Overview
 This project was built within 6 days as my final project during my enrollment at the Spiced Academy Bootcamp. As an avid music fan I am trying to combine my funding and coding skills to develop a unique platform to help guid artists through the confusing and complex process of applying and accounting for cultural funding programs. 
