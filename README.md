@@ -1,5 +1,5 @@
 # Go Fund Yourself
-Platform where users can keep track of their grants and project funding.
+The Platform Where Users Can Keep Track of Their Grants and Project Funding.
 
 ## Description
 This project was built within 6 days as my final project during my enrollment at the Spiced Academy Bootcamp. As an avid music fan I am trying to combine my funding and coding skills to develop a unique platform to help guid artists through the confusing and complex process of applying and accounting for cultural funding programs. 
