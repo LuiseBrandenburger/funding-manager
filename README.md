@@ -1,5 +1,5 @@
 # Go Fund Yourself
-The Platform Where Users Can Keep Track of Their Grants and Project Funding.
+A Platform Where Users Can Keep Track of Their Grants and Project Funding.
 
 ## Description
 This project was built within 6 days as my final project during my enrollment at the Spiced Academy Bootcamp. As an avid music fan I am trying to combine my funding and coding skills to develop a unique platform to help guid artists through the confusing and complex process of applying and accounting for cultural funding programs. 
@@ -7,15 +7,15 @@ So far, the project consists of some basic features. With this app you can add f
 
 ## Tech
 This Project was built on the PERN Stack. I used React/Redux, Node.js/Express and PostgreSQL.
-Other Libraries I used were:
+Other Libraries I used:
 - Bycrypt
 - chart.js
 - cookie session
 - moment
-- mui/x-data-grid for tables
+- mui/x-data-grid
 
 ## Motivation
-I created this project to practice my React and Redux skills, as well as SQL and getting more familiar with Dataflow. Particularly challenging for me was figuring out data flow and calculations with decimal numbers in JS.
+I created this project to practice my React and Redux skills, as well as SQL and getting more familiar with the data flow.
 
 ## TODOS
 - change user profile
