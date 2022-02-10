@@ -2,11 +2,12 @@
 Homepage where users can keep track of their grants and project funding. PERN Stack.
 
 ## Description
-This project is the first draft of a much bigger Project. With this app you can add funding projects to your profile and add, update and delete cost positions to your project. 
-You can keep track of how much money you have forecasted and eventuelly spend for your project.
+This project was build within 6 days as the final project for my participation at the Spiced Academy Bootcamp. The Project so far contains basic features. With this app you can add funding projects to your profile and add, update and delete cost positions to your project. You can keep track of how much money you have forecasted and eventuelly spend for your project. Charts and Tables will give you a visual overview of your costs and make it easier for you to track your project. 
 
 ## Tech
-React/Redux, Node.js/Express, PostgreSQL, Bycrypt for hashing pws
+This Project was build on the PERN Stack. I used React/Redux, Node.js/Express and PostgreSQL
+Libraries I used for this project are:
+- Bycrypt for hashing pws
 
 ## Libraries 
 Chart.js, Datagrid/MUI
