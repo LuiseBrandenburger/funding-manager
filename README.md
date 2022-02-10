@@ -19,7 +19,7 @@ I created this project to practice my React and Redux skills, as well as SQL and
 
 ## TODOS
 - change user profile
-- update project details
+- update project details and delete projects
 - add and save files in db to all cost positions
 - add incoming positions
 - add team members to the projects
