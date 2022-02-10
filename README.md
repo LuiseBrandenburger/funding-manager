@@ -2,7 +2,7 @@
 Platform where users can keep track of their grants and project funding.
 
 ## Description
-This project was build within 6 days as the final project for my participation at the Spiced Academy Bootcamp. As an avid music fan I am trying to combine my funding and coding skills to develop a unique platform to help guid artists through the confusing and complex process of applying and accounting for cultural funding programs. 
+This project was built within 6 days as my final project during my enrollment at the Spiced Academy Bootcamp. As an avid music fan I am trying to combine my funding and coding skills to develop a unique platform to help guid artists through the confusing and complex process of applying and accounting for cultural funding programs. 
 The Project so far contains basic features. With this app you can add funding projects to your profile and add, update and delete cost positions in that project. You can keep track of how much money you have forecasted and eventuelly spend. Charts and Tables will give you a visual overview of your costs and make it easier for you to track your project. 
 
 ## Tech
