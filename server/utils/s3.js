@@ -5,7 +5,7 @@ let secrets;
 if (process.env.NODE_ENV == "production") {
     secrets = process.env;
 } else {
-    secrets = require("./secrets");
+    secrets = require("../secrets");
 }
 
 const s3 = new aws.S3({
@@ -14,7 +14,7 @@ const s3 = new aws.S3({
 }); //instance of aws user, allows us to communicate with our S3 Bucket
 
 module.exports.upload = (req, res, next) => {
-    // console.log("Reqfile in Upload",req.file);
+    console.log("Reqfile in Upload",req.file);
 
     if (!req.file) {
         console.log("no file, something went wrong with multer");
@@ -37,13 +37,11 @@ module.exports.upload = (req, res, next) => {
 
     promise
         .then(() => {
-            // it worked!!!
-            console.log("img is in the cloud");
+            // console.log("img is in the cloud");
             next();
             fs.unlink(path, () => {});
         })
         .catch((err) => {
-            // uh oh
             console.log("error uploading img to cloud", err);
             return res.sendStatus(500);
         });

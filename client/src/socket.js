@@ -1,8 +1,6 @@
 import { io } from "socket.io-client";
+// FIXME: setup for sockets prepared, but not in use yet
 
-import // wallMessagesReceived,
-// wallMessageReceived,
-"./redux/wall/slice.js";
 
 export let socket;
 

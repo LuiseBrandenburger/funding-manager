@@ -1,10 +1,14 @@
 import { combineReducers } from "redux";
-// import { messagesReducer } from "./chat/slice.js";
+import { projectsReducer } from "./projects/slice";
+import { currentProjectIdReducer } from "./currentProjectId/slice";
+import { outgoingsReducer } from "./outgoings/slice";
+import { currentOutgoingReducer } from "./currentOutgoing/slice";
 
 const rootReducer = combineReducers({
-    // friendsAndWannabees: friendsAndWannabeesReducer,
-    // messages: messagesReducer,
-    // wallMessages: wallReducer,
+    projects: projectsReducer,
+    currentProjectId: currentProjectIdReducer,
+    outgoings: outgoingsReducer,
+    currentOutgoing: currentOutgoingReducer,
 });
 
 export default rootReducer;
