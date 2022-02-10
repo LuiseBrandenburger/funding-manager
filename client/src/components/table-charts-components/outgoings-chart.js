@@ -10,44 +10,12 @@ export default function OutgoingsChart() {
     const currentProjectId = useSelector(
         (state) => state.currentProjectId || {}
     );
-    // const outgoings = useSelector((state) => state.outgoings || {});
-
-    // const labelArr = useSelector((state) => state.outgoings.map((item)=> {
-    //     return item.position;
-    // }) || {});
-
-    // const dataEstimatedCosts = useSelector(
-    //     (state) =>
-    //         state.outgoings.map((item) => {
-    //             return item.price;
-    //         }) || {}
-    // );
-    // const dataFinalCosts = useSelector(
-    //     (state) =>
-    //         state.outgoings.map((item) => {
-    //             return item.total;
-    //         }) || {}
-    // );
-
-    // const currentOutgoingData = useSelector((state) => {
-    //     if (state.outgoings) {
-    //         return state.outgoings.filter((outgoing) => {
-    //             return outgoing.project_id === state.currentProjectId;
-    //         });
-    //     } else {
-    //         return {};
-    //     }
-    // });
 
     const dataEstimatedCosts = useSelector((state) => {
         if (state.outgoings) {
 
             const currentOut = state.outgoings.filter((outgoing) => {
-                // I only want an array where there is a value
-                return outgoing.project_id === state.currentProjectId
-                // {
-                //     return outgoing.price;
-                // }
+                return outgoing.project_id === state.currentProjectId;
             });
             const currentPrice = currentOut.map((outgoing) => {
                 return outgoing.price;
@@ -108,14 +76,6 @@ export default function OutgoingsChart() {
     });
 
     // *********************************** EFFECTS *******************************
-
-    // useEffect(() => {
-    //     setDataEstimatedCosts(currentOutgoingData);
-    // }, [currentProjectId]);
-
-    // useEffect(() => {
-    //     setDataFinalCosts(currentOutgoingData);
-    // }, [currentProjectId]);
 
 
     useEffect(() => {

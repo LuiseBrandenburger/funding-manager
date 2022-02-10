@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+// FIXME: finish Delet BTN
 
 export default function DeleteProjectBtn({ userId }) {
     const dispatch = useDispatch();
-    // const [currentProject, setCurrentProject] = useState(0);
 
     // ********************* STATE ***************************
     const projects = useSelector((state) => state.projects || {});
@@ -42,11 +42,7 @@ export default function DeleteProjectBtn({ userId }) {
             .then((data) => {
                 if (data.success) {
                     console.log("this worked");
-                    // dispatch(deleteOutgoing(clickedItemInTable[0].id));
-                    // dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
-                    // dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
-                    // dispatch(updateProjectSumTotalCostsPaid(currentProjectId, data.sumTotalCostsPaid));
-                    // setUserInputOutgoings({});
+
                 } else {
                     // setError(true);
                 }

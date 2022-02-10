@@ -14,9 +14,7 @@ auth.get("/api/user-id", function (req, res) {
     });
 });
 
-// login.json vorher
 auth.post("/api/login", (req, res) => {
-    // console.log("req.body in login.json request: ", req.body);
 
     const data = req.body;
     const pw = data.password;
@@ -27,7 +25,6 @@ auth.post("/api/login", (req, res) => {
                 .then((match) => {
                     if (match) {
                         req.session.userId = rows[0].id;
-                        // console.log("console.log req.session: ", req.session);
                         res.json({ success: true });
                     } else {
                         console.log("Error in Match");
@@ -46,21 +43,16 @@ auth.post("/api/login", (req, res) => {
 });
 
 auth.post("/api/register", (req, res) => {
-    // console.log("req.body in registration.json request: ", req.body);
 
     const data = req.body;
     const pw = data.password;
 
     const mailError = validateEmail(data.email);
-    console.log("Mail Error is: ", mailError);
 
     if (mailError) {
         res.json({ error: true });
     } else {
-        // if (data.first == "" || data.last == "" || data.email == "" || pw == "") {
-        //     console.log("no data in input -> change state to error");
-        //     res.json({ success: false });
-        // } else {
+ 
         hash(pw)
             .then((hashedPw) => {
 
@@ -68,12 +60,10 @@ auth.post("/api/register", (req, res) => {
 
                     .then(({ rows }) => {
                         req.session.userId = rows[0].id;
-                        // console.log("console.log req.session: ", req.session);
                         res.json({ success: true });
                     })
                     .catch((err) => {
                         console.log("error adding user: ", err);
-                        console.log("change state to error");
                         res.json({ success: false });
                     });
             })

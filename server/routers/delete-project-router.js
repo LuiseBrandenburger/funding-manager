@@ -10,11 +10,8 @@ const {
 deleteProject.post("/delete-project", function (req, res) {
 
     const projectId = req.body.currentProjectId;
-
     deleteOutgoingsByProjectId(projectId).then(() => {
-        console.log("delete Outgoings Worked");
         deleteProjectByProjectId(projectId).then(()=>{
-            console.log("delete Projects Worked");
             res.json({
                 success: true,
             });

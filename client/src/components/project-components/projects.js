@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import ShowProjectOverview from "./show-project-overview";
-import DeleteProjectBtn from "./delete-project-btn";
+// TODO: import DeleteProjectBtn from "./delete-project-btn";
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +18,6 @@ import AddNewProject from "./add-new-project";
 export default function Projects({ userId }) {
     const dispatch = useDispatch();
     const [userInput, handleChange] = useForm();
-    // const [currentProject, setCurrentProject] = useState(0);
 
     // ********************* STATE ***************************
     const projects = useSelector((state) => state.projects || {});
@@ -74,10 +73,6 @@ export default function Projects({ userId }) {
                 </option>
             );
         }, this);
-
-        // const deleteProject = ()=> {
-        //     console.log("delete Project");
-        // };
 
     return (
         <div className="main-content-container">

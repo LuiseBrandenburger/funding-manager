@@ -3,7 +3,6 @@ const app = express();
 const compression = require("compression");
 const path = require("path");
 const cookieSession = require("cookie-session");
-// const moment = require("moment");
 
 
 // SOCKETS
@@ -78,9 +77,9 @@ app.use(deleteProject);
 
 io.on("connection", (socket) => {
     const userId = socket.request.session.userId;
-    console.log(
-        `user with the ${socket.id} and the UserId: ${userId} connected`
-    );
+    // console.log(
+    //     `user with the ${socket.id} and the UserId: ${userId} connected`
+    // );
     // if (!socket.request.session.userId) {
     //     return socket.disconnect(true);
     // }

@@ -1,13 +1,9 @@
 import Register from "./components/auth-components/register";
-import Reset from "./components/auth-components/reset-pw";
 import { BrowserRouter, Route } from "react-router-dom";
 import Login from "./components/auth-components/login";
-// import MyChart from "./myChart";
 
 // import { io } from "socket.io-client";
 // const socket = io();
-
-// // sends message to server console
 // socket.on("hello", (message) => console.log(message));
 
 export default function Welcome() {
@@ -32,5 +28,3 @@ export default function Welcome() {
         </div>
     );
 }
-
-{/* <MyChart /> */}

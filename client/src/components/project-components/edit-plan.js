@@ -196,8 +196,6 @@ export default function EditPlan() {
     useEffect(()=>{
         if (clickedItemInTable[0]) {
             if(updateUserInput) {
-                // console.log("clicked Item in Table", clickedItemInTable[0]);
-                // clickedItemInTable[0].paiddate = new Date(clickedItemInTable[0].paiddate).toLocaleDateString();
                 setUserInputOutgoings(clickedItemInTable[0]);
                 setUpdateUserInput(false);
 
@@ -205,9 +203,7 @@ export default function EditPlan() {
         }
     },[updateUserInput, clickedItemInTable]);
 
-    // console.log("clicked Item in Table", clickedItemInTable[0]);
     useEffect(()=>{
-        // console.log("item clicken?", itemPopulateListClicked);
     }, [itemPopulateListClicked]);
     
     // ******************************* HANDLE CHANGES & SUBMITS *************************
@@ -218,9 +214,7 @@ export default function EditPlan() {
             [target.name]: target.value,
         });
         setError(false);
-        console.log("UserInput Outgoings: ", [target.name], target.value);
     };
-    // console.log("UserInput Outgoings: ", userInputOutgoings);
 
     const handleItemClick =(itm) => {
         setIdItemPopulateList(itm[0]);
@@ -230,7 +224,6 @@ export default function EditPlan() {
         } else {
             setItemPopulateListClicked(true);
         }
-        // itemPopulateListClicked? setItemPopulateListClicked(false) :setItemPopulateListClicked(true);
         setUpdateUserInput(true);
     };
 
@@ -275,7 +268,6 @@ export default function EditPlan() {
     const handleUpdateOutgoings = (e) => {
         e.preventDefault();
         
-        // IF I CHANGE SOMETHING I OVERRIDE THE VALUES
         const userInputForUpdate = {
             category: categoryRef.current.value,
             option: optionRef.current.value,
@@ -297,7 +289,6 @@ export default function EditPlan() {
                 return data.json();
             })
             .then((data) => {
-                console.log("data after update: ", data)
                 if (data.success) {
                     dispatch(updateProjectFCSumOutgoings(currentProjectId, data.sumFcTotalCosts));
                     dispatch(updateProjectSumFundingLeft(currentProjectId, data.sumFundingLeft));
@@ -319,7 +310,6 @@ export default function EditPlan() {
     const handleDeleteOutgoings = (e) => {
         e.preventDefault();
 
-        // console.log("clickedItemInTable Delete: ",clickedItemInTable);
         fetch("/api/delete-outgoings", {
             method: "POST",
             headers: {
@@ -370,7 +360,6 @@ export default function EditPlan() {
                                     ref={categoryRef}
                                     onChange={handleChange}
                                     value={userInputOutgoings?.category || "-- Category --"}
-                                    // defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].category : ""}
                                 >
                                     <option value="">-- Category --</option>
                                     <option value="Production">
@@ -401,7 +390,6 @@ export default function EditPlan() {
                                     id="position"
                                     ref={positionRef}
                                     value={userInputOutgoings?.position || ""}
-                                    // defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].position : null}
                                     name="position"
                                     placeholder="Describe Position"
                                     onChange={handleChange}
@@ -417,7 +405,6 @@ export default function EditPlan() {
                                     ref={priceRef}
                                     placeholder="E.g. 1000,00"
                                     value={userInputOutgoings?.price || ""}
-                                    // defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].price : ""}
                                     min="0.01"
                                     step="0.01"
                                     onChange={handleChange}
@@ -437,7 +424,6 @@ export default function EditPlan() {
                                     ref={paidDateRef}
                                     name="paiddate"
                                     value={userInputOutgoings?.paiddate || ""}
-                                    // defaultValue={(itemPopulateListClicked)? new Date(clickedItemInTable[0].paiddate).toISOString().slice(0, 10) : ""}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -451,7 +437,6 @@ export default function EditPlan() {
                                     ref={totalRef}
                                     placeholder="E.g. 1000,00"
                                     value={userInputOutgoings?.total || ""}
-                                    // defaultValue={(itemPopulateListClicked)? clickedItemInTable[0].total : null}
                                     min="0.01"
                                     step="0.01"
                                     onChange={handleChange}

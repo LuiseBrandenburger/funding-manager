@@ -36,16 +36,6 @@ export default function OutgoingsTable() {
         { field: "id", headerName: "ID", width: 60 },
 
     ]);
-    const currentProjectData = useSelector((state) => {
-        if (state.projects) {
-            return state.projects.filter((project) => {
-                return project.id === state.currentProjectId;
-            });
-        } else {
-            return {};
-        }
-    });
-    const outgoings = useSelector((state) => state.outgoings || {});
     const currentOutgoingData = useSelector((state) => {
         if (state.outgoings) {
             return state.outgoings.filter((outgoing) => {
@@ -80,10 +70,6 @@ export default function OutgoingsTable() {
                     pageSize={10}
                     rowsPerPageOptions={[10]}
                     checkboxSelection
-                    // onSelectionModelChange={itm => {
-                    //     handleItemClick(itm);
-                    // }
-                    // }
                     components={{ Toolbar: GridToolbar }}
                 />
             </div>

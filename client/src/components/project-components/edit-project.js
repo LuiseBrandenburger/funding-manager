@@ -1,6 +1,6 @@
 import useForm from "../../hooks/use-form";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 
 export default function EditProject() {
@@ -22,8 +22,6 @@ export default function EditProject() {
             return {};
         }
     });
-
-    console.log(currentProjectData[0].name);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -49,18 +47,6 @@ export default function EditProject() {
                 setError(true);
             });
     };
-
-    // approved_funding: "20000.00"
-    // artist_name: "Elder"
-    // funding_received: "0.00"
-    // id: 6
-    // name: "Elder - New Album 2022"
-    // project_number: "E123"
-    // sum_accounted: "0.00"
-    // sum_fc_total: "21000.00"
-    // sum_left: "14000.00"
-    // sum_total: "6000.00"
-    // sumspend: "0.00"
 
 
     return (

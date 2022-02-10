@@ -12,7 +12,6 @@ const { registerProject, getProjectsById } = require("../sql/db");
 projects.get("/all-projects", function (req, res) {
 
     getProjectsById(req.session.userId).then(({ rows }) => {
-        // console.log("rows after projects have been fetched: ", rows);
         res.json({
             data: rows,
         });
@@ -23,10 +22,8 @@ projects.get("/all-projects", function (req, res) {
 
 
 projects.post("/api/projects", (req, res) => {
-    // console.log("req.body in registration.json request: ", req.body);
 
     const data = req.body;
-
     if (!data.approvedFunding) {
         data.approvedFunding = 0;
     }

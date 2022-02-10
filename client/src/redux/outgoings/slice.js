@@ -13,8 +13,7 @@ export function outgoingsReducer(outgoings = [], action) {
             return outgoing.id !== action.payload.id;
         });
     } else if (action.type == "outgoing/updateOutgoing") {
-        // FIXME: 
-        
+
         outgoings = outgoings.filter((outgoing) => {
             return outgoing.id !== action.payload.id;
         });
@@ -24,7 +23,6 @@ export function outgoingsReducer(outgoings = [], action) {
         ];
         return newOutgoings;
     }
-    // console.log("outgoings in Reducer 3: ", outgoings);
     return outgoings;
 }
 

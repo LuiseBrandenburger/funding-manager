@@ -1,11 +1,9 @@
-import { BrowserRouter, Route, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { projectsReceived } from "../../redux/projects/slice";
 import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 import { Bar } from "react-chartjs-2";
-// import AddNewProject from "./add-new-project";
 
 
 export default function Dashboard() {
@@ -134,20 +132,12 @@ export default function Dashboard() {
                                 </li>
                             ))}
                         </ul>
-                        {/* <Link to="/projects/add-project">
-                                <button className="submit-btn-two">
-                                    Add New Project
-                                </button>
-                            </Link> */}
                     </div>
                 </div>
             </div>
             {/* DASHBOARD MAIN CONTENT RIGHT */}
 
             <div className="main-content-right">
-            {/* <Route path="/projects/add-project">
-                        <AddNewProject userId={userId} />
-                    </Route> */}
                 <div className="main-content-right-container">
                     <div className="project-preview-container">
                         {projects &&

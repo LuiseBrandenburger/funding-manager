@@ -258,6 +258,19 @@ h1, h3 {
     align-self: flex-end;
 }
 
+.btns-left {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.btns-left button {
+    margin-top: 10px;
+}
+
 /******************* MAIN SETUP *******************/
 
 .main-container {
@@ -369,16 +382,10 @@ h1, h3 {
 .avatar {
     height: 45px;
     width: 45px;
-    /* background-color: var(--main-headline-color); */
     border-radius: 3px;
     align-self: center;
 }
 
-/* .logo {
-    height: 50px;
-    width: 50px;
-    align-self: center;
-} */
 
 /******************************************* NAVBAR LEFT ******************************************/
 
@@ -439,7 +446,6 @@ h1, h3 {
     width: 100%;
     padding: 10px;
     padding-left: 25px;
-    /* background-color: var(--btn-submit-bg-color); */
 }
 
 .content-left-container {
@@ -452,19 +458,6 @@ h1, h3 {
 
 .content-left-container button {
     margin-bottom: 10px;
-}
-
-.btns-left {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-.btns-left button {
-    margin-top: 10px;
 }
 
 .choose-project select {
@@ -499,10 +492,7 @@ h1, h3 {
     flex-direction: column;
     width: 25%;
     height: 100%;
-    /* padding: 10px; */
     margin: 10px 10px 0px 10px;
-    /* border: 3px solid var(--focus-btn-bg-color); */
-    /* overflow-y: scroll; */
 }
 
 .headline-dashboard {
@@ -512,7 +502,6 @@ h1, h3 {
 .dashboard-left-container {
     display: flex;
     flex-direction: column;
-
 }
 
 .chart-container {
@@ -522,7 +511,6 @@ h1, h3 {
     background-color: var(--main-bg-color);
     border-radius: 3px;
     border: 4px solid var(--main-headline-color);
-
 }
 
 /******************************************* ADD NEW PROJECT ******************************************/
@@ -572,7 +560,6 @@ h1, h3 {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    /* justify-content: space-around; */
 }
 
 .edit-project-container form {
@@ -613,11 +600,9 @@ h1, h3 {
 
 #category {
     min-width: 150px;
-    /* max-width: 150px; */
 }
 #option, #position, #notes  {
     min-width: 250px;
-    /* max-width: 250px; */
 }
 
 .edit-project-container label {
@@ -758,9 +743,6 @@ h1, h3 {
     width: 900px;
     height: 900px;
     position: fixed;
-    
-    /* width: 100vw; */
-    /* background-color: var(--main-bg-color); */
     z-index: 1;
 }
 
@@ -810,10 +792,6 @@ h1, h3 {
     background-color: var(--bg-color-left-nav)!important;
     height: 30px !important;
     color: var(--btn-submit-bg-color)!important;
-}
-
-.css-1s0hp0k-MuiDataGrid-columnHeadersInner  {
-    /* pointer-events: none!important; */
 }
 
 /******************* OTHERS *******************/

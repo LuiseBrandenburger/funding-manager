@@ -84,51 +84,8 @@
   SELECT * FROM users;
   SELECT * FROM projects;
   SELECT * FROM outgoings;
-  SELECT * FROM incomings;
+  -- SELECT * FROM incomings;
 
-
-
-
-
-
-
-
-
--- TODO: OLD CODE
-
-
--- DROP TABLE IF EXISTS reset_code;
-
--- CREATE TABLE reset_code (
---     email VARCHAR(255) NOT NULL,
---     code VARCHAR(255) NOT NULL,
---     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
---   );
-
--- DROP TABLE IF EXISTS friendships;
-
--- CREATE TABLE friendships( 
--- id SERIAL PRIMARY KEY, 
--- sender_id INT REFERENCES users(id) NOT NULL,
--- recipient_id INT REFERENCES users(id) NOT NULL,
--- accepted BOOLEAN DEFAULT false);
-
--- DROP TABLE IF EXISTS wall_messages;
-
--- CREATE TABLE wall_messages (
---       id SERIAL PRIMARY KEY,
---       author_id INT REFERENCES users(id) NOT NULL,
---       wall_id INT REFERENCES users(id) NOT NULL,
---       wall_message TEXT NOT NULL,
---       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
--- );
-
--- INSERT INTO wall_messages
---   (author_id, wall_id, wall_message) 
--- VALUES 
---   (1, 207, 'Hey everyone, nice to meet you...'),
---   (1, 207, 'Hello there!'),
---   (1, 207, 'I love this social network');
 
 
 

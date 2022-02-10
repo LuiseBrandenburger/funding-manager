@@ -16,12 +16,9 @@ export default function Register() {
             body: JSON.stringify(userInput),
         })
             .then((data) => {
-                console.log("Data from handle Submit: ", data);
                 return data.json();
             })
             .then((data) => {
-                console.log("response data from /register.json", data);
-
                 if (data.success) {
                     location.replace("/");
                 } else {
