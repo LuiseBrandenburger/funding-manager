@@ -1,5 +1,4 @@
 const spicedPg = require("spiced-pg");
-
 const database = "gofundyourself";
 const username = "postgres";
 const password = "postgres";
@@ -127,8 +126,6 @@ module.exports.getOutgoingById = (id) => {
     return db.query(q, params);
 };
 
-// SELECT email, password, id FROM users WHERE email = ($1)
-
 module.exports.getIncomingsByProjectId = (projectId) => {
     const q = `SELECT * WHERE project_id = ($1)
     FROM incomings
@@ -137,7 +134,6 @@ module.exports.getIncomingsByProjectId = (projectId) => {
     const params = [projectId];
     return db.query(q, params);
 };
-
 
 // ************** SUMS ***************
 
@@ -164,21 +160,6 @@ module.exports.getOutgoingsSumFinalMarketing= (projectId) => {
     const params = [projectId];
     return db.query(q, params);
 };
-
-
-// module.exports.getIncomingsSumFC= (projectId) => {
-//     const q = `SELECT sum(CAST(price AS decimal(8,2))) FROM incomings WHERE project_id = ($1)`;
-//     const params = [projectId];
-//     return db.query(q, params);
-// };
-
-// module.exports.getIncomingsSumFinal= (projectId) => {
-//     const q = `SELECT sum(CAST(total AS decimal(8,2))) FROM incomings WHERE project_id = ($1)`;
-//     const params = [projectId];
-//     return db.query(q, params);
-// };
-
-// ************** UPDATE PROJECT ***************
 
 module.exports.updateProjectFCSum = (fcOutgoingsSum, projectId) => {
     const q = `UPDATE projects SET sum_fc_total = ($1)
