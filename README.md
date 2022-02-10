@@ -24,6 +24,8 @@ Other Libraries I used:
 - Users are able to sort costs data and export the data as pdf or CSV
 - Users are able to view the data in charts or tables
 
+![gfy-screenshot-finance-plan](https://github.com/LuiseBrandenburger/go-fund-yourself/blob/master/client/public/gfy-screenshot-finance-plan.png)
+
 ## Motivation
 I created this project to practice my React and Redux skills, as well as SQL and getting more familiar with the data flow.
 
