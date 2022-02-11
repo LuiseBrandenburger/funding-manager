@@ -26,13 +26,16 @@ Other Libraries I used:
 
 ![gfy-screenshot-finance-plan](https://github.com/LuiseBrandenburger/go-fund-yourself/blob/master/client/public/gfy-screenshot-finance-plan.png)
 
-## Motivation
-I created this project to practice my React and Redux skills, as well as SQL and getting more familiar with the data flow.
-
-## TO DO'S
+## Future Features
 - change and delete user profile
 - update project details and delete projects
 - add and save files in db to all cost positions
 - add incoming positions
 - add team members to the projects
 - create chat function
+
+## Motivation
+I created this project to practice my React and Redux skills, as well as SQL and getting more familiar with the data flow.
+
+## TO DO'S
+- split up components and refactor
