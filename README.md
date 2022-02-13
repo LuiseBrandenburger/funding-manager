@@ -8,7 +8,7 @@ This project was built within 6 days as my final project during my enrollment at
 So far, the project consists of some basic features. With this app you can add funding projects to your profile and add, update and delete cost positions and keep track of how much money you have forecasted and will eventually spend. Furthermore, charts and tables provide a visual expense overview making it easier for the user to track and analyze their project. 
 
 ## Motivation
-I created this project to practice my React and Redux skills, as well as SQL and getting more familiar with the data flow.
+I created this project to practice my React and Redux skills, as well as SQL and getting more familiar with the data flow and data structure.
 
 ## Tech
 This Project was built on the PERN Stack. I used React/Redux, Node.js/Express and PostgreSQL.
