@@ -1,5 +1,5 @@
 # Go Fund Yourself
-A Platform Where Users Can Keep Track of Their Grants and Project Funding.
+A platform where users can keep track of their grants and project funding.
 
 ![gfy-landingpage](https://github.com/LuiseBrandenburger/go-fund-yourself/blob/master/client/public/gfy-landingpage.png)
 
